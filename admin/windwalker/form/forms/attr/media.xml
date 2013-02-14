@@ -37,7 +37,9 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="directory"
 			type="text"
@@ -51,7 +53,8 @@
 			type="radio"
 			label="LIB_WINDWALKER_FIELD_ATTR_PREVIEW"
 			description="LIB_WINDWALKER_FIELD_ATTR_PREVIEW_DESC"
-			class=""
+			class="btn-group"
+			default="tooltip"
 		>
 			<option value="false">JNO</option>
 			<option value="tooltip">LIB_WINDWALKER_FIELD_ATTR_OPTION_TOOLTIP</option>

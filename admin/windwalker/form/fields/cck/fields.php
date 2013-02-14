@@ -30,6 +30,7 @@ class JFormFieldFields extends JFormField
 	
 	public $name ;
 	
+	public $form ;
 	
 	
 	/**
@@ -40,31 +41,54 @@ class JFormFieldFields extends JFormField
 	 */
 	public function getInput()
 	{
+		static $form_setted = false ;
+		static $form ;
+		
 		$element 	= $this->element ;
 		
 		$this->addFieldJs();
+		$fieldset 	= (string) $element['fset'];
+		$fieldset 	= $fieldset ? $fieldset : 'attrs' ;
+		$class 		= (string) $element['class'];
 		
-		// ParseValue
-		$data = AKHelper::_('fields.parseAttrs', $this->value);
-		
-		$type 	= JRequest::getVar('field_type', 'text') ;
-		
-		JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
-		$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
-		$form->bind($data);
-		JRequest::setVar('field_default', JArrayHelper::getValue($data, 'default'), 'method', true) ;
-		
-		$fields = $form->getFieldset('attrs');
+		$nolabel		= (string) $element['nolabel'] ;
+		$nolabel		= ($nolabel == 'true' || $nolabel == '1') ? true : false ;
 		
 		
-		$html = '' ;
+		if(!$form_setted){
+			// ParseValue
+			$data = AKHelper::_('fields.parseAttrs', $this->value);
+			
+			$type 	= JRequest::getVar('field_type', 'text') ;
+			
+			JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
+			$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
+			$form->bind($data);
+			
+			// Set Default for Options
+			$default = JArrayHelper::getValue($data, 'default') ;
+			JRequest::setVar('field_default', $default, 'method', true) ;
+			$form_setted = true;
+		}
+		
+		
+		$fields = $form->getFieldset($fieldset);
+		
+		
+		$html = '<div class="'.$class.' ak-cck-'.$fieldset.'">' ;
 		foreach( $fields as $field ):
-			$html .= '<div class="control-group">' ;
-			$html .= '	<div class="control-label">'.$field->getLabel().'</div>' ;
-			$html .= '			<div class="controls">'.$field->getInput().'</div>' ;
-			$html .= '</div>' ;
+			if(!$nolabel){
+				$html .= '<div class="control-group">' ;
+				$html .= '	<div class="control-label">'.$field->getLabel().'</div>' ;
+				$html .= '			<div class="controls">'.$field->getInput().'</div>' ;
+				$html .= '</div>' ;
+			}else{
+				$html .= '<div class="control-group">' ;
+				$html .= $field->getInput() ;
+				$html .= '</div>' ;
+			}
 		endforeach;
-		
+		$html .= '</div>';
 		
 		return  $html;
 

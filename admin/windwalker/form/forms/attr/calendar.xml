@@ -28,9 +28,10 @@
 		
 		<field
 			name="default"
-			type="text"
+			type="calendar"
 			label="LIB_WINDWALKER_FIELD_ATTR_DEFAULT"
 			description="LIB_WINDWALKER_FIELD_ATTR_DEFAULT_DESC"
+			format="%Y-%m-%d %H:%M:%S"
 		/>
 		
 		<field
@@ -44,13 +45,15 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="format"
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_FORMAT"
 			description="LIB_WINDWALKER_FIELD_ATTR_FORMAT_DESC"
-			default="%Y-%m-%d"
+			default="%Y-%m-%d %H:%M:%S"
 		/>
 		
 		<field
@@ -65,7 +68,7 @@
 			type="filterlist"
 			label="LIB_WINDWALKER_FIELD_ATTR_FILTERLIST"
 			description="LIB_WINDWALKER_FIELD_ATTR_FILTERLIST_DESC"
-			include="server_utc, user_utc"
+			include="server_utc,user_utc"
 		>
 			<option>JDEFAULT</option>
 		</field>

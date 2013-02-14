@@ -28,21 +28,19 @@ class AKHelperFields
 		}
 		
 		// Check is table have all needed column
+		// ==================================================================
 		self::checkTable($table);
 		
-		/*
-		// implode Array
-		foreach( $attrs as $key => &$attr ):
-			if($key == 'options') continue;
-			
-			if(is_array($attr)) implode(',',$attr);
-		endforeach;
-		*/
+		
 		
 		// Filter Attrs
+		// ==================================================================
 		$attrs = self::filterFields($field_type, $attrs) ;
 		
-		// Filter Name to uppercase
+		
+		
+		// Convert Name to uppercase and safe ID
+		// ==================================================================
 		$name = JArrayHelper::getValue($attrs, 'name' ) ;
 		$name = self::filterName($name);
 		$attrs['name'] = $name;
@@ -52,7 +50,20 @@ class AKHelperFields
 			$table->set('name', $name );
 		}
 		
+		
+		// Remove empty options
+		// ==================================================================
+		foreach( $attrs['options']['value'] as $k => $val ):
+			if(!$attrs['options']['value'][$k] && !$attrs['options']['text'][$k]){
+				unset($attrs['options']['value'][$k]);
+				unset($attrs['options']['text'][$k]);
+			}
+		endforeach;
+		
+		
+		
 		// Build Element
+		// ==================================================================
 		$table->element = self::buildElement( $field_type , $attrs);
 		$table->name 	= $name ;
 		$table->attrs	= json_encode($attrs) ;
@@ -155,7 +166,7 @@ class AKHelperFields
 		
 		$array = (array)json_decode($attrs);
 		
-		// Save options
+		// Save options to new var
 		// ================================================================
 		$options = null ;
 		if(isset($array['options'])) {
@@ -163,6 +174,9 @@ class AKHelperFields
 			$options = $array['options'];
 		}
 		
+		
+		// Rebuild Options
+		// ==================================================================
 		if($options) {
 			$array['options'] = array();
 			$i = 0 ;
@@ -227,6 +241,8 @@ class AKHelperFields
 	
 	public static function filterFields($field_type = 'text', $data = array())
 	{
+		// Clean text
+		// ==================================================================
 		foreach( $data as $key => &$val ):
 			if($key == 'options' || is_array($val)) continue;
 			
@@ -234,6 +250,8 @@ class AKHelperFields
 		endforeach;
 		
 		
+		// Filter Text
+		// ==================================================================
 		JForm::addFormPath(AKPATH_FORM.'/forms/attr');
 		$form = JForm::getInstance( 'fields', $field_type, array(), false, false );
 		
@@ -251,6 +269,8 @@ class AKHelperFields
 	
 	public static function filterName($name)
 	{
+		// Make Name as safe ID
+		// ==================================================================
 		$name = JFilterOutput::stringURLSafe($name);
 		$name = str_replace('-', '_', $name) ;
 		$name = strtoupper($name) ;
@@ -266,6 +286,7 @@ class AKHelperFields
 	
 	public static function checkTable($table)
 	{
+		// Needed columns
 		$needed = array(
 			'title',
 			'name',
@@ -274,6 +295,10 @@ class AKHelperFields
 			'attrs'
 		);
 		
+		
+		
+		// Check columns
+		// ==================================================================
 		$lack = array();
 		
 		foreach( $needed as $needed ):
@@ -282,6 +307,7 @@ class AKHelperFields
 			}
 		endforeach;
 		
+		// Raise Error
 		if(count($lack) > 0) {
 			$message = "Table {$table->getTableName()} need columns: ".implode(', ', $lack) ;
 			JError::raiseError( 500, $message) ;

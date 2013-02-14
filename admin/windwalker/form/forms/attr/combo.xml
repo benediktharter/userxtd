@@ -44,7 +44,9 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="class"
 			type="text"
@@ -71,7 +73,9 @@
 			description="LIB_WINDWALKER_FIELD_ATTR_SIZE_DESC"
 			class="input-small"
 		/>
-		
+	</fieldset>
+	
+	<fieldset name="options">
 		<field
 			name="options"
 			type="options"

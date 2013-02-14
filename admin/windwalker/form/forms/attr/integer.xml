@@ -30,6 +30,7 @@
 			label="LIB_WINDWALKER_FIELD_ATTR_FIRST"
 			description="LIB_WINDWALKER_FIELD_ATTR_FIRST_DESC"
 			class="input-small"
+			default="1"
 		/>
 		
 		<field
@@ -38,6 +39,7 @@
 			label="LIB_WINDWALKER_FIELD_ATTR_LAST"
 			description="LIB_WINDWALKER_FIELD_ATTR_LAST_DESC"
 			class="input-small"
+			default="10"
 		/>
 		
 		<field
@@ -46,6 +48,7 @@
 			label="LIB_WINDWALKER_FIELD_ATTR_STEP"
 			description="LIB_WINDWALKER_FIELD_ATTR_STEP_DESC"
 			class="input-small"
+			default="1"
 		/>
 		
 		<field
@@ -54,7 +57,9 @@
 			label="LIB_WINDWALKER_FIELD_ATTR_DEFAULT"
 			description="LIB_WINDWALKER_FIELD_ATTR_DEFAULT_DESC"
 		/>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="class"
 			type="text"
@@ -128,7 +133,9 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="options">
 		<field
 			name="options"
 			type="options"

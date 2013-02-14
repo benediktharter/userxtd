@@ -44,7 +44,9 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="maxlength"
 			type="text"

@@ -66,6 +66,14 @@ if( JVERSION >= 3 ) {
 				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
 			</th>
 			
+			<th>
+				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_NAME', 'a.name', $listDirn, $listOrder); ?>
+			</th>
+			
+			<th>
+				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_TYPE', 'a.field_type', $listDirn, $listOrder); ?>
+			</th>
+			
 			<th width="5%" class="nowrap">
 				<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $listDirn, $listOrder); ?>
 			</th>
@@ -83,20 +91,8 @@ if( JVERSION >= 3 ) {
 				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th width="5%">
-				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ACCESS', 'd.title', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JDATE', 'a.created', $listDirn, $listOrder); ?>
-			</th>
-			
 			<th width="10%">
 				<?php echo JHtml::_('grid.sort',  'JAUTHOR', 'c.name', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="5%">
-				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_LANGUAGE', 'e.title', $listDirn, $listOrder); ?>
 			</th>
 			
 			<th width="1%" class="nowrap">
@@ -235,7 +231,7 @@ if( JVERSION >= 3 ) {
 				<?php endif; ?>
 				
 				
-				<!-- Sub Title -->
+				<!-- Sub Title 
 				<?php if( JVERSION >= 3 ): ?>
 				<div class="small">
 					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
@@ -245,6 +241,7 @@ if( JVERSION >= 3 ) {
 					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
 				</p>
 				<?php endif; ?>
+				-->
 				</div>
 				
 				
@@ -289,6 +286,14 @@ if( JVERSION >= 3 ) {
 			</td>
 			
 			<td class="center">
+				<?php echo $item->get('a_name'); ?>
+			</td>
+			
+			<td class="center">
+				<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+			</td>
+			
+			<td class="center">
 				<?php echo JHtml::_('jgrid.published', $item->a_published, $i, 'fields.', $canChange, 'cb', $item->a_publish_up, $item->a_publish_down); ?>
 			</td>
 			
@@ -316,24 +321,9 @@ if( JVERSION >= 3 ) {
 				<?php echo $item->get('b_title'); ?>
 			</td>
 			
-			<td class="center">
-				<?php echo $item->get('d_title'); ?>
-			</td>
-			
-			<td class="center">
-				<?php echo JHtml::_('date', $item->get('a_created'), JText::_('DATE_FORMAT_LC4')); ?>
-			</td>
 			
 			<td class="center">
 				<?php echo $item->get('c_name'); ?>
-			</td>
-			
-			<td class="center">
-				<?php if ($item->get('a_language')=='*'):?>
-					<?php echo JText::alt('JALL', 'language'); ?>
-				<?php else:?>
-					<?php echo $item->get('e_title') ? $this->escape($item->e_title) : JText::_('JUNDEFINED'); ?>
-				<?php endif;?>
 			</td>
 
 			<td class="center">

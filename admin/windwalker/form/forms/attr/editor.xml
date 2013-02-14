@@ -48,13 +48,16 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="width"
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_WIDTH"
 			description="LIB_WINDWALKER_FIELD_ATTR_WIDTH_DESC"
 			filter="string"
+			class="input-small"
 		/>
 		
 		<field
@@ -63,6 +66,7 @@
 			label="LIB_WINDWALKER_FIELD_ATTR_HEIGHT"
 			description="LIB_WINDWALKER_FIELD_ATTR_HEIGHT_DESC"
 			filter="string"
+			class="input-small"
 		/>
 		
 		<field
@@ -70,7 +74,8 @@
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_COLS"
 			description="LIB_WINDWALKER_FIELD_ATTR_COLS_DESC"
-			filter="integer"
+			filter="string"
+			class="input-small"
 		/>
 		
 		<field
@@ -78,7 +83,8 @@
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_ROWS"
 			description="LIB_WINDWALKER_FIELD_ATTR_ROWS_DESC"
-			filter="integer"
+			filter="string"
+			class="input-small"
 		/>
 		
 		<field

@@ -33,13 +33,18 @@
 			description="LIB_WINDWALKER_FIELD_ATTR_DEFAULT_DESC"
 		/>
 		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="class"
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_CLASS"
 			description="LIB_WINDWALKER_FIELD_ATTR_CLASS_DESC"
 		/>
-		
+	</fieldset>
+	
+	<fieldset name="options">
 		<field
 			name="options"
 			type="options"

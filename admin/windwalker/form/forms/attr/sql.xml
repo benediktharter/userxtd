@@ -48,27 +48,12 @@
 		/>
 		
 		<field
-			name="class"
-			type="text"
-			label="LIB_WINDWALKER_FIELD_ATTR_CLASS"
-			description="LIB_WINDWALKER_FIELD_ATTR_CLASS_DESC"
-		/>
-		
-		<field
-			name="size"
-			type="text"
-			label="LIB_WINDWALKER_FIELD_ATTR_SIZE"
-			description="LIB_WINDWALKER_FIELD_ATTR_SIZE_DESC"
-			class="input-small"
-		/>
-		
-		<field
 			name="query"
 			type="editor"
 			label="LIB_WINDWALKER_FIELD_ATTR_QUERY"
 			description="LIB_WINDWALKER_FIELD_ATTR_QUERY_DESC"
 			width="500px"
-			height="250px"
+			height="150px"
 			editor="ace|codemirror"
 			buttons="false"
 		/>
@@ -84,6 +69,25 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
+		
+	</fieldset>
+	
+	<fieldset name="advanced">
+		
+		<field
+			name="class"
+			type="text"
+			label="LIB_WINDWALKER_FIELD_ATTR_CLASS"
+			description="LIB_WINDWALKER_FIELD_ATTR_CLASS_DESC"
+		/>
+		
+		<field
+			name="size"
+			type="text"
+			label="LIB_WINDWALKER_FIELD_ATTR_SIZE"
+			description="LIB_WINDWALKER_FIELD_ATTR_SIZE_DESC"
+			class="input-small"
+		/>
 		
 		<field
 			name="translate"
@@ -132,11 +136,13 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="options">
 		<field
 			name="options"
 			type="options"
-			label="LIB_WINDWALKER_FIELD_ATTR_OPTIONS_NAME"
+			label="LIB_WINDWALKER_FIELD_ATTR_OPTIONS"
 			description="LIB_WINDWALKER_FIELD_ATTR_OPTIONS_DESC"
 		>
 			<option>JDEFAULT</option>

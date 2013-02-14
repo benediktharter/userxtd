@@ -45,6 +45,9 @@
 			<option value="true">JYES</option>
 		</field>
 		
+	</fieldset>
+	
+	<fieldset name="advanced">
 		<field
 			name="class"
 			type="text"
@@ -95,7 +98,9 @@
 			<option value="0">JNO</option>
 			<option value="true">JYES</option>
 		</field>
-		
+	</fieldset>
+	
+	<fieldset name="options">
 		<field
 			name="options"
 			type="options"

@@ -35,7 +35,34 @@
 				buttons="true"
 				hide="readmore,pagebreak,article"
 				labelclass="control-label"
+				class="form-horizontal"
+				fset="attrs"
 			/>
+			
+			<field name="options"
+				type="fields"
+				label="LIB_WINDWALKER_FIELD_ATTR_OPTIONS"
+				description="LIB_WINDWALKER_FIELD_ATTR_OPTIONS_DESC"
+				filter="raw"
+				buttons="true"
+				hide="readmore,pagebreak,article"
+				labelclass="control-label"
+				nolabel="true"
+				fset="options"
+			/>
+			
+			<!--
+			<field name="options"
+				type="fields"
+				label="COM_USERXTD_INTROTEXT"
+				description="COM_USERXTD_INTROTEXT_DESC"
+				filter="raw"
+				buttons="true"
+				hide="readmore,pagebreak,article"
+				labelclass="control-label"
+				fieldset="options"
+			/>
+			-->
 			
 			<!--<field name="alias"
 				type="text"
@@ -81,7 +108,27 @@
 			/>-->
 		</fieldset>
 		
-		<fieldset name="publish" align="right" horz="true">
+		<fieldset name="advanced" align="right">
+			<field name="advanced"
+				type="fields"
+				label=""
+				description="COM_USERXTD_INTROTEXT_DESC"
+				filter="raw"
+				buttons="true"
+				hide="readmore,pagebreak,article"
+				labelclass="control-label"
+				class="form-horizontal"
+				fset="advanced"
+			/>
+		</fieldset>
+		
+	</fields>
+	
+	<fields name="advanced">
+		
+		<fieldset name="publish" horz="true">
+			
+			
 			<field name="published"
 				type="list"
 				label="JSTATUS"
@@ -119,44 +166,6 @@
 				labelclass="control-label"
 			/>
 			
-			<field name="publish_up"
-				type="calendar"
-				label="COM_USERXTD_PUBLISH_UP"
-				description="COM_USERXTD_PUBLISH_UP_DESC"
-				labelclass="control-label"
-			/>
-			
-			<field name="publish_down"
-				type="calendar"
-				label="COM_USERXTD_PUBLISHED_DOWN"
-				description="COM_USERXTD_PUBLISH_DOWN_DESC"
-				labelclass="control-label"
-			/>
-			
-			
-		</fieldset>
-		
-		<fieldset name="text" align="left">
-			
-			
-			<!--<field name="fulltext"
-				type="editor"
-				label="COM_USERXTD_FULLTEXT"
-				description="COM_USERXTD_FULLTEXT_DESC"
-				filter="raw"
-				buttons="true"
-				hide="readmore,pagebreak,article"
-				labelclass="control-label"
-			/>-->
-	
-			<field name="checked_out" type="hidden" filter="unset" />
-			<field name="checked_out_time" type="hidden" filter="unset" />
-			
-		</fieldset>	
-	</fields>
-	
-	<fields name="advanced">
-		<fieldset name="created">
 			<field name="access"
 				type="accesslevel"
 				label="JFIELD_ACCESS_LABEL"
@@ -172,6 +181,10 @@
 			>
 				<option value="*">JALL</option>
 			</field>
+			
+			<field name="checked_out" type="hidden" filter="unset" />
+			<field name="checked_out_time" type="hidden" filter="unset" />
+			
 		</fieldset>
 	</fields>
 	
