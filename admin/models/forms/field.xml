@@ -21,13 +21,13 @@
 				labelclass="control-label"
 				default="text"
 				onchange="AKFields.changeType(this)"
-				class="span7"
+				
 			>
 				<!--<option value="text">Text</option>
 				<option value="list">List</option>-->
 			</field>
 			
-			<field name="introtext"
+			<field name="attrs"
 				type="fields"
 				label="COM_USERXTD_INTROTEXT"
 				description="COM_USERXTD_INTROTEXT_DESC"

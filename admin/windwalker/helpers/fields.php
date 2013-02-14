@@ -16,6 +16,50 @@ defined('_JEXEC') or die;
 class AKHelperFields
 {
 	/*
+	 * function setFieldTable
+	 * @param $table
+	 */
+	
+	public static function setFieldTable($table, $attrs = null, $option = array())
+	{
+		$field_type = $table->get('field_type', 'text') ;
+		if(!is_array($attrs)){
+			$attrs = $_REQUEST['attrs'] ;
+		}
+		
+		// Check is table have all needed column
+		self::checkTable($table);
+		
+		/*
+		// implode Array
+		foreach( $attrs as $key => &$attr ):
+			if($key == 'options') continue;
+			
+			if(is_array($attr)) implode(',',$attr);
+		endforeach;
+		*/
+		
+		// Filter Attrs
+		$attrs = self::filterFields($field_type, $attrs) ;
+		
+		// Filter Name to uppercase
+		$name = JArrayHelper::getValue($attrs, 'name' ) ;
+		$name = self::filterName($name);
+		$attrs['name'] = $name;
+		
+		// Set Name as Field ID
+		if(isset($table->name)){
+			$table->set('name', $name );
+		}
+		
+		// Build Element
+		$table->element = self::buildElement( $field_type , $attrs);
+		$table->name 	= $name ;
+		$table->attrs	= json_encode($attrs) ;
+	}
+	
+	
+	/*
 	 * function buildElement
 	 * @param 
 	 */
@@ -27,9 +71,8 @@ class AKHelperFields
 		
 		if(!is_array($attrs)){
 			$attrs = $_REQUEST['attrs'] ;
+			$attrs = self::filterFields($field_type, $attrs) ;
 		}
-		
-		$attrs = self::filterFields($field_type, $attrs) ;
 		
 		if(!is_array($attrs)) {
 			return '<'.$node_name.'/>' ;
@@ -56,6 +99,12 @@ class AKHelperFields
 		
 		// set type in attrs
 		$attrs['type'] = $field_type;
+		
+		// set default
+		if(is_array($attrs['default'])){
+			$attrs['default'] = implode(',', $attrs['default']);
+		}
+		
 		
 		// start buliding attrs and options
 		foreach( $attrs as $key => $attr ):
@@ -96,6 +145,40 @@ class AKHelperFields
 	
 	
 	/*
+	 * function parseAttrs
+	 * @param $attrs
+	 */
+	
+	public static function parseAttrs($attrs)
+	{
+		if(!$attrs) return false;
+		
+		$array = (array)json_decode($attrs);
+		
+		// Save options
+		// ================================================================
+		$options = null ;
+		if(isset($array['options'])) {
+			$array['options'] = (array) $array['options'] ;
+			$options = $array['options'];
+		}
+		
+		if($options) {
+			$array['options'] = array();
+			$i = 0 ;
+			foreach( $options['value'] as $key => $option ):
+				$array['options'][$i]['text'] = (string)$options['text'][$i] ;
+				$array['options'][$i]['value'] = (string)$option ;
+				$i++;
+			endforeach;
+		}
+		
+		return $array;
+	}
+	
+	
+	
+	/*
 	 * function parseElement
 	 * @param $element
 	 */
@@ -131,7 +214,7 @@ class AKHelperFields
 				$i++;
 			endforeach;
 		}
-		
+		AK::show($array);
 		return $array;
 	}
 	
@@ -145,7 +228,7 @@ class AKHelperFields
 	public static function filterFields($field_type = 'text', $data = array())
 	{
 		foreach( $data as $key => &$val ):
-			if($key == 'options') continue;
+			if($key == 'options' || is_array($val)) continue;
 			
 			$val = trim($val);
 		endforeach;
@@ -157,5 +240,51 @@ class AKHelperFields
 		$data = $form->filter($data) ;
 		
 		return $data;
+	}
+	
+	
+	
+	/*
+	 * function filterName
+	 * @param $name
+	 */
+	
+	public static function filterName($name)
+	{
+		$name = JFilterOutput::stringURLSafe($name);
+		$name = str_replace('-', '_', $name) ;
+		$name = strtoupper($name) ;
+		
+		return $name ;
+	}
+	
+	
+	/*
+	 * function checkTable
+	 * @param $table
+	 */
+	
+	public static function checkTable($table)
+	{
+		$needed = array(
+			'title',
+			'name',
+			'field_type',
+			'element',
+			'attrs'
+		);
+		
+		$lack = array();
+		
+		foreach( $needed as $needed ):
+			if(!property_exists($table, $needed)) {
+				$lack[] = $needed ;
+			}
+		endforeach;
+		
+		if(count($lack) > 0) {
+			$message = "Table {$table->getTableName()} need columns: ".implode(', ', $lack) ;
+			JError::raiseError( 500, $message) ;
+		}
 	}
 }

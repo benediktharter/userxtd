@@ -42,6 +42,18 @@
 		/>
 		
 		<field
+			name="required"
+			type="radio"
+			label="LIB_WINDWALKER_FIELD_ATTR_REQUIRED"
+			description="LIB_WINDWALKER_FIELD_ATTR_REQUIRED_DESC"
+			default="0"
+			class="btn-group"
+		>
+			<option value="0">JNO</option>
+			<option value="true">JYES</option>
+		</field>
+		
+		<field
 			name="class"
 			type="text"
 			label="LIB_WINDWALKER_FIELD_ATTR_CLASS"
@@ -85,16 +97,44 @@
 		</field>
 		
 		<field
-			name="required"
+			name="size"
+			type="text"
+			label="LIB_WINDWALKER_FIELD_ATTR_SIZE"
+			description="LIB_WINDWALKER_FIELD_ATTR_SIZE_DESC"
+			class="input-small"
+		/>
+		
+		<field
+			name="readonly"
 			type="radio"
-			label="LIB_WINDWALKER_FIELD_ATTR_REQUIRED"
-			description="LIB_WINDWALKER_FIELD_ATTR_REQUIRED_DESC"
+			label="LIB_WINDWALKER_FIELD_ATTR_READONLY"
+			description="LIB_WINDWALKER_FIELD_ATTR_READONLY_DESC"
 			default="0"
 			class="btn-group"
 		>
 			<option value="0">JNO</option>
-			<option value="1">JYES</option>
+			<option value="true">JYES</option>
 		</field>
 		
+		<field
+			name="disabled"
+			type="radio"
+			label="LIB_WINDWALKER_FIELD_ATTR_DISABLED"
+			description="LIB_WINDWALKER_FIELD_ATTR_DISABLED_DESC"
+			default="0"
+			class="btn-group"
+		>
+			<option value="0">JNO</option>
+			<option value="true">JYES</option>
+		</field>
+		
+		<field
+			name="options"
+			type="options"
+			label="LIB_WINDWALKER_FIELD_ATTR_OPTIONS"
+			description="LIB_WINDWALKER_FIELD_ATTR_OPTIONS_DESC"
+		>
+			<option>JDEFAULT</option>
+		</field>
 	</fieldset>
 </form>

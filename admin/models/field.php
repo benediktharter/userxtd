@@ -139,10 +139,9 @@ class UserxtdModelField extends AKModelAdmin
 	 */
 	protected function prepareTable(&$table)
 	{
-		
-		$table->introtext = AKHelper::_('fields.buildElement', $table->field_type) ;
-		
-		return parent::prepareTable($table);
+		parent::prepareTable($table);
+	
+		AKHelper::_('fields.setFieldTable', $table) ;
 	}
 	
 }

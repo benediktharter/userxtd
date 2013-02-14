@@ -39,9 +39,18 @@ class JFormFieldOptions extends JFormField
 	 */
 	public function getInput()
 	{
-		$element = $this->element ;
-		$doc = JFactory::getDocument();
+		$element 	= $this->element ;
+		$doc 		= JFactory::getDocument();
+		$default 	= JRequest::getVar('field_default') ;
 		
+		// is checkbox?
+		$checkbox = (string) $this->element['checkbox'];
+		if($checkbox == 'true' || $checkbox == '1') {
+			$checkbox = true ;
+			$default = explode(',', $default);
+		}else{
+			$checkbox = false ;
+		}
 		
 		// Set Default Vars
 		$vars = $this->value ? $this->value : array();
@@ -61,11 +70,16 @@ class JFormFieldOptions extends JFormField
 		$grid->setRowCell('text', JText::_('LIB_WINDWALKER_ATTR_TEXT')) ;
 		$grid->setRowCell('operate', JText::_('LIB_WINDWALKER_ATTR_OPERATE')) ;
 		
-		$default = JRequest::getVar('field_default') ;
+		
 		
 		foreach( $vars as $key => $var ):
 			$checked = '' ;
-			if($var['value'] === $default) $checked = 'checked' ;
+			if($checkbox){
+				if(in_array($var['value'], $default)) $checked = 'checked' ;
+			}
+			else{
+				if($var['value'] === $default) $checked = 'checked' ;
+			}
 			
 			//Set Operate buttons
 			$add_btn = ( JVERSION >= 3 )
@@ -83,9 +97,16 @@ class JFormFieldOptions extends JFormField
 			$grid->addRow(array('class' => 'row'.$key%2));
 			
 			// Set TDs
-			$grid->setRowCell('default', '<input type="radio" class="attr-default" id="option-'.$key.'" name="attrs[default]" value="'.$var['text'].'" '.$checked.'/>') ;
-			$grid->setRowCell('value', '<input type="text" class="attr-value" name="attrs[options][value][]" value="'.$var['value'].'" onfocus="addAttrRow(this);" onblur="setDefault(this)" />') ;
-			$grid->setRowCell('text', '<input type="text" class="attr-text" name="attrs[options][text][]" value="'.$var['text'].'" onfocus="addAttrRow(this);" />') ;
+			if($checkbox){
+				$grid->setRowCell('default', '<input type="checkbox" class="attr-default" id="option-'.$key.'" name="attrs[default][]" value="'.$var['text'].'" '.$checked.'/>') ;
+			}
+			else{
+				$grid->setRowCell('default', '<input type="radio" class="attr-default" id="option-'.$key.'" name="attrs[default]" value="'.$var['text'].'" '.$checked.'/>') ;
+			}
+			
+			
+			$grid->setRowCell('value', '<input type="text" class="attr-value input-medium" name="attrs[options][value][]" value="'.$var['value'].'" onfocus="addAttrRow(this);" onblur="setDefault(this)" />') ;
+			$grid->setRowCell('text', '<input type="text" class="attr-text input-medium" name="attrs[options][text][]" value="'.$var['text'].'" onfocus="addAttrRow(this);" />') ;
 			$grid->setRowCell('operate', $add_btn.$del_btn) ;
 			
 			//$html .=  ;
@@ -167,7 +188,7 @@ class JFormFieldOptions extends JFormField
 	
 	var setDefault = function(e){
 		var v = e.value;
-		e.getParent('tr').getElement('input[type=radio]').set('value', v);
+		e.getParent('tr').getElement('input.attr-default').set('value', v);
 	}
 SCRIPT;
 		

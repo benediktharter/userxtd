@@ -28,6 +28,13 @@
              description="COM_USERXTD_SELECT_FIELD_DESC"
 		/>
 		
+		<field name="PASS"
+			type="password"
+			label="PASS"
+			autocomplete="off"
+			strengthmeter="true"
+		/>
+		
 		<field name="limit"
 			type="text"
 			default="20"

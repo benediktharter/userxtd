@@ -45,17 +45,17 @@ class JFormFieldFields extends JFormField
 		$this->addFieldJs();
 		
 		// ParseValue
-		$data = AKHelper::_('fields.parseElement', $this->value);
+		$data = AKHelper::_('fields.parseAttrs', $this->value);
 		
 		$type 	= JRequest::getVar('field_type', 'text') ;
 		
 		JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
 		$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
 		$form->bind($data);
-		JRequest::setVar('field_default', $data['default'], 'method', true) ;
+		JRequest::setVar('field_default', JArrayHelper::getValue($data, 'default'), 'method', true) ;
 		
 		$fields = $form->getFieldset('attrs');
-		//AK::show($fields);
+		
 		
 		$html = '' ;
 		foreach( $fields as $field ):

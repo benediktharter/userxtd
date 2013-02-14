@@ -48,3 +48,10 @@ function akLoader($uri, $option = null){
 
 include_once JPath::clean( AKPATH_ADMIN."/toolbar.php" ) ;
 include_once JPath::clean( AKPATH_BASE."/text.php" ) ;
+
+// Load Language
+$lang = JFactory::getLanguage();
+$lang->load('lib_windwalker', JPATH_BASE, null, false, false)
+            || $lang->load('lib_windwalker', AKPATH_ROOT , null, false, false)
+            || $lang->load('lib_windwalker', JPATH_BASE, $lang->getDefault(), false, false)
+            || $lang->load('lib_windwalker', AKPATH_ROOT , $lang->getDefault(), false, false);

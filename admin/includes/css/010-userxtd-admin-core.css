@@ -23,6 +23,9 @@
 	color: #ea392c;
 }
 
+#joomla30 .CodeMirror-wrapping {
+	height: 250px !important;
+}
 
 /* BATCH */
 #joomla25 .control-group label#batch-language-lbl,
