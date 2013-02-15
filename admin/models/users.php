@@ -42,11 +42,8 @@ class UserxtdModelUsers extends AKModelList
 		// Set query tables
 		// ========================================================================
 		$config['tables'] = array(
-			'a' => '#__userxtd_users',
-			'b' => '#__categories',
-			'c' => '#__users',
-			'd' => '#__viewlevels',
-			'e' => '#__languages'
+			'a' => '#__users',
+			'b' => '#__userxtd_profiles'
 		);
 		
 		
@@ -84,7 +81,13 @@ class UserxtdModelUsers extends AKModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		parent::populateState($ordering, $direction);
+		parent::populateState('a.id', $direction);
+		
+		
+		// set List Keys
+		$keys = $this->getProfileKeys();
+		
+		$this->setState('profileKeys', $keys) ;
 	}
 
 	
@@ -120,6 +123,30 @@ class UserxtdModelUsers extends AKModelList
 	}
 	
 	
+	
+	/*
+	 * function getProfileKeys
+	 * @param 
+	 */
+	
+	public function getProfileKeys()
+	{
+		$db = JFactory::getDbo();
+		$q = $db->getQuery(true) ;
+		
+		$q->select("distinct ".$q->qn('a.name'))
+			->from("#__userxtd_fields AS a")
+			->where("a.name != ''")
+			//->order("")
+			;
+		
+		$db->setQuery($q);
+		$result = $db->loadColumn();
+		
+		return $result;
+	}
+	
+	
 
 	/**
 	 * Build an SQL query to load the list data.
@@ -145,23 +172,8 @@ class UserxtdModelUsers extends AKModelList
 		$layout = JRequest::getVar('layout') ;
 		$nested = $this->getState('items.nested') ;
 		$avoid	= JRequest::getVar('avoid') ;
-		$show_root = JRequest::getVar('show_root') ;
 		
-		
-		
-		// Nested
-		// ========================================================================
-		if($nested && !$show_root){
-			$q->where("a.id != 1") ;
-		}
-		
-		if($avoid){
-			$table = $this->getTable();
-			$table->load( $avoid ) ;
-			
-			$q->where("a.lft < {$table->lft} OR a.rgt > {$table->rgt}") ;
-			$q->where("a.id != {$avoid}") ;
-		}
+		$keys 	= $this->getState('profileKeys') ;
 		
 		
 		
@@ -195,11 +207,6 @@ class UserxtdModelUsers extends AKModelList
 			}
 		}
 		
-		// published
-		if(empty($filter['a.published'])){
-			$q->where("a.published >= 0") ;
-		}
-		
 		
 		// Build query
 		// ========================================================================
@@ -209,13 +216,23 @@ class UserxtdModelUsers extends AKModelList
 		
 		//build query
 		$q->select($select)
-			->from('#__userxtd_users AS a')
-			->leftJoin('#__categories 	AS b ON a.catid = b.id')
-			->leftJoin('#__users 		AS c ON a.created_by = c.id')
-			->leftJoin('#__viewlevels 	AS d ON a.access = d.id')
-			->leftJoin('#__languages 	AS e ON a.language = e.lang_code')
+			->from('#__users AS a')
+			->leftJoin('#__userxtd_profiles 	AS b ON a.id = b.user_id')
+			//->leftJoin('#__users 		AS c ON a.created_by = c.id')
+			//->leftJoin('#__viewlevels 	AS d ON a.access = d.id')
+			//->leftJoin('#__languages 	AS e ON a.language = e.lang_code')
 			//->where("")
+			->group('a.id')
 			->order( " {$order} {$dir}" ) ;
+		
+		
+		
+		// Build SQL Pivot
+		// ========================================================================
+		foreach( $keys as $key ):
+			$q->select( "MAX( IF(b.key = '{$key}', b.value, NULL) ) AS {$key}" );
+		endforeach;
+		
 		
 		return $q;
 	}

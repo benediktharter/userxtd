@@ -45,12 +45,18 @@ class UserxtdViewUsers extends AKViewList
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 		$this->filter		= $this->get('Filter');
+		$this->keys			= $this->state->get('profileKeys');
+		
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
 			JError::raiseError(500, implode("\n", $errors));
 			return false;
 		}
+		
+		
+		// Include com_users Language
+		UXHelper::_('lang.loadLanguage', 'com_users', 'admin');
 		
 		parent::displayWithPanel($tpl);
 	}

@@ -117,7 +117,7 @@ if( JVERSION >= 3 ) {
 
 	
 	<!-- Table -->
-	<?php echo $this->loadTemplate('table') ; ?>
+	<?php echo $this->loadTemplate('grid') ; ?>
 	
 	
 	

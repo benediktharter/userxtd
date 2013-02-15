@@ -20,7 +20,7 @@ $canOrder	= $user->authorise('core.edit.state', 'com_userxtd');
 $saveOrder	= $listOrder == 'a.ordering';
 
 jimport('libraries.joomla.html.jgrid');
-userxtdLoader('admin://class/grid');
+include_once AKPATH_HTML.'/grid.php';
 
 
 
@@ -102,54 +102,7 @@ foreach( $this->items as $k => $item ):
 		// Checkbox TD Content
 		// -----------------------------------------
 		
-		$content = JHtml::_('grid.id', $i, $item->a_id); ;
-		
-		
-		// Put in $td
-		// -----------------------------------------
-		$td[$column]['option'] 	= $option ;
-		$td[$column]['content'] = $content ;
-	
-
-	
-	
-	
-	// Sort Column
-	// =================================================================================
-		$column = 'sort' ;
-		
-		
-		// Sort TH
-		// -----------------------------------------
-		if($k == 0){
-			$th[$column]['option']['class'] 	= 'nowrap center hidden-phone' ;
-			$th[$column]['option']['width'] 	= '1%' ;
-			$th[$column]['content'] 			= JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING');
-		}
-		
-		
-		// Sort TD Option
-		// -----------------------------------------
-		$option['class'] = 'order nowrap center hidden-phone' ;
-		
-		
-		// Sort TD Content
-		// -----------------------------------------
-		if ($canChange) :
-		$disableClassName = '';
-		$disabledLabel	  = '';
-	
-		if (!$saveOrder) :
-			$disabledLabel    = JText::_('JORDERINGDISABLED');
-			$disableClassName = 'inactive tip-top';
-		endif;
-		endif;
-		
-		$content = '<span class="sortable-handler hasTooltip '.$disableClassName.'" title="'.$disabledLabel.'">
-						<i class="icon-menu"></i>
-					</span>' ;
-		
-		$content .= '<input type="text" style="display:none" name="order[]" size="5" value="'.$item->a_ordering.'" class="width-20 text-area-order " />' ;
+		$content = JHtml::_('grid.id', $k, $item->a_id); 
 		
 		
 		// Put in $td
@@ -159,83 +112,30 @@ foreach( $this->items as $k => $item ):
 	
 	
 	
-	// Title
+	
+	// Name Column START
 	// =================================================================================
-		$column = 'a_title' ;
-		
-		// Title TH
-		if($k == 0){
-			$th[$column]['option']['class'] = null ;
-			$th[$column]['option']['width'] = null ;
-			$th[$column]['content'] 		= JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder);
-		}
-		
-		// Title TD
-		$option['class'] = 'nowrap has-context' ;
-		
-		$content = '<div class="pull-left">' ;
-		
-		if ($item->get('a_checked_out'))
-			$content .= JHtml::_('jgrid.checkedout', $i, $item->get('a_checked_out'), $item->get('a_checked_out_time'), 'users.', $canCheckin);
-		
-		if ($canEdit || $canEditOwn) 
-			$content .= JHtml::link(JRoute::_('index.php?option=com_userxtd&task=user.edit&id='.$item->a_id), $item->get('a_title')) ;
+		$column = 'name' ;
 		
 		
-		$content .= '<div class="small">'.JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') )).'</div></div>' ;
-		
-		JHtml::_('dropdown.edit', $item->id, 'users.');
-		JHtml::_('dropdown.divider');
-		if ($item->a_published) :
-			JHtml::_('dropdown.unpublish', 'cb' . $i, 'users.');
-		else :
-			JHtml::_('dropdown.publish', 'cb' . $i, 'users.');
-		endif;
-		
-		JHtml::_('dropdown.divider');
-		
-		if ($item->a_checked_out) :
-			JHtml::_('dropdown.checkin', 'cb' . $i, 'users.');
-		endif;
-		
-		
-		if ($trashed) :
-			JHtml::_('dropdown.untrash', 'cb' . $i, 'users.');
-		else :
-			JHtml::_('dropdown.trash', 'cb' . $i, 'users.');
-		endif;
-		
-		$content .= '<div class="pull-left">'.JHtml::_('dropdown.render').'</div>' ;
-		
-		$td[$column]['option'] 	= $option ;
-		$td[$column]['content'] = $content ;
-	
-	
-	
-	
-	// Published Column START
-	// =================================================================================
-		$column = 'a_published' ;
-		
-		
-		// Published TH
+		// Example TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= 'nowrap' ;
-			$th[$column]['option']['width'] 	= '5%' ;
-			$th[$column]['content'] 			= JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $listDirn, $listOrder);
+			$th[$column]['option']['class'] 	= 'center' ;
+			//$th[$column]['option']['width'] 	= '5%' ;
+			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder);
 		}
 		
 		
-		// Published TD Option
+		// Example TD Option
 		// -----------------------------------------
 		$option['class'] = 'nowrap center' ;
 		
 		
-		// Published TD Content
+		// Example TD Content
 		// -----------------------------------------
 		
-		$content = JHtml::_('jgrid.published', $item->a_published, $i, 'users.', $canChange, 'cb', $item->a_publish_up, $item->a_publish_down);
+		$content = JHtml::link('index.php?option=com_users&task=user.edit&id='.$item->a_id, $item->a_name, array('target'=> '_blank')) ;
 		
 		
 		// Put in $td
@@ -243,6 +143,146 @@ foreach( $this->items as $k => $item ):
 		$td[$column]['option'] 	= $option ;
 		$td[$column]['content'] = $content ;
 	
+	
+	
+	
+	// UserName Column START
+	// =================================================================================
+		$column = 'username' ;
+		
+		
+		// Example TH
+		// -----------------------------------------
+		if($k == 0){
+			$th[$column]['option']['class'] 	= 'center' ;
+			//$th[$column]['option']['width'] 	= '5%' ;
+			$th[$column]['content'] 			= JHtml::_('grid.sort',  'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder);
+		}
+		
+		
+		// Example TD Option
+		// -----------------------------------------
+		$option['class'] = 'nowrap center' ;
+		
+		
+		// Example TD Content
+		// -----------------------------------------
+		
+		$content = $item->a_username ;
+		
+		
+		// Put in $td
+		// -----------------------------------------
+		$td[$column]['option'] 	= $option ;
+		$td[$column]['content'] = $content ;
+	
+	
+	
+	
+	// Enabled Column START
+	// =================================================================================
+		$column = 'enabled' ;
+		
+		
+		// Example TH
+		// -----------------------------------------
+		if($k == 0){
+			$th[$column]['option']['class'] 	= null ;
+			$th[$column]['option']['width'] 	= '5%' ;
+			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_ENABLED', 'a.enabled', $listDirn, $listOrder);
+		}
+		
+		
+		// Example TD Option
+		// -----------------------------------------
+		$option['class'] = 'nowrap center' ;
+		
+		
+		// Example TD Content
+		// -----------------------------------------
+		
+		if(!$item->a_block) {
+			$content = '<i class="icon-publish"></i>' ;
+		}else{
+			$content = '<i class="icon-unpublich"></i>' ;
+		}
+		
+		
+		// Put in $td
+		// -----------------------------------------
+		$td[$column]['option'] 	= $option ;
+		$td[$column]['content'] = $content ;
+	
+	
+	
+	
+	// Activated Column START
+	// =================================================================================
+		$column = 'activation' ;
+		
+		
+		// Example TH
+		// -----------------------------------------
+		if($k == 0){
+			$th[$column]['option']['class'] 	= null ;
+			$th[$column]['option']['width'] 	= '5%' ;
+			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_ACTIVATED', 'a.activation', $listDirn, $listOrder);
+		}
+		
+		
+		// Example TD Option
+		// -----------------------------------------
+		$option['class'] = 'nowrap center' ;
+		
+		
+		// Example TD Content
+		// -----------------------------------------
+		
+		if(!$item->a_activation) {
+			$content = '<i class="icon-publish"></i>' ;
+		}else{
+			$content = '<i class="icon-unpublich"></i>' ;
+		}
+		
+		
+		// Put in $td
+		// -----------------------------------------
+		$td[$column]['option'] 	= $option ;
+		$td[$column]['content'] = $content ;
+	
+	
+	
+	foreach( $this->keys as $key ):
+		// Example Column START
+		// =================================================================================
+			$column = $key ;
+			
+			
+			// Example TH
+			// -----------------------------------------
+			if($k == 0){
+				$th[$column]['option']['class'] 	= 'center' ;
+				$th[$column]['option']['width'] 	= '5%' ;
+				$th[$column]['content'] 			= JHtml::_('grid.sort',  $key, $key, $listDirn, $listOrder) . '<div class="small">'.$key.'</div>' ;
+			}
+			
+			
+			// Example TD Option
+			// -----------------------------------------
+			$option['class'] = 'nowrap center' ;
+			
+			
+			// Example TD Content
+			// -----------------------------------------
+			
+			$content = $item->get($key) ;
+			
+			
+			// Put in $td
+			// -----------------------------------------
+			$td[$column]['option'] 	= $option ;
+			$td[$column]['content'] = $content ;
+	endforeach;
 	
 	
 	
@@ -253,7 +293,7 @@ foreach( $this->items as $k => $item ):
 	// Set TR
 	// =================================================================================
 	$tr[$k]['option']['class'] 				= "row".($k%2) ;
-	$tr[$k]['option']['sortable-group-id'] 	= $item->a_catid;
+	//$tr[$k]['option']['sortable-group-id'] 	= $item->a_catid;
 	$tr[$k]['td'] = $td ;
 endforeach;
 
@@ -262,7 +302,7 @@ endforeach;
 $table['thead']['tr'][0]['th'] 	= $th ;
 $table['tbody']['tr'] 			= $tr ;
 
-$table_option = array( 'class' => 'table table-striped adminlist', 'id' => 'articleList' ) ;
+$table_option = array( 'class' => 'table table-striped table-bordered adminlist', 'id' => 'articleList' ) ;
 
 
 // Render Grid

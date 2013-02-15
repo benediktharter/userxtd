@@ -35,28 +35,12 @@ $nested		= $this->state->get('items.nested') ;
 $orderCol 	= $nested ? 'a.lft' : 'a.ordering' ;
 $show_root	= JRequest::getVar('show_root') ;
 
-
-// For Joomla!3.0
-// ================================================================================
-if( JVERSION >= 3 ) {
-	if ($saveOrder)
-	{
-		$method = $nested ? 'saveOrderNestedAjax' : 'saveOrderAjax' ;
-		$saveOrderingUrl = 'index.php?option=com_userxtd&task=users.'.$method.'&tmpl=component';
-		JHtml::_('sortablelist.sortable', 'itemList', 'adminForm', strtolower($listDirn), $saveOrderingUrl, false, $nested);
-	}
-}
 ?>
 
 <!-- List Table -->
 <table class="table table-striped adminlist" id="itemList">
 	<thead>
 		<tr>
-			<?php if( JVERSION >= 3 ): ?>
-			<th width="1%" class="nowrap center hidden-phone">
-				<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', $orderCol, $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
-			</th>
-			<?php endif; ?>
 			
 			<th width="1%">
 				<input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
@@ -66,38 +50,7 @@ if( JVERSION >= 3 ) {
 				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th width="5%" class="nowrap">
-				<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $listDirn, $listOrder); ?>
-			</th>
 			
-			<?php if( JVERSION < 3 ): ?>
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ORDERING', $orderCol, $listDirn, $listOrder); ?>
-				<?php if ($canOrder && $saveOrder) :?>
-					<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'users.saveorder'); ?>
-				<?php endif; ?>
-			</th>
-			<?php endif; ?>
-			
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="5%">
-				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ACCESS', 'd.title', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JDATE', 'a.created', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JAUTHOR', 'c.name', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th width="5%">
-				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_LANGUAGE', 'e.title', $listDirn, $listOrder); ?>
-			</th>
 			
 			<th width="1%" class="nowrap">
 				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
@@ -131,77 +84,10 @@ if( JVERSION >= 3 ) {
 		$canEdit	= $user->authorise('core.edit',			'com_userxtd.user.'.$item->a_id);
 		$canCheckin	= $user->authorise('core.manage',		'com_userxtd.user.'.$item->a_id) || $item->a_checked_out == $userId || $item->a_checked_out == 0;
 		$canChange	= $user->authorise('core.edit.state',	'com_userxtd.user.'.$item->a_id) && $canCheckin;
-		$canEditOwn = $user->authorise('core.edit.own',		'com_userxtd.user.'.$item->a_id) && $item->c_id == $userId;
-		
-		// Nested ordering
-		if($nested){
-			
-			if($item->a_id == 1) {
-				$item->a_title = JText::_('JGLOBAL_ROOT') ;
-				$canEdit 	= false ;
-				$canChange 	= false ;
-				$canEditOwn = false ;
-			}
-			
-			$orderkey = array_search($item->a_id, $this->ordering[$item->a_parent_id]);
-		
-			// Get the parents of item for sorting
-			if ($item->a_level > 1)
-			{
-				$parentsStr = "";
-				$_currentParentId = $item->a_parent_id;
-				$parentsStr = " ".$_currentParentId;
-				for ($n = 0; $n < $item->a_level; $n++)
-				{
-					foreach ($this->ordering as $k => $v)
-					{
-						$v = implode("-", $v);
-						$v = "-".$v."-";
-						if (strpos($v, "-" . $_currentParentId . "-") !== false)
-						{
-							$parentsStr .= " ".$k;
-							$_currentParentId = $k;
-							break;
-						}
-					}
-				}
-			}
-			else
-			{
-				$parentsStr = "";
-			}
-		}
+		$canEditOwn = $user->authorise('core.edit.own',		'com_userxtd.user.'.$item->a_id) && $item->a_id == $userId;
 
 		?>
-		<tr class="row<?php echo $i % 2; ?>"
-			<?php if( $nested ): ?>
-				sortable-group-id="<?php echo $item->a_parent_id ;?>" item-id="<?php echo $item->a_id?>" parents="<?php echo $parentsStr?>" level="<?php echo $item->a_level?>"
-			<?php else: ?>
-				sortable-group-id="<?php echo $item->a_catid ;?>"
-			<?php endif; ?>
-		>
-		<?php if( JVERSION >= 3 ): ?>
-			<!-- Drag sort for Joomla!3.0 -->
-			<td class="order nowrap center hidden-phone">
-			<?php if ($canChange) :
-				$disableClassName = '';
-				$disabledLabel	  = '';
-
-				if (!$saveOrder) :
-					$disabledLabel    = JText::_('JORDERINGDISABLED');
-					$disableClassName = 'inactive tip-top';
-				endif; ?>
-				<span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
-					<i class="icon-menu"></i>
-				</span>
-				<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $nested ? $orderkey + 1 : $item->a_ordering;?>" class="width-20 text-area-order " />
-			<?php else : ?>
-				<span class="sortable-handler inactive" >
-					<i class="icon-menu"></i>
-				</span>
-			<?php endif; ?>
-			</td>
-		<?php endif; ?>
+		<tr class="row<?php echo $i % 2; ?>">
 		
 			<td class="center">
 				<?php echo JHtml::_('grid.id', $i, $item->a_id); ?>
@@ -234,107 +120,8 @@ if( JVERSION >= 3 ) {
 					<?php echo $item->get('a_title'); ?>
 				<?php endif; ?>
 				
-				
-				<!-- Sub Title -->
-				<?php if( JVERSION >= 3 ): ?>
-				<div class="small">
-					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
-				</div>
-				<?php else: ?>
-				<p class="smallsub">
-					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
-				</p>
-				<?php endif; ?>
-				</div>
-				
-				
-				<?php if( JVERSION >= 3 ): ?>
-				<!-- Title Edit Button -->
-				<div class="pull-left">
-					<?php
-						// Create dropdown items
-						if($canEdit || $canEditOwn){
-							JHtml::_('dropdown.edit', $item->a_id, 'user.');
-							JHtml::_('dropdown.divider');
-						}
-						
-						
-						if($canChange || $canEditOwn) {
-							if ($item->a_published) :
-							JHtml::_('dropdown.unpublish', 'cb' . $i, 'users.');
-							else :
-								JHtml::_('dropdown.publish', 'cb' . $i, 'users.');
-							endif;
-							JHtml::_('dropdown.divider');
-						}
-						
-						
-						if ($item->a_checked_out && $canCheckin) :
-							JHtml::_('dropdown.checkin', 'cb' . $i, 'users.');
-						endif;
-						
-						if($canChange || $canEditOwn) {
-							if ($trashed) :
-								JHtml::_('dropdown.untrash', 'cb' . $i, 'users.');
-							else :
-								JHtml::_('dropdown.trash', 'cb' . $i, 'users.');
-							endif;
-						}
-						
-						// Render dropdown list
-						echo JHtml::_('dropdown.render');
-						?>
-				</div>
-				<?php endif; ?>
 			</td>
 			
-			<td class="center">
-				<?php echo JHtml::_('jgrid.published', $item->a_published, $i, 'users.', $canChange, 'cb', $item->a_publish_up, $item->a_publish_down); ?>
-			</td>
-			
-			<?php if( JVERSION < 3 ): ?>
-			<td class="order">
-				<?php if ($canChange) : ?>
-					<?php if ($saveOrder) :?>
-						<?php if ($listDirn == 'asc') : ?>
-							<span><?php echo $this->pagination->orderUpIcon($i, true, 'users.orderup', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
-							<span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, true, 'users.orderdown', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
-						<?php elseif ($listDirn == 'desc') : ?>
-							<span><?php echo $this->pagination->orderUpIcon($i, true, 'users.orderdown', 'JLIB_HTML_MOVE_UP', $ordering); ?></span>
-							<span><?php echo $this->pagination->orderDownIcon($i, $this->pagination->total, true, 'users.orderup', 'JLIB_HTML_MOVE_DOWN', $ordering); ?></span>
-						<?php endif; ?>
-					<?php endif; ?>
-					<?php $disabled = $saveOrder ?  '' : 'disabled="disabled"'; ?>
-					<input type="text" name="order[]" size="5" value="<?php echo $nested ? $orderkey + 1 : $item->get('a_ordering');?>" <?php echo $disabled ?> class="text-area-order input-mini" />
-				<?php else : ?>
-					<?php echo $nested ? $orderkey + 1 : $item->get('a_ordering');?>
-				<?php endif; ?>
-			</td>
-			<?php endif; ?>
-			
-			<td class="center">
-				<?php echo $item->get('b_title'); ?>
-			</td>
-			
-			<td class="center">
-				<?php echo $item->get('d_title'); ?>
-			</td>
-			
-			<td class="center">
-				<?php echo JHtml::_('date', $item->get('a_created'), JText::_('DATE_FORMAT_LC4')); ?>
-			</td>
-			
-			<td class="center">
-				<?php echo $item->get('c_name'); ?>
-			</td>
-			
-			<td class="center">
-				<?php if ($item->get('a_language')=='*'):?>
-					<?php echo JText::alt('JALL', 'language'); ?>
-				<?php else:?>
-					<?php echo $item->get('e_title') ? $this->escape($item->e_title) : JText::_('JUNDEFINED'); ?>
-				<?php endif;?>
-			</td>
 
 			<td class="center">
 				<span
