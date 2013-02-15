@@ -34,6 +34,7 @@ $trashed	= $this->state->get('filter.published') == -2 ? true : false;
 $nested		= $this->state->get('items.nested') ;
 $orderCol 	= $nested ? 'a.lft' : 'a.ordering' ;
 $show_root	= JRequest::getVar('show_root') ;
+
 ?>
 
 <!-- List Table -->

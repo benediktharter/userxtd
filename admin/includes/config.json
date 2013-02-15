@@ -1,0 +1,45 @@
+{
+	
+	"system": {
+		
+	}
+	
+	,
+	
+	"table": {
+		
+		"field" : {
+			"nested" 			: false
+			,
+			"core_sidebar" 		: false
+			,
+			"cck" 				: true
+			,
+			"fulltext_search" 	: true
+		}
+		
+		,
+		
+		"profile" : {
+			"nested" 			: false
+			,
+			"core_sidebar" 		: false
+			,
+			"cck" 				: false
+			,
+			"fulltext_search" 	: false
+		}
+		
+		,
+		
+		"user" : {
+			"nested" 			: false
+			,
+			"core_sidebar" 		: false
+			,
+			"cck" 				: false
+			,
+			"fulltext_search" 	: false
+		}
+	}
+}

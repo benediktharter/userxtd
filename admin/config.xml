@@ -5,7 +5,7 @@
 		description="COM_USERXTD_COMPONENT_DESC"
 		addfieldpath="administrator/components/com_userxtd/models/fields"
 	>
-
+<!--
         <field name="field_list"
              type="field_list"
              default="1"
@@ -27,7 +27,7 @@
              label="COM_USERXTD_SELECT_FIELD"
              description="COM_USERXTD_SELECT_FIELD_DESC"
 		/>
-		
+		-->
 		<field name="CoreRegistration_Categories"
              type="category"
              default="*"
@@ -38,13 +38,13 @@
 		>
 			<option value="*">JALL</option>
 		</field>
-		
+<!--		
 		<field name="limit"
 			type="text"
 			default="20"
 			label="數量"
 		/>
-		
+-->		
 	</fieldset>
 	
 	<fieldset name="item">

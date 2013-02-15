@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 
 class AKHelper extends AKProxy
 {
+	static $config = array();
+	
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
@@ -86,6 +88,29 @@ class AKHelper extends AKProxy
 		if($option) {
 			return JComponentHelper::getParams($option);
 		}
+	}
+	
+	
+	/*
+	 * function getConfig
+	 * @param $key
+	 */
+	
+	public static function getConfig($key, $default = null, $option = null)
+	{
+		if(!$option){
+			$option = AKHelper::_('path.getOption') ;
+		}
+		
+		if(isset(self::$config[$option])) {
+			return self::$config[$option]->get($key, $default) ;
+		}
+		
+		// Init Config
+		self::$config[$option] = new JRegistry();
+		self::$config[$option]->loadFile( AKHelper::_('path.getAdmin', $option).'/includes/config.json' );
+		
+		return self::$config[$option]->get($key, $default) ;
 	}
 }
 
