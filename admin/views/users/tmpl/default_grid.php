@@ -45,7 +45,7 @@ foreach( $this->items as $k => $item ):
 	$canEditOwn = $user->authorise('core.edit.own',		'com_userxtd');
 	
 	
-	
+	/*
 	// Example Column START
 	// =================================================================================
 		$column = 'example' ;
@@ -75,7 +75,7 @@ foreach( $this->items as $k => $item ):
 		// -----------------------------------------
 		$td[$column]['option'] 	= $option ;
 		$td[$column]['content'] = $content ;
-	
+	*/
 
 	
 	
@@ -266,7 +266,7 @@ foreach( $this->items as $k => $item ):
 			// -----------------------------------------
 			if($k == 0){
 				$th[$column]['option']['class'] 	= 'center' ;
-				$th[$column]['option']['width'] 	= '5%' ;
+				$th[$column]['option']['width'] 	= null ;
 				$th[$column]['content'] 			= JHtml::_('grid.sort',  $field->title, $key, $listDirn, $listOrder) . '<div class="small" style="font-weight: normal;">('.$field->label.')</div>' ;
 			}
 			
@@ -305,13 +305,19 @@ endforeach;
 
 
 // Set th in Table
+$table['thead']['tr'][0]['option'] = array() ;
 $table['thead']['tr'][0]['th'] 	= $th ;
 $table['tbody']['tr'] 			= $tr ;
+
 
 $table_option = array( 'class' => 'table table-striped table-bordered adminlist', 'id' => 'articleList' ) ;
 
 
 // Render Grid
-echo $this->renderGrid($table, $table_option) ;
+if(count($this->items)) {
+	echo $this->renderGrid($table, $table_option) ;
+}else{
+	echo JText::_('COM_USERXTD_NO_DATA');
+}
 ?>
 

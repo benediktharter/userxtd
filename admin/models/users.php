@@ -62,7 +62,7 @@ class UserxtdModelUsers extends AKModelList
 		
 		// Other settings
 		// ========================================================================
-		$config['fulltext_search'] 	= true ;
+		$config['fulltext_search'] 	= false ;
 		
 		$config['core_sidebar'] 	= false ;
 		
@@ -186,16 +186,17 @@ class UserxtdModelUsers extends AKModelList
 			
 			if($this->getState( 'search.fulltext' )){
 				$fields = $this->getFullSearchFields();
+				$fields = array_merge($fields, $keys);
 				
 				foreach( $fields as &$field ):
 					$field = "{$field} LIKE '%{$search['index']}%'" ;
 				endforeach;
 				
 				if(count($fields))
-				$q->where( "( ".implode(' OR ', $fields )." )" );
+				$q->having( "( ".implode(' OR ', $fields )." )" );
 				
 			}else{
-				$q->where("{$search['field']} LIKE '%{$search['index']}%'");
+				$q->having("{$search['field']} LIKE '%{$search['index']}%'");
 			}
 			
 		}

@@ -65,7 +65,7 @@ class UserxtdModelProfiles extends AKModelList
 		
 		// Other settings
 		// ========================================================================
-		$config['fulltext_search'] 	= true ;
+		$config['fulltext_search'] 	= false ;
 		
 		$config['core_sidebar'] 	= false ;
 		

@@ -96,16 +96,13 @@ class UserxtdViewUsers extends AKViewList
 		$ordering_key = $this->state->get('items.nested') ? 'a.lft' : 'a.ordering' ;
 		
 		$this->sort_fields = array(
-			$ordering_key 		=> JText::_('JGRID_HEADING_ORDERING'),
-			'a.published' 		=> JText::_('JPUBLISHED'),
-			'a.title' 			=> JText::_('JGLOBAL_TITLE'),
-			'b.title' 			=> JText::_('JCATEGORY'),
-			'd.title' 			=> JText::_('JGRID_HEADING_ACCESS'),
-			'a.created_by' 		=> JText::_('JAUTHOR'),
-			'e.title' 			=> JText::_('JGRID_HEADING_LANGUAGE'),
-			'a.created' 		=> JText::_('JDATE'),
-			'a.id' 				=> JText::_('JGRID_HEADING_ID')
+			'a.name' 		=> JText::_('COM_USERS_HEADING_NAME'),
+			'a.username' 			=> JText::_('JGLOBAL_USERNAME')
 		);
+		
+		foreach( $this->fields as $field ):
+			$this->sort_fields[$field->name] = $field->title ;
+		endforeach;
 		
 		return $this->sort_fields ;
 	}

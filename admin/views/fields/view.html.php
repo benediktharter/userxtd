@@ -99,7 +99,7 @@ class UserxtdViewFields extends AKViewList
 			'a.id' 				=> JText::_('JGRID_HEADING_ID')
 		);
 		
-		return $this->sort_fields ;
+		//return $this->sort_fields ;
 	}
 	
 	
