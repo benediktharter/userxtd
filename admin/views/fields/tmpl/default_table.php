@@ -218,7 +218,15 @@ if( JVERSION >= 3 ) {
 			</td>
 			
 			<td class="center">
-				<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+				<!-- Title -->
+				<?php if ($canEdit || $canEditOwn) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_userxtd&task=field.edit&id='.$item->a_id);//.'&field_type='.$item->a_field_type); ?>">
+						<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+					</a>
+				<?php else: ?>
+					<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+				<?php endif; ?>
+				
 			</td>
 			
 			<td class="n/owrap has-context">

@@ -160,4 +160,41 @@ class UserxtdTableField extends JTable
 		
 		return parent::rebuild($parentId, $leftId, $level, $path);
 	}
+	
+	
+	/**
+     * Method to store a row in the database from the JTable instance properties.
+     * If a primary key value is set the row with that primary key value will be
+     * updated with the instance property values.  If no primary key value is set
+     * a new row will be inserted into the database with the properties from the
+     * JTable instance.
+     *
+     * @param   boolean  $updateNulls  True to update fields even if they are null.
+     *
+     * @return  boolean  True on success.
+     *
+     * @link    http://docs.joomla.org/JTable/store
+     * @since   11.1
+     */
+    public function store($updateNulls = false)
+	{
+		$db = JFactory::getDbo();
+		$q = $db->getQuery(true) ;
+		
+		$q->select("name")
+			->from($this->_tbl)
+			->where("name='{$this->name}'")
+			->where("id != {$this->id}")
+			;
+		$db->setQuery($q);
+		$result = $db->loadResult();
+		
+		if($result) {
+			$e = new JException(JText::_('COM_USERXTD_FIELD_NAME_EXISTS'));
+			$this->setError($e);
+			return false;
+		}
+		
+		return parent::store($updateNulls);
+	}
 }

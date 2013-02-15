@@ -109,6 +109,9 @@ class AKModelAdmin extends JModelAdmin
 			$data = $this->getItem();
 		}else{
 			$data = new JObject($data);
+			
+			// If Error occured and resend, just return data.
+			return $data ;
 		}
 		
 		
@@ -431,8 +434,9 @@ class AKModelAdmin extends JModelAdmin
 		
 		
 		// Version
-		$table->version++ ;
-		
+		if(isset($table->version)){
+			$table->version++ ;
+		}
 		
 		
 		// Set Ordering or Nested ordering
