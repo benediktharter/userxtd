@@ -63,7 +63,7 @@
 			class="btn-group"
 		>
 			<option value="0">JNO</option>
-			<option value="1">JYES</option>
+			<option value="true">JYES</option>
 		</field>
 		
 		<field

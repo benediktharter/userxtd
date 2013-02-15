@@ -252,7 +252,11 @@ foreach( $this->items as $k => $item ):
 	
 	
 	
-	foreach( $this->keys as $key ):
+	foreach( $this->keys as $i => $key ):
+		if(!$key) continue;
+		
+		$field = $this->fields[$i];
+	
 		// Example Column START
 		// =================================================================================
 			$column = $key ;
@@ -263,7 +267,7 @@ foreach( $this->items as $k => $item ):
 			if($k == 0){
 				$th[$column]['option']['class'] 	= 'center' ;
 				$th[$column]['option']['width'] 	= '5%' ;
-				$th[$column]['content'] 			= JHtml::_('grid.sort',  $key, $key, $listDirn, $listOrder) . '<div class="small">'.$key.'</div>' ;
+				$th[$column]['content'] 			= JHtml::_('grid.sort',  $field->title, $key, $listDirn, $listOrder) . '<div class="small" style="font-weight: normal;">('.$field->label.')</div>' ;
 			}
 			
 			
@@ -276,6 +280,8 @@ foreach( $this->items as $k => $item ):
 			// -----------------------------------------
 			
 			$content = $item->get($key) ;
+			$content = JFilterOutput::cleanText($content) ;
+			$content = JString::substr($content, 0, 20) ;
 			
 			
 			// Put in $td

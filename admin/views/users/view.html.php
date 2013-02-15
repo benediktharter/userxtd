@@ -41,6 +41,7 @@ class UserxtdViewUsers extends AKViewList
 	{
 		$app = JFactory::getApplication() ;
 		
+		$this->fields		= $this->get('Fields');
 		$this->state		= $this->get('State');
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
@@ -73,7 +74,13 @@ class UserxtdViewUsers extends AKViewList
 		// Set title.
 		AKToolBarHelper::title( ucfirst($this->getName()) . ' ' . JText::_($this->text_prefix.'_TITLE_LIST'), 'article.png');
 		
-		parent::addToolbar();
+		$canDo	= AKHelper::getActions($this->option);
+		
+		if ($canDo->get('core.admin')) {
+			AKToolBarHelper::preferences($this->option);
+		}
+		
+		//parent::addToolbar();
 	}
 	
 	

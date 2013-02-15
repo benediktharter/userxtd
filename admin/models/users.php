@@ -83,11 +83,6 @@ class UserxtdModelUsers extends AKModelList
 	{
 		parent::populateState('a.id', $direction);
 		
-		
-		// set List Keys
-		$keys = $this->getProfileKeys();
-		
-		$this->setState('profileKeys', $keys) ;
 	}
 
 	
@@ -129,19 +124,27 @@ class UserxtdModelUsers extends AKModelList
 	 * @param 
 	 */
 	
-	public function getProfileKeys()
+	public function getFields()
 	{
 		$db = JFactory::getDbo();
 		$q = $db->getQuery(true) ;
 		
-		$q->select("distinct ".$q->qn('a.name'))
+		$q->select("a.*")
 			->from("#__userxtd_fields AS a")
-			->where("a.name != ''")
+			->where("a.published > 0")
+			->order('a.catid, a.ordering')
 			//->order("")
 			;
 		
 		$db->setQuery($q);
-		$result = $db->loadColumn();
+		$result = $db->loadObjectList();
+		
+		// Set Keys into State
+		$keys = JArrayHelper::getColumn($result, 'name');
+		$this->setState('profileKeys', $keys) ;
+		
+		// Set Keys into Filter Fields
+		$this->filter_fields = array_merge($this->filter_fields, $keys);
 		
 		return $result;
 	}
@@ -230,7 +233,9 @@ class UserxtdModelUsers extends AKModelList
 		// Build SQL Pivot
 		// ========================================================================
 		foreach( $keys as $key ):
-			$q->select( "MAX( IF(b.key = '{$key}', b.value, NULL) ) AS {$key}" );
+			if($key){
+				$q->select( "MAX( IF(b.key = '{$key}', b.value, NULL) ) AS {$key}" );
+			}
 		endforeach;
 		
 		
