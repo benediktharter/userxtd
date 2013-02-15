@@ -114,3 +114,9 @@ class UserxtdHelper extends AKProxy
 	}
 	
 }
+
+
+class UXHelper extends UserxtdHelper
+{
+	
+}

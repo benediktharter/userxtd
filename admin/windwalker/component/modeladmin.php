@@ -136,6 +136,13 @@ class AKModelAdmin extends JModelAdmin
 		endforeach;
 		
 		
+		// Set FieldType if enable CCK Engine
+		// ==========================================================================================
+		if($this->getState('CCKEngine.enabled')){
+			$this->setFieldType($data);
+		}
+		
+		
 		return $data;
 	}
 	
@@ -277,6 +284,25 @@ class AKModelAdmin extends JModelAdmin
     {
         $user = JFactory::getUser();
         return $user->authorise('core.edit.state', $this->option.'.'.$this->item_name.'.'.$record->id);
+	}
+	
+	
+	
+	/**
+	 * A protected method to get a set of ordering conditions.
+	 *
+	 * @param   object	A record object.
+	 *
+	 * @return  array  An array of conditions to add to add to ordering queries.
+	 * @since   1.6
+	 */
+	protected function getReorderConditions($table)
+	{
+		if(property_exists($table, 'catid')){
+			$condition = array();
+			$condition[] = 'catid = '.(int) $table->catid;
+			return $condition;
+		}
 	}
 	
 	
@@ -442,6 +468,11 @@ class AKModelAdmin extends JModelAdmin
 			}
 		}
 		
+		
+		// Set Fields if CCKEngine Enabled
+		if($this->getState('CCKEngine.enabled')) {
+			AKHelper::_('fields.setFieldTable', $table) ;
+		}
 	}
 	
 	

@@ -27,6 +27,13 @@
 	height: 150px !important;
 }
 
+/* TABLE LIST */
+#joomla30 table td {
+	min-height: 24px;
+	height: 24px;
+}
+
+
 /* BATCH */
 #joomla25 .control-group label#batch-language-lbl,
 #joomla25 .control-group label#batch-user-lbl ,

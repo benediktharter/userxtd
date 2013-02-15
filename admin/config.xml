@@ -28,12 +28,16 @@
              description="COM_USERXTD_SELECT_FIELD_DESC"
 		/>
 		
-		<field name="PASS"
-			type="password"
-			label="PASS"
-			autocomplete="off"
-			strengthmeter="true"
-		/>
+		<field name="CoreRegistration_Categories"
+             type="category"
+             default="*"
+			 extension="com_userxtd"
+             label="COM_USERXTD_CONFIG_CORE_REGISTRATION_CATEGORIES"
+             description="COM_USERXTD_CONFIG_CORE_REGISTRATION_CATEGORIES_DESC"
+			 multiple="true"
+		>
+			<option value="*">JALL</option>
+		</field>
 		
 		<field name="limit"
 			type="text"

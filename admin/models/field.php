@@ -29,6 +29,22 @@ class UserxtdModelField extends AKModelAdmin
 	public 		$list_name = 'fields' ;
 	
 	
+	
+	/**
+     * Constructor.
+     *
+     * @param    array    An optional associative array of configuration settings.
+     * @see        JController
+     * @since    1.6
+     */
+    public function __construct($config = array())
+    {
+        parent::__construct($config);
+		
+		$this->setState('CCKEngine.enabled', true);
+    }
+	
+	
 
 	/**
 	 * Method to get the record form.
@@ -68,9 +84,29 @@ class UserxtdModelField extends AKModelAdmin
 	 */
 	protected function loadFormData()
 	{
-		$data = parent::loadFormData();
+		$retain = JRequest::getVar('retain', 0) ;
 		
-		$this->setFieldType($data);
+		
+		// Set Change Field Type Retain Data
+		if($retain) {
+			$data = JRequest::getVar('jform') ;
+			
+			$data2 = array() ;
+			foreach( $data as $key => $val ):
+				if(is_array($val)) {
+					$data2 = array_merge($data2, $val) ;
+				}else{
+					$data2[$key] = $val ;
+				}
+			endforeach;
+			
+			$data = $data2 ;
+			
+			$data['attrs'] = json_encode(JRequest::getVar('attrs')) ;
+			JFactory::getApplication()->setUserState("{$this->option}.edit.{$this->item_name}.data", $data);
+		}
+		
+		$data = parent::loadFormData();
 		
 		return $data ;
 	}
@@ -139,9 +175,20 @@ class UserxtdModelField extends AKModelAdmin
 	 */
 	protected function prepareTable(&$table)
 	{
+		$db = JFactory::getDbo();
+		$q = $db->getQuery(true) ;
+		
+		if (!$table->ordering) {
+			$q->select("MAX(ordering)")
+				->from("#__userxtd_fields")
+				->where('catid='.$table->catid)
+				;
+			$db->setQuery($q);
+			$max = $db->loadResult();
+			$table->ordering = $max+1;
+		}
+		
 		parent::prepareTable($table);
-	
-		AKHelper::_('fields.setFieldTable', $table) ;
 	}
 	
 }

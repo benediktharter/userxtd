@@ -21,18 +21,18 @@ $doc 	= JFactory::getDocument();
 $uri 	= JFactory::getURI() ;
 $user	= JFactory::getUser();
 $userId	= $user->get('id');
-
+$nested	= $this->state->get('items.nested') ;
 
 
 // List Control
 // ================================================================================
 $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
+$orderCol 	= $nested ? 'a.lft' : 'a.catid, a.ordering' ;
+
 $canOrder	= $user->authorise('core.edit.state', 'com_userxtd');
-$saveOrder	= $listOrder == 'a.ordering' || ($listOrder == 'a.lft' && $listDirn == 'asc');
+$saveOrder	= $listOrder == $orderCol || ($listOrder == 'a.lft' && $listDirn == 'asc');
 $trashed	= $this->state->get('filter.published') == -2 ? true : false;
-$nested		= $this->state->get('items.nested') ;
-$orderCol 	= $nested ? 'a.lft' : 'a.ordering' ;
 $show_root	= JRequest::getVar('show_root') ;
 
 
@@ -49,7 +49,7 @@ if( JVERSION >= 3 ) {
 ?>
 
 <!-- List Table -->
-<table class="table table-striped adminlist" id="itemList">
+<table class="table table-striped table-bordered adminlist" id="itemList">
 	<thead>
 		<tr>
 			<?php if( JVERSION >= 3 ): ?>
@@ -62,16 +62,24 @@ if( JVERSION >= 3 ) {
 				<input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
 			</th>
 			
+			<th width="">
+				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
+			</th>
+			
+			<th>
+				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_TYPE', 'a.field_type', $listDirn, $listOrder); ?>
+			</th>
+			
 			<th>
 				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
 			</th>
 			
 			<th>
-				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_NAME', 'a.name', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_LABEL', 'a.lael', $listDirn, $listOrder); ?>
 			</th>
 			
 			<th>
-				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_TYPE', 'a.field_type', $listDirn, $listOrder); ?>
+				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_NAME', 'a.name', $listDirn, $listOrder); ?>
 			</th>
 			
 			<th width="5%" class="nowrap">
@@ -86,10 +94,6 @@ if( JVERSION >= 3 ) {
 				<?php endif; ?>
 			</th>
 			<?php endif; ?>
-			
-			<th width="10%">
-				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
-			</th>
 			
 			<th width="10%">
 				<?php echo JHtml::_('grid.sort',  'JAUTHOR', 'c.name', $listDirn, $listOrder); ?>
@@ -189,11 +193,17 @@ if( JVERSION >= 3 ) {
 				endif; ?>
 				<span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
 					<i class="icon-menu"></i>
+					<span class="label">
+						<?php echo $item->get('a_ordering'); ?>
+					</span>
 				</span>
 				<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $nested ? $orderkey + 1 : $item->a_ordering;?>" class="width-20 text-area-order " />
 			<?php else : ?>
 				<span class="sortable-handler inactive" >
 					<i class="icon-menu"></i>
+					<span class="label">
+						<?php echo $item->get('a_ordering'); ?>
+					</span>
 				</span>
 			<?php endif; ?>
 			</td>
@@ -201,6 +211,14 @@ if( JVERSION >= 3 ) {
 		
 			<td class="center">
 				<?php echo JHtml::_('grid.id', $i, $item->a_id); ?>
+			</td>
+			
+			<td class="center">
+				<?php echo $item->get('b_title'); ?>
+			</td>
+			
+			<td class="center">
+				<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
 			</td>
 			
 			<td class="n/owrap has-context">
@@ -234,11 +252,11 @@ if( JVERSION >= 3 ) {
 				<!-- Sub Title 
 				<?php if( JVERSION >= 3 ): ?>
 				<div class="small">
-					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
+					<?php echo JTEXT::_('LIB_WINDWALKER_FIELD_ATTR_LABEL').': '.$item->attrs->get('label');?>
 				</div>
 				<?php else: ?>
 				<p class="smallsub">
-					<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape( $item->get('a_alias') ));?>
+					<?php echo JTEXT::_('LIB_WINDWALKER_FIELD_ATTR_LABEL').': '.$item->attrs->get('label');?>
 				</p>
 				<?php endif; ?>
 				-->
@@ -286,11 +304,11 @@ if( JVERSION >= 3 ) {
 			</td>
 			
 			<td class="center">
-				<?php echo $item->get('a_name'); ?>
+				<?php echo JText::_($item->get('a_label')); ?>
 			</td>
 			
 			<td class="center">
-				<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+				<?php echo $item->get('a_name'); ?>
 			</td>
 			
 			<td class="center">
@@ -316,11 +334,6 @@ if( JVERSION >= 3 ) {
 				<?php endif; ?>
 			</td>
 			<?php endif; ?>
-			
-			<td class="center">
-				<?php echo $item->get('b_title'); ?>
-			</td>
-			
 			
 			<td class="center">
 				<?php echo $item->get('c_name'); ?>

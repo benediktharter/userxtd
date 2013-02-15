@@ -52,6 +52,11 @@ class UserxtdViewFields extends AKViewList
 			return false;
 		}
 		
+		// Decode Field
+		foreach( $this->items as &$item ):
+			$item->attrs = new JObject(json_decode($item->attrs));
+		endforeach;
+		
 		parent::displayWithPanel($tpl);
 	}
 

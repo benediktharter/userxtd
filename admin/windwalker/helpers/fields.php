@@ -66,6 +66,7 @@ class AKHelperFields
 		// ==================================================================
 		$table->element = self::buildElement( $field_type , $attrs);
 		$table->name 	= $name ;
+		$table->label	= $attrs['label'];
 		$table->attrs	= json_encode($attrs) ;
 	}
 	
@@ -77,12 +78,14 @@ class AKHelperFields
 	
 	public static function buildElement($field_type = 'text', $attrs = null, $option = array())
 	{
-		$node_name = $option['node_name'] ? $option['node_name'] : 'field' ;
+		$node_name = !empty($option['node_name']) ? $option['node_name'] : 'field' ;
 		$field_type = $field_type ? $field_type : 'text' ;
+		
+		$attrs = self::convertJsonToArray($attrs);
 		
 		if(!is_array($attrs)){
 			$attrs = $_REQUEST['attrs'] ;
-			$attrs = self::filterFields($field_type, $attrs) ;
+			//$attrs = self::filterFields($field_type, $attrs) ;
 		}
 		
 		if(!is_array($attrs)) {
@@ -92,13 +95,16 @@ class AKHelperFields
 		
 		// Rebuild options
 		// ================================================================
-		$new_options = array();
-		foreach( $attrs['options']['value'] as $key => $option ):
-			$new_options[$key]['value'] = $attrs['options']['value'][$key] ;
-			$new_options[$key]['text'] = $attrs['options']['text'][$key] ;
-		endforeach;
-		$attrs['options'] = $new_options ;
-		
+		if(isset($attrs['options'])){
+			
+			$new_options = array();
+			foreach( $attrs['options']['value'] as $key => $option ):
+				$new_options[$key]['value'] = $attrs['options']['value'][$key] ;
+				$new_options[$key]['text'] = $attrs['options']['text'][$key] ;
+			endforeach;
+			$attrs['options'] = $new_options ;
+			
+		}
 		
 		$element = '' ;
 		$options = array();
@@ -151,6 +157,29 @@ class AKHelperFields
 		
 		
 		return $element;
+	}
+	
+	
+	
+	/*
+	 * function buildFormXML
+	 * @param $fields
+	 */
+	
+	public static function buildFormXML($elements = array(), $fieldset = 'fieldset', $fields = null, $fset_label = null)
+	{
+		if(!$fset_label) {
+			$fset_label = $fieldset ;
+		}
+		
+		$xml = '<?xml version="1.0" encoding="utf-8"?><form>';
+		$xml .= $fields ? '<fields name="'.$fields.'">' : '';
+		$xml .= '<fieldset name="'.$fieldset.'" label="'.$fset_label.'">'.$elements.'</fieldset>';
+		$xml .= $fields ? '</fields>' : '';
+		$xml .= '</form>' ;
+		
+			
+		return $xml;
 	}
 	
 	
@@ -235,6 +264,32 @@ class AKHelperFields
 	
 	
 	/*
+	 * function convertJsonToArray
+	 * @param $data
+	 */
+	
+	public static function convertJsonToArray($data)
+	{
+		if(is_string($data)) {
+			$data = json_decode($data);
+		}
+		
+		if(is_object($data)) {
+			$data = (array) $data ;
+		}
+		
+		if(is_array($data)) {
+			if(isset($data['options']) && is_object($data['options'])) {
+				$data['options'] = (array) $data['options'] ;
+			}
+		}
+		
+		return $data ;
+	}
+	
+	
+	
+	/*
 	 * function filterFields
 	 * @param $data
 	 */
@@ -290,6 +345,7 @@ class AKHelperFields
 		$needed = array(
 			'title',
 			'name',
+			'label',
 			'field_type',
 			'element',
 			'attrs'

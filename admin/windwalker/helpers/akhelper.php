@@ -70,6 +70,23 @@ class AKHelper extends AKProxy
 		else 
 			return false;
 	}
+	
+	
+	/*
+	 * function getParams
+	 * @param $option
+	 */
+	
+	public static function getParams($option = null)
+	{
+		if(!$option) {
+			$option = AKHelper::_('path.getOption') ;
+		}
+		
+		if($option) {
+			return JComponentHelper::getParams($option);
+		}
+	}
 }
 
 

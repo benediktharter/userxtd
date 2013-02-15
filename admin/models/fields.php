@@ -55,7 +55,8 @@ class UserxtdModelFields extends AKModelList
 		// ========================================================================
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
-                'filter_order_Dir', 'filter_order'
+                'filter_order_Dir', 'filter_order',
+				'a.catid, a.ordering'
             );
 			
             $config['filter_fields'] = UserxtdHelper::_('db.mergeFilterFields', $config['filter_fields'] , $config['tables'] );
@@ -84,7 +85,7 @@ class UserxtdModelFields extends AKModelList
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
-		parent::populateState($ordering, $direction);
+		parent::populateState('a.catid, a.ordering', $direction);
 	}
 
 	

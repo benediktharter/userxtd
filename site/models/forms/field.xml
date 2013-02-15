@@ -13,68 +13,7 @@
 				class="input-xlarge"
 			/>
 			
-			<field name="catid"
-				type="category"
-				label="JCATEGORY"
-				description="JFIELD_CATEGORY_DESC"
-				extension="com_userxtd"
-				labelclass="control-label"
-			>
-				<!--<option value="0">COM_USERXTD_TITLE_UNCATEGORISED</option>-->
-			</field>
-			
-			<field name="field_type"
-				type="fieldtype"
-				label="LIB_WINDWALKER_FIELD_TYPE"
-				description="LIB_WINDWALKER_FIELD_TYPE_DESC"
-				required="true"
-				labelclass="control-label"
-				default="text"
-				onchange="AKFields.changeType(this)"
-				
-			>
-				<!--<option value="text">Text</option>
-				<option value="list">List</option>-->
-			</field>
-			
-			<field name="attrs"
-				type="fields"
-				label="COM_USERXTD_INTROTEXT"
-				description="COM_USERXTD_INTROTEXT_DESC"
-				filter="raw"
-				buttons="true"
-				hide="readmore,pagebreak,article"
-				labelclass="control-label"
-				class="form-horizontal"
-				fset="attrs"
-			/>
-			
-			<field name="options"
-				type="fields"
-				label="LIB_WINDWALKER_FIELD_ATTR_OPTIONS"
-				description="LIB_WINDWALKER_FIELD_ATTR_OPTIONS_DESC"
-				filter="raw"
-				buttons="true"
-				hide="readmore,pagebreak,article"
-				labelclass="control-label"
-				nolabel="true"
-				fset="options"
-			/>
-			
-			<!--
-			<field name="options"
-				type="fields"
-				label="COM_USERXTD_INTROTEXT"
-				description="COM_USERXTD_INTROTEXT_DESC"
-				filter="raw"
-				buttons="true"
-				hide="readmore,pagebreak,article"
-				labelclass="control-label"
-				fieldset="options"
-			/>
-			-->
-			
-			<!--<field name="alias"
+			<field name="alias"
 				type="text"
 				label="JFIELD_ALIAS_LABEL"
 				description="JFIELD_ALIAS_DESC"
@@ -82,17 +21,17 @@
 				labelclass="control-label"
 			/>
 			
-			<field name="parent_id"
-				type="field_modal"
-				label="COM_USERXTD_PARENT_ITEM"
-				description="COM_USERXTD_PARENT_ITEM_DESC"
+			<field name="catid"
+				type="category"
+				label="JCATEGORY"
+				description="JFIELD_CATEGORY_DESC"
+				extension="com_userxtd"
 				labelclass="control-label"
-				show_root="true"
-				class="input-xlarge"
-				access="true"
-			/>
+			>
+				<option value="0">COM_USERXTD_TITLE_UNCATEGORISED</option>
+			</field>
 			
-			<field name="images"
+			<field name="param_images"
 				type="media"
 				label="COM_USERXTD_IMAGES"
 				description="COM_USERXTD_IMAGES_DESC"
@@ -105,30 +44,10 @@
 				description="COM_USERXTD_URL_DESC"
 				size="60"
 				labelclass="control-label"
-			/>-->
-		</fieldset>
-		
-		<fieldset name="advanced" align="right">
-			<field name="advanced"
-				type="fields"
-				label=""
-				description="COM_USERXTD_INTROTEXT_DESC"
-				filter="raw"
-				buttons="true"
-				hide="readmore,pagebreak,article"
-				labelclass="control-label"
-				class="form-horizontal"
-				fset="advanced"
 			/>
 		</fieldset>
 		
-	</fields>
-	
-	<fields name="advanced">
-		
-		<fieldset name="publish" horz="true">
-			
-			
+		<fieldset name="publish" align="right" horz="true">
 			<field name="published"
 				type="list"
 				label="JSTATUS"
@@ -152,6 +71,8 @@
 				labelclass="control-label"
 			/>
 			
+			<field name="asset_id" type="hidden" filter="unset" />
+			
 			<field name="created_by"
 				type="user"
 				label="COM_USERXTD_CREATED_BY"
@@ -166,6 +87,52 @@
 				labelclass="control-label"
 			/>
 			
+			<field name="publish_up"
+				type="calendar"
+				label="COM_USERXTD_PUBLISH_UP"
+				description="COM_USERXTD_PUBLISH_UP_DESC"
+				labelclass="control-label"
+			/>
+			
+			<field name="publish_down"
+				type="calendar"
+				label="COM_USERXTD_PUBLISHED_DOWN"
+				description="COM_USERXTD_PUBLISH_DOWN_DESC"
+				labelclass="control-label"
+			/>
+			
+			
+		</fieldset>
+		
+		<fieldset name="text" align="left">
+			<field name="introtext"
+				type="editor"
+				label="COM_USERXTD_INTROTEXT"
+				description="COM_USERXTD_INTROTEXT_DESC"
+				filter="raw"
+				buttons="true"
+				hide="readmore,pagebreak,article"
+				labelclass="control-label"
+			/>
+			
+			<field name="fulltext"
+				type="editor"
+				label="COM_USERXTD_FULLTEXT"
+				description="COM_USERXTD_FULLTEXT_DESC"
+				filter="raw"
+				buttons="true"
+				hide="readmore,pagebreak,article"
+				labelclass="control-label"
+			/>
+	
+			<field name="checked_out" type="hidden" filter="unset" />
+			<field name="checked_out_time" type="hidden" filter="unset" />
+			
+		</fieldset>	
+	</fields>
+	
+	<fields name="advanced">
+		<fieldset name="created">
 			<field name="access"
 				type="accesslevel"
 				label="JFIELD_ACCESS_LABEL"
@@ -181,12 +148,9 @@
 			>
 				<option value="*">JALL</option>
 			</field>
-			
-			<field name="checked_out" type="hidden" filter="unset" />
-			<field name="checked_out_time" type="hidden" filter="unset" />
-			
 		</fieldset>
 	</fields>
+	
 	
 	
 	<!-- Need this field br child of root node for access setting. -->
