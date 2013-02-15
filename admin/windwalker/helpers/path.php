@@ -80,7 +80,7 @@ class AKHelperPath
 	 * @param $option
 	 */
 	
-	public function getOption()
+	public static function getOption()
 	{
 		return self::$default_option ;
 	}
