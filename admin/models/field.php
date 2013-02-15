@@ -101,20 +101,24 @@ class UserxtdModelField extends AKModelAdmin
 		
 		// Set Change Field Type Retain Data
 		if($retain) {
-			$data = JRequest::getVar('jform') ;
+			$data 	= JRequest::getVar('jform') ;
+			$attrs 	= json_encode(JRequest::getVar('attrs')) ;
 			
 			$data2 = array() ;
-			foreach( $data as $key => $val ):
+			foreach( $data as $key => &$val ):
+				/*
 				if(is_array($val)) {
 					$data2 = array_merge($data2, $val) ;
 				}else{
 					$data2[$key] = $val ;
 				}
+				*/
+				$val['attrs'] = $attrs;
 			endforeach;
 			
-			$data = $data2 ;
+			//$data = $data2 ;
 			
-			$data['attrs'] = json_encode(JRequest::getVar('attrs')) ;
+			$data['attrs'] = $attrs;
 		}
 		
 		return $data ;

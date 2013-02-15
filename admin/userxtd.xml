@@ -56,11 +56,11 @@
 				img="components/com_userxtd/images/admin-icons/menu-fields.png"
 				alt="Weblinks/Links">com_userxtd_fields</menu>
 			
-			<menu link="option=com_userxtd&amp;view=profiles" view="fields"
+			<menu link="option=com_userxtd&amp;view=profiles" view="profiles"
 				img="components/com_userxtd/images/admin-icons/menu-profiles.png"
 				alt="Weblinks/Links">com_userxtd_fields</menu>
 			
-			<menu link="option=com_userxtd&amp;view=users" view="fields"
+			<menu link="option=com_userxtd&amp;view=users" view="users"
 				img="components/com_userxtd/images/admin-icons/menu-users.png"
 				alt="Weblinks/Links">com_userxtd_fields</menu>
 		</submenu>

@@ -28,9 +28,12 @@
 	</files>
 	
 	
-	<languages folder="language/zh-TW">
-		<language tag="zh-TW">zh-TW.lib_windwalker.ini</language>
-		<language tag="zh-TW">zh-TW.lib_windwalker.sys.ini</language>
+	<languages folder="language">
+		<language tag="zh-TW">zh-TW/zh-TW.lib_windwalker.ini</language>
+		<language tag="zh-TW">zh-TW/zh-TW.lib_windwalker.sys.ini</language>
+		
+		<language tag="en-GB">en-GB/en-GB.lib_windwalker.ini</language>
+		<language tag="en-GB">en-GB/en-GB.lib_windwalker.sys.ini</language>
 	</languages>
 	
 	<!--
