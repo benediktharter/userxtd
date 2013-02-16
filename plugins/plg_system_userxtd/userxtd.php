@@ -43,6 +43,9 @@ class plgSystemUserxtd extends JPlugin
 			'com_userxtd.profile', 'com_userxtd.user', 'com_userxtd.registration'
 		);
 		
+		// Set Form
+		
+		
 		self::$_self = $this ;
     }
 	
@@ -293,6 +296,8 @@ class plgSystemUserxtd extends JPlugin
 	function onContentPrepareForm($form, $data)
 	{
 		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
+		JForm::addFieldPath(AKPATH_FORM.'/fields');
+		
 		$app 	= JFactory::getApplication() ;
 		$result = null ;
 		$db 	= JFactory::getDbo();
@@ -308,20 +313,6 @@ class plgSystemUserxtd extends JPlugin
 		if(JVERSION >= 3) {
 			JHtml::_('formbehavior.chosen', 'select');
 		}
-		
-		
-		// Set Category
-		$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
-		
-		if(!is_array($catid)) {
-			$catid = array($catid);
-		}
-		
-		if(!in_array('*', $catid)) {
-			$catid = implode(',', $catid);
-			$q->where("a.catid IN({$catid})");
-		}
-		
 		
 		
 		// Prepare Form
@@ -342,56 +333,21 @@ class plgSystemUserxtd extends JPlugin
 		}
 		
 		
+		// Set Category
+		$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
 		
-		// Get FormFields
-		// ============================================================================
-		$tables = array(
-			'a' => '#__userxtd_fields',
-			'b' => '#__categories'
-		);
-		$select = UXHelper::_('db.getSelectList', $tables) ;
+		if(!is_array($catid)) {
+			$catid = array($catid);
+		}
 		
-		$q->select($select)
-			->from("#__userxtd_fields AS a")
-			->join('LEFT', '#__categories AS b ON a.catid = b.id' )
-			->where('a.published > 0')
-			->order("a.ordering")
-			;
-		
-		$db->setQuery($q);
-		$fields = $db->loadObjectList('a_id');
+		if(!in_array('*', $catid)) {
+			$catid = implode(',', $catid);
+		}else{
+			$catid = null ;
+		}
 		
 		
-		
-		// Separate Categories
-		// ============================================================================
-		$field_groups = array();
-		foreach( $fields as $key => $field ):
-			
-			// init array
-			if(!isset($field_groups[$field->a_catid])){
-				$field_groups[$field->a_catid] = array();
-			}
-			
-			$field_groups[$field->a_catid][] = $field ;
-		endforeach;
-		
-		
-		
-		// Build Form
-		// ============================================================================
-		foreach( $field_groups as $group ):
-			$elements = array();
-			foreach( $group as &$field ):
-				$elements[] = UXHelper::_('fields.buildElement', $field->a_field_type, $field->a_attrs );
-			endforeach;
-			
-			$elements = implode("\n", $elements);
-			$elements = UXHelper::_('fields.buildFormXML', $elements, 'userxtd-cat-'.$group[0]->a_catid, 'profile', $group[0]->b_title );
-			
-			$field_list = JArrayHelper::getColumn($group, 'name');
-			$form->load($elements, false);
-		endforeach;
+		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form);
 		
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
@@ -448,9 +404,9 @@ class plgSystemUserxtd extends JPlugin
 		$db 	= JFactory::getDbo();
 		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 		$UXParams = UserxtdHelper::_('getParams');
-		
-		// Prepare Categories data
-		
+
+		AK::show($_FILES);AK::show($data);
+		$form = UXHelper::_('form.getFieldsByCategory', $catid);
 		
 		$userId	= JArrayHelper::getValue($data, 'id', 0, 'int');
 		
@@ -479,6 +435,41 @@ class plgSystemUserxtd extends JPlugin
 				$q = $db->getQuery(true) ;
 				$q->columns(array($q->qn('user_id'), $q->qn('key'), $q->qn('value'), $q->qn('ordering')));
 				
+				
+				// If has image, upload file
+				if(isset($_FILES['jform']['name']['profile'])){
+					
+					foreach( $_FILES['jform']['name']['profile'] as $key =>$var ):
+					
+						// Get Field Attr
+						$width 	= $form->getFieldAttribute($key, 'width', 250, 'profile') ;
+						$height = $form->getFieldAttribute($key, 'height', 250, 'profile') ;
+						$crop 	= $form->getFieldAttribute($key, 'crop', true, 'profile') ;
+										
+						$src 	= $_FILES['jform']['tmp_name']['profile'][$key] ;
+						$var 	= explode('.', $var);
+						$name 	= $key . '.' . array_pop( $var );
+						$url 	= 'images/userxtd/'.$data['username'].'/'.$name ;
+						$dest 	= JPATH_ROOT.'/'.$url ;
+						
+						// Upload First
+						JFile::upload( $src , $dest );
+						
+						// Resize image
+						$new	= AKHelper::_('thumb.resize', $url, $width, $height, $crop) ;
+						$new	= explode('/', $new) ;
+						$new	= array_pop($new) ;
+						$new	= 'cache/thumbs/cache/'.$new ;
+						
+						JFile::move($new, $dest);
+						
+						$data['profile'][$key] = $url ;
+					endforeach;
+					
+				}
+				
+				
+				// Build query
 				foreach ($data['profile'] as $k => $v)
 				{
 					
@@ -612,6 +603,8 @@ class plgSystemUserxtd extends JPlugin
 	public function onContentPrepareData($context, $data)
 	{
 		$result = array() ;
+		include_once AKPATH_FORM.'/fields/uploadimage.php';
+		JHtml::register('users.uploadimage', array('JFormFieldUploadimage', 'showImage'));
 		
 		// Check we are manipulating a valid form.	
 		if (!in_array($context, $this->allow_context))
