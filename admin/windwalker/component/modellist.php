@@ -51,10 +51,10 @@ class AKModelList extends JModelList
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'User', $prefix = 'JTable', $config = array())
+	public function getTable($type = null, $prefix = null, $config = array())
 	{
-		//$prefix = $prefix 	? $prefix 	: ucfirst($this->component).'Table' ;
-		//$type 	= $type 	? $type 	: $this->item_name ;
+		$prefix = $prefix 	? $prefix 	: ucfirst($this->component).'Table' ;
+		$type 	= $type 	? $type 	: $this->item_name ;
 		
 		return parent::getTable( $type , $prefix , $config );
 	}

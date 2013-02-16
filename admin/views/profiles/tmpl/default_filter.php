@@ -89,6 +89,7 @@ if( JVERSION >= 3 ) {
 				</select>
 			</div>
 			<?php //endif; ?>
+			
 		
 		<?php endif; ?>
 	

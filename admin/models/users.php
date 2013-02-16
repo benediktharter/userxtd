@@ -71,6 +71,22 @@ class UserxtdModelUsers extends AKModelList
 		
         parent::__construct($config);
     }
+	
+	
+	
+	/**
+	 * Returns a reference to the a Table object, always creating it.
+	 *
+	 * @param	type	The table type to instantiate
+	 * @param	string	A prefix for the table class name. Optional.
+	 * @param	array	Configuration array for model. Optional.
+	 * @return	JTable	A database object
+	 * @since	1.6
+	 */
+	public function getTable($type = 'User', $prefix = 'JTable', $config = array())
+	{		
+		return parent::getTable( $type , $prefix , $config );
+	}
 
 	
 	
@@ -82,7 +98,6 @@ class UserxtdModelUsers extends AKModelList
 	protected function populateState($ordering = null, $direction = null)
 	{
 		parent::populateState('a.id', $direction);
-		
 	}
 
 	
@@ -129,6 +144,13 @@ class UserxtdModelUsers extends AKModelList
 		$db = JFactory::getDbo();
 		$q = $db->getQuery(true) ;
 		
+		
+		// Get Field Filter
+		$app = JFactory::getApplication() ;
+		$filter_fields = $app->getUserStateFromRequest($this->context.'.field.fields', 'fields');
+		
+		
+		// Query
 		$q->select("a.*")
 			->from("#__userxtd_fields AS a")
 			->where("a.published > 0")
@@ -136,14 +158,34 @@ class UserxtdModelUsers extends AKModelList
 			//->order("")
 			;
 		
-		$db->setQuery($q);
+		
+		if(!$filter_fields) {
+			$db->setQuery($q, 0, 5);
+		}else{
+			$db->setQuery($q);
+		}
+		
 		$result = $db->loadObjectList();
 		
+		
+		// Set All Fields
+		$this->setState('allFields', $result) ;
+		
+		
+		// Set Filtered Fields 
+		$filtered = array();
+		foreach( $result as $row ):
+			if( in_array($row->name, $filter_fields) ) $filtered[] = $row ;
+		endforeach;
+		$this->setState('filteredFields', $filtered) ;
+		
+		
 		// Set Keys into State
-		$keys = JArrayHelper::getColumn($result, 'name');
-		$this->setState('profileKeys', $keys) ;
+		$this->setState('profileKeys', $filter_fields) ;
+		
 		
 		// Set Keys into Filter Fields
+		$keys = JArrayHelper::getColumn($result, 'name');
 		$this->filter_fields = array_merge($this->filter_fields, $keys);
 		
 		return $result;

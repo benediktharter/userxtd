@@ -18,6 +18,36 @@ class AKHelperInclude
 	static $bootstrap ;
 	static $bluestork ;
 	
+	
+	/*
+	 * function dropdownCheckbox
+	 * @param $framework
+	 */
+	
+	public static function dropdownCheckbox($id = 'MultiSelect', $framework = true)
+	{
+		if($framework) {
+			JHtml::_('behavior.framework', true) ;
+		}
+		
+		$doc = JFactory::getDocument();
+		$script = AKHelper::_('path.getWWUrl').'/assets/js/mootools/multi-select/source/' . (JDEBUG ? 'MultiSelect-uncompressed.js' : 'MultiSelect.js') ;
+		$css	= AKHelper::_('path.getWWUrl').'/assets/js/mootools/multi-select/css/MultiSelect.css';
+		
+		$doc->addScript( $script );
+		$doc->addStylesheet( $css );
+		
+		$instance = <<<JS
+		window.addEvent('domready', function(){
+			var AKMultiSelect_{$id} = new MultiSelect('.{$id}');
+		});
+JS;
+		
+		$doc->addScriptDeclaration($instance);
+	}
+	
+	
+	
 	/*
 	 * function core
 	 * @param 
@@ -42,29 +72,7 @@ class AKHelperInclude
 		}
 	}
 	
-	
-	/*
-	 * function foundation
-	 * @param 
-	 */
-	
-	public static function foundation($appl = true, $js = true)
-	{
-		$doc = JFactory::getDocument();
-		$app = JFactory::getApplication() ;
-		$option = JRequest::getVar('option') ;
-		
-		$prefix = $app->isSite() ? 'administrator/' : '' ;
-		
-		JHtml::_('stylesheet', $prefix.'components/'.$option.'/includes/foundation/stylesheets/foundation.min.css');
-		if($appl) JHtml::_('stylesheet', $prefix.'components/'.$option.'/includes/foundation/stylesheets/app.css');
-		
-		if($js){
-			JHtml::_('script', $prefix.'components/'.$option.'/includes/foundation/javascripts/modernizr.foundation.js');
-			JHtml::_('script', $prefix.'components/'.$option.'/includes/foundation/javascripts/foundation.min.js');
-			if($appl) JHtml::_('script', $prefix.'components/'.$option.'/includes/foundation/javascripts/app.js');
-		}
-	}
+
 	
 	/*
 	 * function bootstrap

@@ -255,7 +255,7 @@ foreach( $this->items as $k => $item ):
 	foreach( $this->keys as $i => $key ):
 		if(!$key) continue;
 		
-		$field = $this->fields[$i];
+		$field = $this->filteredFields[$i];
 	
 		// Example Column START
 		// =================================================================================

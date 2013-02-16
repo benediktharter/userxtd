@@ -47,6 +47,7 @@ class UserxtdViewUsers extends AKViewList
 		$this->pagination	= $this->get('Pagination');
 		$this->filter		= $this->get('Filter');
 		$this->keys			= $this->state->get('profileKeys');
+		$this->filteredFields	= $this->state->get('filteredFields');
 		
 
 		// Check for errors.

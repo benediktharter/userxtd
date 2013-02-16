@@ -84,4 +84,36 @@ class AKHelperPath
 	{
 		return self::$default_option ;
 	}
+	
+	
+	
+	/*
+	 * function getWWPath
+	 * @param 
+	 */
+	
+	public static function getWWPath()
+	{
+		return AKPATH_ROOT ;
+	}
+	
+	
+	
+	/*
+	 * function getWWUrl
+	 * @param $absolute
+	 */
+	
+	public static function getWWUrl($absolute = false)
+	{
+		$path = 'libraries/windwalker' ;
+		
+		if($absolute) {
+			return $path = AKHelper::_('uri.pathAddHost', $path);
+		}
+		else{
+			return $path = '/' . AKHelper::_('uri.pathAddSubfolder', $path);
+		}
+		
+	}
 }

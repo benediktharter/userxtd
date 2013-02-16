@@ -33,6 +33,10 @@
 	height: 24px;
 }
 
+#joomla30 .MultiSelect ul li label.btn-success.active {
+	background: none;
+}
+
 
 /* BATCH */
 #joomla25 .control-group label#batch-language-lbl,

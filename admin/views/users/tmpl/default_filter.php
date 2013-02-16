@@ -69,6 +69,7 @@ if( JVERSION >= 3 ) {
 		<?php if( $layout != 'modal' ): ?>
 	
 			<?php //if( false ): // Do not show this. ?>
+			
 			<!-- Filter Order Dir -->
 			<div class="btn-group pull-right hidden-phone">
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
@@ -89,6 +90,23 @@ if( JVERSION >= 3 ) {
 				</select>
 			</div>
 			<?php //endif; ?>
+			
+			
+			<!-- Field Name MultiSelect -->
+			<?php if( JVERSION >= 3 ): ?>
+			
+			<?php else: ?>
+			
+			<div class="btn-group pull-right">
+				<label for="UserXTD_field_name" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
+				<div id="UserXTD_field_name" class="UserXTD_field_name input-medium">
+					<?php foreach( $this->fields as $field ): ?>
+					<input type="checkbox" id="field_<?php echo $field->name; ?>" name="fields[]" value="<?php echo $field->id; ?>" checked="checked" />
+					<label for="field_<?php echo $field->name; ?>"><?php echo $field->title; ?> (<?php echo $field->label; ?>)</label>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
 		
 		<?php endif; ?>
 	
@@ -109,5 +127,16 @@ if( JVERSION >= 3 ) {
 		<?php endif; ?>
 	
 	<?php endif; ?>
+</div>
+<div class="fields-filter">
+	<button class="btn tip hasTooltip pull-right" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+	<div class="btn-group pull-right">
+		<label for="UserXTD_field_name" class="element-invisible"><?php echo JText::_('COM_USERXTD_FIELDS_FILTER');?></label>
+		<select id="UserXTD_field_name" class="UserXTD_field_name input-xxlarge" name="fields[]" multiple="true">
+			<?php foreach( $this->fields as $field ): ?>
+			<option value="<?php echo $field->name; ?>" <?php echo (in_array($field->name, $this->keys)) ? 'selected' : ''; ?>><?php echo $field->title; ?> (<?php echo $field->label; ?>)</option>
+			<?php endforeach; ?>
+		</select>
+	</div>	
 </div>
 <div class="clearfix"> </div>

@@ -47,6 +47,7 @@ if( JVERSION >= 3 ) {
 		UserxtdHelper::_('include.isis');
 	}
 }else{
+	UserxtdHelper::_('include.dropdownCheckbox', 'UserXTD_field_name');
 	
 	// For Site
 	if($app->isSite()) {
