@@ -68,8 +68,8 @@
 		<field
 			name="height"
 			type="text"
-			label="LIB_WINDWALKER_FIELD_ATTR_HEIGHT"
-			description="LIB_WINDWALKER_FIELD_ATTR_HEIGHT_DESC"
+			label="LIB_WINDWALKER_FIELD_ATTR_IMG_HEIGHT"
+			description="LIB_WINDWALKER_FIELD_ATTR_IMG_HEIGHT_DESC"
 			filter="string"
 			class="input-small"
 		/>
@@ -77,8 +77,8 @@
 		<field
 			name="width"
 			type="text"
-			label="LIB_WINDWALKER_FIELD_ATTR_WIDTH"
-			description="LIB_WINDWALKER_FIELD_ATTR_WIDTH_DESC"
+			label="LIB_WINDWALKER_FIELD_ATTR_IMG_WIDTH"
+			description="LIB_WINDWALKER_FIELD_ATTR_IMG_WIDTH_DESC"
 			filter="string"
 			class="input-small"
 		/>
@@ -87,7 +87,7 @@
 			name="crop"
 			type="radio"
 			label="LIB_WINDWALKER_FIELD_ATTR_CROP"
-			description="LIB_WINDWALKER_FIELD_ATTR_HEIGHT_CROP"
+			description="LIB_WINDWALKER_FIELD_ATTR_CROP_DESC"
 			default="0"
 			class="btn-group"
 		>
