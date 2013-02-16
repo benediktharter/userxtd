@@ -89,24 +89,7 @@ if( JVERSION >= 3 ) {
 					<?php echo JHtml::_('select.options', $sortFields, 'value', 'text', $listOrder);?>
 				</select>
 			</div>
-			<?php //endif; ?>
-			
-			
-			<!-- Field Name MultiSelect -->
-			<?php if( JVERSION >= 3 ): ?>
-			
-			<?php else: ?>
-			
-			<div class="btn-group pull-right">
-				<label for="UserXTD_field_name" class="element-invisible"><?php echo JText::_('JGLOBAL_SORT_BY');?></label>
-				<div id="UserXTD_field_name" class="UserXTD_field_name input-medium">
-					<?php foreach( $this->fields as $field ): ?>
-					<input type="checkbox" id="field_<?php echo $field->name; ?>" name="fields[]" value="<?php echo $field->id; ?>" checked="checked" />
-					<label for="field_<?php echo $field->name; ?>"><?php echo $field->title; ?> (<?php echo $field->label; ?>)</label>
-					<?php endforeach; ?>
-				</div>
-			</div>
-			<?php endif; ?>
+			<?php //endif; ?>			
 		
 		<?php endif; ?>
 	
@@ -118,16 +101,37 @@ if( JVERSION >= 3 ) {
 			<div class="clearfix"></div>
 			<?php endif; ?>
 			
+			
 			<!-- Show Filters -->
 			<?php foreach( $this->filter['filter']->getFieldset('filter') as $filter ): ?>
 			<div class="btn-group pull-right span3 fltrt">
 				<?php echo $filter->input; ?>
 			</div>
 			<?php endforeach; ?>
+			
+			
+			<?php if( JVERSION < 3 ): ?>
+			<!-- Joomla!2.5 Fields Filter -->
+			<button class="btn submit fltrt"><?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?></button>
+			<div class="btn-group fltrt" style="width:200px;">
+				
+				<div id="UserXTD_field_name" class="UserXTD_field_name">
+					<?php foreach( $this->fields as $field ): ?>
+					<input type="checkbox" id="field_<?php echo $field->name; ?>" name="fields[]" value="<?php echo $field->name; ?>" <?php echo (in_array($field->name, $this->keys)) ? 'checked' : ''; ?> />
+					<label for="field_<?php echo $field->name; ?>"><?php echo $field->title; ?> (<?php echo $field->label; ?>)</label>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+			
 		<?php endif; ?>
 	
 	<?php endif; ?>
 </div>
+
+
+<?php if( JVERSION >= 3 ): ?>
+<!-- Joomla!3.0 Fields Filter -->
 <div class="fields-filter">
 	<button class="btn tip hasTooltip pull-right" type="submit" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
 	<div class="btn-group pull-right">
@@ -139,4 +143,6 @@ if( JVERSION >= 3 ) {
 		</select>
 	</div>	
 </div>
+<?php endif; ?>
+
 <div class="clearfix"> </div>

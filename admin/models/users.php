@@ -158,18 +158,20 @@ class UserxtdModelUsers extends AKModelList
 			//->order("")
 			;
 		
-		
-		if(!$filter_fields) {
-			$db->setQuery($q, 0, 5);
-		}else{
-			$db->setQuery($q);
-		}
+		$db->setQuery($q);
 		
 		$result = $db->loadObjectList();
 		
 		
 		// Set All Fields
 		$this->setState('allFields', $result) ;
+		
+		
+		// if is default
+		if(!$filter_fields) {
+			$filter_fields = JArrayHelper::getColumn($result, 'name');
+			$filter_fields = array_slice($filter_fields, 0, 5);
+		}
 		
 		
 		// Set Filtered Fields 
