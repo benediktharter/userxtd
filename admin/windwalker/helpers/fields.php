@@ -25,6 +25,7 @@ class AKHelperFields
 	
 	public static function setFieldTable($table, $attrs = null, $option = array())
 	{
+		
 		$field_type = $table->get('field_type', 'text') ;
 		if(!is_array($attrs)){
 			$attrs = $_REQUEST['attrs'] ;
@@ -193,7 +194,9 @@ class AKHelperFields
 		
 		// Rebuild Options
 		// ==================================================================
-		$array['options'] = AKHelper::_('array.pivotByKey', $array['options']);
+		if(isset($array['options'])){
+			$array['options'] = AKHelper::_('array.pivotByKey', $array['options']);
+		}
 		
 
 		return $array;

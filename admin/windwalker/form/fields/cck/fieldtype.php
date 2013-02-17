@@ -41,11 +41,14 @@ class JFormFieldFieldtype extends JFormFieldList
 	 */
 	public function getOptions()
 	{
-		$this->value = JRequest::getVar('field_type') ;
+		//$this->value = JRequest::getVar('field_type') ;
+		$this->setFieldData();
 		
 		if(!$this->value){
 			$this->value = (string)$this->element['default'];
 		}
+		
+		JRequest::setVar('field_type', $this->value, 'method', true) ;
 		
 		$element = $this->element ;
 		
@@ -67,4 +70,21 @@ class JFormFieldFieldtype extends JFormFieldList
 	}
 	
 	
+	/*
+	 * function setFieldData
+	 * @param arg
+	 */
+	
+	public function setFieldData()
+	{
+		if(!JRequest::getVar('id') ){
+			$app = JFactory::getApplication() ;
+			$app->setUserState('lib_windwalker.cck.fields' , null );
+		}
+		
+		$type = JRequest::getVar('field_type') ;
+		
+		$this->value = $type ? $type : $this->value;
+		
+	}
 }

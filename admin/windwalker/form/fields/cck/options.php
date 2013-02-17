@@ -98,10 +98,10 @@ class JFormFieldOptions extends JFormField
 			
 			// Set TDs
 			if($checkbox){
-				$grid->setRowCell('default', '<input type="checkbox" class="attr-default" id="option-'.$key.'" name="attrs[default][]" value="'.$var['text'].'" '.$checked.'/>') ;
+				$grid->setRowCell('default', '<input type="checkbox" class="attr-default" id="option-'.$key.'" name="attrs[default][]" value="'.$var['value'].'" '.$checked.'/>') ;
 			}
 			else{
-				$grid->setRowCell('default', '<input type="radio" class="attr-default" id="option-'.$key.'" name="attrs[default]" value="'.$var['text'].'" '.$checked.'/>') ;
+				$grid->setRowCell('default', '<input type="radio" class="attr-default" id="option-'.$key.'" name="attrs[default]" value="'.$var['value'].'" '.$checked.'/>') ;
 			}
 			
 			

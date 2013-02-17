@@ -49,29 +49,29 @@ class UserxtdControllerField extends AKControllerForm
 	
 	
 	
-	/**
-     * Method to save a record.
-     *
-     * @param   string  $key     The name of the primary key of the URL variable.
-     * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
-     *
-     * @return  boolean  True if successful, false otherwise.
-     *
-     * @since   11.1
-     */
-    public function save($key = null, $urlVar = null)
-	{
-		$result = parent::save($key, $urlVar) ;
-		$app = JFactory::getApplication() ;
-		
-		if(!$result) {
-			$context = "{$this->option}.edit.field.fields";
-			$attrs = JRequest::getVar('attrs');
-			$app->setUserState($context , $attrs );
-		}
-		
-		return $result;
-	}
+//	/**
+//     * Method to save a record.
+//     *
+//     * @param   string  $key     The name of the primary key of the URL variable.
+//     * @param   string  $urlVar  The name of the URL variable if different from the primary key (sometimes required to avoid router collisions).
+//     *
+//     * @return  boolean  True if successful, false otherwise.
+//     *
+//     * @since   11.1
+//     */
+//    public function save($key = null, $urlVar = null)
+//	{
+//		$result = parent::save($key, $urlVar) ;
+//		$app = JFactory::getApplication() ;
+//		
+//		if(!$result) {
+//			$context = "{$this->option}.edit.field.fields";
+//			$attrs = JRequest::getVar('attrs');
+//			$app->setUserState($context , $attrs );
+//		}
+//		
+//		return $result;
+//	}
 	
 	
 	

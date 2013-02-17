@@ -44,6 +44,8 @@ class JFormFieldFields extends JFormField
 		static $form_setted = false ;
 		static $form ;
 		
+		$this->getValues();
+		
 		$element 	= $this->element ;
 		
 		$this->addFieldJs();
@@ -93,6 +95,32 @@ class JFormFieldFields extends JFormField
 		return  $html;
 
 	}
+	
+	
+	/*
+	 * function getValues
+	 * @param 
+	 */
+	
+	public function getValues()
+	{
+		if($this->value) {
+			return true ;
+		}
+		
+		$attrs 	= JFactory::getApplication()->getUserState("lib_windwalker.cck.fields", array());
+		
+		if($attrs) {
+			$this->value = json_encode($attrs) ;
+		}
+		
+		// Retain data
+		$retain = JRequest::getVar('retain', 0) ;
+		if($retain) {
+			$this->value = json_encode(JRequest::getVar('attrs')) ;
+		}
+	}
+	
 	
 	
 	/*

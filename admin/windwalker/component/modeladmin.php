@@ -139,10 +139,14 @@ class AKModelAdmin extends JModelAdmin
 		endforeach;
 		
 		
-		// Set FieldType if enable CCK Engine
+		
+		// If page reload, retain data
 		// ==========================================================================================
-		if($this->getState('CCKEngine.enabled')){
-			$this->setFieldType($data);
+		$retain = JRequest::getVar('retain', 0) ;
+		
+		// Set Change Field Type Retain Data
+		if($retain) {
+			$data 	= JRequest::getVar('jform') ;
 		}
 		
 		
@@ -205,31 +209,6 @@ class AKModelAdmin extends JModelAdmin
 	public function getItem($pk = null)
 	{
 		return $this->item = parent::getItem($pk);
-	}
-	
-	
-	
-	/*
-	 * function setFieldType
-	 * @param arg
-	 */
-	
-	public function setFieldType($data = null, $key = 'field_type')
-	{
-		if(!$data) return false ;
-		
-		$type = JRequest::getVar($key) ;
-		if(!$type) {
-			if( !($data instanceof JObject) ){
-				$data = new JObject($data);
-			}
-			
-			$type = $data->get('field_type', 'text');
-		}
-		
-		$type = $type ? $type : 'text';
-		
-		JRequest::setVar($key, $type, 'method', true) ;
 	}
 	
 	

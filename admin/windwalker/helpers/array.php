@@ -125,6 +125,18 @@ class AKHelperArray {
 		
 		return $new ;
 	}
+	
+	
+	
+	/*
+	 * function pivotParams
+	 * @param $params
+	 */
+	
+	public static function pivotParamsFromArray($array)
+	{
+		
+	}
 }
 
 

@@ -84,43 +84,8 @@ class UserxtdModelField extends AKModelAdmin
 	 */
 	protected function loadFormData()
 	{
-		$retain = JRequest::getVar('retain', 0) ;
-		
 		$data 	= (array) parent::loadFormData();
-		$attrs 	= JFactory::getApplication()->getUserState("{$this->option}.edit.field.fields", array());
-		
-		if($attrs) {
-			$data['attrs'] = json_encode($attrs) ;
-			
-			foreach( $data as &$d ):
-				if(is_array($d)) {
-					$d['attrs'] = json_encode($attrs) ;
-				}
-			endforeach;
-		}
-		
-		// Set Change Field Type Retain Data
-		if($retain) {
-			$data 	= JRequest::getVar('jform') ;
-			$attrs 	= json_encode(JRequest::getVar('attrs')) ;
-			
-			$data2 = array() ;
-			foreach( $data as $key => &$val ):
-				/*
-				if(is_array($val)) {
-					$data2 = array_merge($data2, $val) ;
-				}else{
-					$data2[$key] = $val ;
-				}
-				*/
-				$val['attrs'] = $attrs;
-			endforeach;
-			
-			//$data = $data2 ;
-			
-			$data['attrs'] = $attrs;
-		}
-		
+
 		return $data ;
 	}
 

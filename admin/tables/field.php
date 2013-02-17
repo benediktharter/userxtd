@@ -178,6 +178,7 @@ class UserxtdTableField extends JTable
      */
     public function store($updateNulls = false)
 	{
+		$app = JFactory::getApplication() ;
 		$db = JFactory::getDbo();
 		$q = $db->getQuery(true) ;
 		
@@ -192,9 +193,17 @@ class UserxtdTableField extends JTable
 		if($result) {
 			$e = new JException(JText::_('COM_USERXTD_FIELD_NAME_EXISTS'));
 			$this->setError($e);
+			
+			$app->setUserState('lib_windwalker.cck.fields' , json_decode($this->attrs) );
 			return false;
 		}
 		
-		return parent::store($updateNulls);
+		$result = parent::store($updateNulls);
+		
+		if(!$result) {
+			$app->setUserState('lib_windwalker.cck.fields' , json_decode($this->attrs) );
+		}
+		
+		return $result ;
 	}
 }
