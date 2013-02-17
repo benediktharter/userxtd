@@ -36,17 +36,17 @@ class AKHelperArray {
 	 *
 	 *  To:
 	 *
-	 * 	[0] => Array
-	 * 		(
-	 * 			[value] => aaa
-	 * 			[text] => aaa
-	 * 		)
-	 * 
-	 * 	[1] => Array
-	 * 		(
-	 * 			[value] => bbb
-	 * 			[text] => bbb
-	 * 		)
+	 * 		[0] => Array
+	 * 			(
+	 * 				[value] => aaa
+	 * 				[text] => aaa
+	 * 			)
+	 * 	
+	 * 		[1] => Array
+	 * 			(
+	 * 				[value] => bbb
+	 * 				[text] => bbb
+	 * 			)	
 	 * @param $array
 	 */
 	
@@ -76,19 +76,19 @@ class AKHelperArray {
 	 *
 	 * 
 	 * From:
-	 *  [0] => Array
-	 * 		(
-	 * 			[value] => aaa
-	 * 			[text] => aaa
-	 * 		)
+	 * 	 	[0] => Array
+	 * 			(
+	 * 				[value] => aaa
+	 * 				[text] => aaa
+	 * 			)
+	 * 	
+	 * 		[1] => Array
+	 * 			(
+	 * 				[value] => bbb
+	 * 				[text] => bbb
+	 * 			)
 	 * 
-	 * 	[1] => Array
-	 * 		(
-	 * 			[value] => bbb
-	 * 			[text] => bbb
-	 * 		)
-	 * 
-	 *  To:
+	 * To:
 	 *
 	 * 		[value] => Array
 	 * 			(
@@ -133,9 +133,79 @@ class AKHelperArray {
 	 * @param $params
 	 */
 	
-	public static function pivotParamsFromArray($array)
+	public static function pivotFromPrefix( $prefix ,$origin, $target = null)
 	{
 		
+		foreach( $origin as $key => $row ):
+			if( strpos( $key, $prefix ) === 0 && isset($row)){
+				$key2 = substr($key, JString::strlen($prefix)) ;
+				self::setValue($target, $key2, $row) ;
+			}
+		endforeach;
+		
+		return $target;
+	}
+	
+	
+	/*
+	 * function pivotToPrefix
+	 * @param $array
+	 */
+	
+	public static function pivotToPrefix( $prefix ,$origin, $target = null)
+	{
+		foreach( $origin as $key => $val ):
+		
+			$key = $prefix.$key ;
+			
+			if(!self::getValue($target, $key)){
+				self::setValue($target, $key, $val) ;
+			}
+			
+		endforeach;
+		
+		return $target;
+	}
+	
+	
+	/*
+	 * function setValue
+	 * @param $key
+	 */
+	
+	public static function setValue(&$array, $key, $value)
+	{
+		if( is_array($array) ) {
+			return $array[$key] = $value ;
+		}else{
+			return $array->$key = $value;
+		}
+	}
+	
+	
+	
+	/*
+	 * function setValue
+	 * @param $key
+	 */
+	
+	public static function getValue(&$array, $key, $default = null)
+	{
+		if( is_array($array) ) {
+			return JArrayHelper::getValue( $array, $key, $default );
+		}
+		
+		// if not Array, we do not detect it for warning not Object
+		$result = null ;
+		if( isset($array->$key) ) {
+			$result = $array->$key ;
+		}
+		
+		if(is_null($result)){
+			$result = $default ;
+		}
+		
+		return $result ;
 	}
 }
 

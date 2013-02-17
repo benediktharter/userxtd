@@ -85,14 +85,8 @@ class UserxtdTableField extends JTable
 		// Set field['param_xxx'] to params
 		// ==========================================================================================
 		if(empty($array['params'])){
-			$array['params'] = array();
+			$array['params'] = (array)AKHelper::_('array.pivotFromPrefix', 'param_', $array, $array['params']) ;
 		}
-		foreach( $array as $key => $row ):
-			if( substr($key, 0, 6) == 'param_' && isset($row)){
-				$key2 = substr($key, 6) ;
-				$array['params'][$key2] = $row  ;
-			}
-		endforeach;
 		
 		
 		

@@ -119,12 +119,7 @@ class AKModelAdmin extends JModelAdmin
 		// Get params, convert $data->params['xxx'] to $data->param_xxx
 		// ==========================================================================================
 		if( isset($data->params) && is_array($data->params)){
-			foreach( $data->params as $key => $param ):
-				$key = 'param_'.$key ;
-				if(empty($data->$key)){
-					$data->$key = $param ;
-				}
-			endforeach;
+			$data = AKHelper::_('array.pivotToPrefix', 'param_', $data->params, $data) ;
 		}
 		
 		
