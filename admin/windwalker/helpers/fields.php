@@ -96,14 +96,7 @@ class AKHelperFields
 		// Rebuild options
 		// ================================================================
 		if(isset($attrs['options'])){
-			
-			$new_options = array();
-			foreach( $attrs['options']['value'] as $key => $option ):
-				$new_options[$key]['value'] = $attrs['options']['value'][$key] ;
-				$new_options[$key]['text'] = $attrs['options']['text'][$key] ;
-			endforeach;
-			$attrs['options'] = $new_options ;
-			
+			$attrs['options'] = AKHelper::_('array.pivotBySort', $attrs['options']);
 		}
 		
 		$element = '' ;
@@ -203,19 +196,11 @@ class AKHelperFields
 			$options = $array['options'];
 		}
 		
-		
 		// Rebuild Options
 		// ==================================================================
-		if($options) {
-			$array['options'] = array();
-			$i = 0 ;
-			foreach( $options['value'] as $key => $option ):
-				$array['options'][$i]['text'] = (string)$options['text'][$i] ;
-				$array['options'][$i]['value'] = (string)$option ;
-				$i++;
-			endforeach;
-		}
+		$array['options'] = AKHelper::_('array.pivotByKey', $array['options']);
 		
+
 		return $array;
 	}
 	
