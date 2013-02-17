@@ -45,23 +45,32 @@ class JFormFieldFields extends JFormField
 		static $form ;
 		
 		$this->getValues();
+		$this->addFieldJs();
 		
 		$element 	= $this->element ;
-		
-		$this->addFieldJs();
-		$fieldset 	= (string) $element['fset'];
-		$fieldset 	= $fieldset ? $fieldset : 'attrs' ;
 		$class 		= (string) $element['class'];
+		$nolabel	= (string) $element['nolabel'] ;
+		$nolabel	= ($nolabel == 'true' || $nolabel == '1') ? true : false ;
 		
-		$nolabel		= (string) $element['nolabel'] ;
-		$nolabel		= ($nolabel == 'true' || $nolabel == '1') ? true : false ;
 		
-		
+		// Get Field Form
+		// =============================================================
 		if(!$form_setted){
 			// ParseValue
 			$data = AKHelper::_('fields.parseAttrs', $this->value);
 			
-			$type 	= JRequest::getVar('field_type', 'text') ;
+			$type = JRequest::getVar('field_type', 'text') ;
+			$form = null;
+			
+			// Event
+			JFactory::getApplication()
+				->triggerEvent( 'onCCKEngineBeforeFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
+			
+			
+			// Loading form
+			// =============================================================
+			$fieldset 	= (string) $element['fset'];
+			$fieldset 	= $fieldset ? $fieldset : 'attrs' ;
 			
 			JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
 			$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
@@ -71,6 +80,11 @@ class JFormFieldFields extends JFormField
 			$default = JArrayHelper::getValue($data, 'default') ;
 			JRequest::setVar('field_default', $default, 'method', true) ;
 			$form_setted = true;
+			
+			
+			// Event
+			JFactory::getApplication()
+				->triggerEvent( 'onCCKEngineAfterFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
 		}
 		
 		

@@ -53,6 +53,10 @@ class JFormFieldFieldtype extends JFormFieldList
 		$element = $this->element ;
 		
 		$types = JFolder::files(AKPATH_FORM.'/forms/attr');
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEnginePrepareFieldtypes' , array( &$types , &$this, &$element)) ;
+		
 		$options = array();
 		
 		foreach( $types as $type ):

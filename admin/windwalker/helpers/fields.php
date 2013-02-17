@@ -31,9 +31,15 @@ class AKHelperFields
 			$attrs = $_REQUEST['attrs'] ;
 		}
 		
+		$context = JArrayHelper::getValue($option, 'context', 'lib_windwalker.field');
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineBeforeSaveField' , array( $context, &$table , &$attrs, $option)) ;
+		
+		
 		// Check is table have all needed column
 		// ==================================================================
-		self::checkTable($table);
+		self::checkTable($table, $context);
 		
 		
 		
@@ -68,10 +74,14 @@ class AKHelperFields
 		
 		// Build Element
 		// ==================================================================
-		$table->element = self::buildElement( $field_type , $attrs);
+		$table->element = self::buildElement( $field_type , $attrs, $option);
 		$table->name 	= $name ;
 		$table->label	= $attrs['label'];
 		$table->attrs	= json_encode($attrs) ;
+		
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineBeforeSaveField' , array( $context, &$table , &$attrs, $option)) ;
 	}
 	
 	
@@ -91,6 +101,9 @@ class AKHelperFields
 			$attrs = $_REQUEST['attrs'] ;
 			//$attrs = self::filterFields($field_type, $attrs) ;
 		}
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineBeforeBuildElement' , array( JArrayHelper::getValue($option, 'context'), &$field_type , &$attrs, $option)) ;
 		
 		if(!is_array($attrs)) {
 			return '<'.$node_name.'/>' ;
@@ -152,6 +165,9 @@ class AKHelperFields
 			$element = "<{$node_name}\n{$element}>\n{$options}</{$node_name}>" ;
 		}
 		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineAfterBuildElement' , array( JArrayHelper::getValue($option, 'context'), &$field_type , &$element, $option)) ;
+		
 		
 		return $element;
 	}
@@ -169,12 +185,22 @@ class AKHelperFields
 			$fset_label = $fieldset ;
 		}
 		
-		$xml = '<?xml version="1.0" encoding="utf-8"?><form>';
+		$context 	= null ;
+		$xml 		= '';
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineBeforeBuildFormXML' , array( $context, &$xml, $fieldset , $fields , $fset_label)) ;
+		
+		
+		$xml .= '<?xml version="1.0" encoding="utf-8"?><form>';
 		$xml .= $fields ? '<fields name="'.$fields.'">' : '';
 		$xml .= '<fieldset name="'.$fieldset.'" label="'.$fset_label.'">'.$elements.'</fieldset>';
 		$xml .= $fields ? '</fields>' : '';
 		$xml .= '</form>' ;
 		
+		
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineAfterBuildFormXML' , array( $context, &$xml, $fieldset , $fields , $fset_label)) ;
 			
 		return $xml;
 	}
@@ -320,7 +346,7 @@ class AKHelperFields
 	 * @param $table
 	 */
 	
-	public static function checkTable($table)
+	public static function checkTable($table, $context)
 	{
 		// Needed columns
 		$needed = array(
@@ -332,6 +358,8 @@ class AKHelperFields
 			'attrs'
 		);
 		
+		
+		JFactory::getApplication()->triggerEvent( 'onCCKEngineCheckTable' , array( $context, $table->getTableName() , &$needed)) ;
 		
 		
 		// Check columns
