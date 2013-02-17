@@ -47,6 +47,59 @@
 -->		
 	</fieldset>
 	
+	<fieldset name="content_intergate">
+		
+		<field
+			name="UserInfo"
+			type="radio"
+			label="COM_USERXTD_CONTENTINTERGATE_USER_INFORMATION"
+			description="COM_USERXTD_CONTENTINTERGATE_USER_INFORMATION_DESC"
+			default="1"
+		>			
+			<option value="0">JHIDE</option>
+			<option value="1">JSHOW</option>
+		</field>
+		
+
+		
+		<field
+			name="UserInfo_ImageField"
+			type="field_list"
+			label="COM_USERXTD_CONTENTINTERGATE_AVATAR"
+			description="COM_USERXTD_CONTENTINTERGATE_AVATAR_DESC"
+			default="BASIC_AVATAR"
+		/>
+		
+		<field
+			name="UserInfo_TitleField"
+			type="field_list"
+			label="COM_USERXTD_CONTENTINTERGATE_USERTITLE"
+			description="COM_USERXTD_CONTENTINTERGATE_USERTITLE_DESC"
+			default="name"
+		>
+			<option value="name">COM_USERXTD_CONTENTINTERGATE_USERTITLE_OPT_NAME</option>
+		</field>
+		
+		<field
+			name="UserInfo_AboutField"
+			type="field_list"
+			label="COM_USERXTD_CONTENTINTERGATE_ABOUT"
+			description="COM_USERXTD_CONTENTINTERGATE_ABOUT_DESC"
+			default="BASIC_ABOUT"
+		/>
+		
+		<field
+			name="UserInfo_WebiteField"
+			type="field_list"
+			label="COM_USERXTD_CONTENTINTERGATE_WEBSITE"
+			description="COM_USERXTD_CONTENTINTERGATE_WEBSITE_DESC"
+			default="BASIC_WEBSITE"
+		/>
+		
+	</fieldset>
+	
+	
+	<!--
 	<fieldset name="item">
 		
 		<field name="link_titles" type="list"
@@ -214,6 +267,7 @@
 		</field>
 		
 	</fieldset>
+	-->
 
 	<fieldset name="permissions"
 		description="JCONFIG_PERMISSIONS_DESC"

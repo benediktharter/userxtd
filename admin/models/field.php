@@ -156,7 +156,7 @@ class UserxtdModelField extends AKModelAdmin
 		$db = JFactory::getDbo();
 		$q = $db->getQuery(true) ;
 		
-		if (!$table->ordering) {
+		if (!$table->ordering && !$table->id) {
 			$q->select("MAX(ordering)")
 				->from("#__userxtd_fields")
 				->where('catid='.$table->catid)

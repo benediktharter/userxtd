@@ -38,4 +38,14 @@ class JFormFieldField_List extends JFormFieldItemlist
 	protected $view_item = 'field' ;
 	
 	protected $extension = 'com_userxtd' ;
+	
+	
+	public function getOptions()
+	{
+		$this->element['key_field'] 	= 'name';
+		$this->element['value_field'] 	= 'new_title';
+		$this->element['select'] = "CONCAT( title, ' (', name, ')' ) AS new_title" ;
+		
+		return parent::getOptions();
+	}
 }
