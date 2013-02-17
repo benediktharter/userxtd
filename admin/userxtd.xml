@@ -75,6 +75,7 @@
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
 			<folder>windwalker</folder>
+			<folder>class</folder>
 			<folder>controllers</folder>
 			<folder>helpers</folder>
 			<folder>images</folder>

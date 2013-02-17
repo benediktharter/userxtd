@@ -157,7 +157,7 @@ class plgSystemUserxtd extends JPlugin
 		$result = null ;
 		
 		// Code here
-		
+		$result = $this->call('content.userInfo', $context, &$article, &$params) ;
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
@@ -700,6 +700,7 @@ class plgSystemUserxtd extends JPlugin
 		$path = explode( '.' , $uri );
 		$func = array_pop($path);
 		$func = explode( '::', $func );
+		$class_name = null ;
 		
 		// set class name of function name.
 		if(isset($func[1])){
@@ -712,7 +713,7 @@ class plgSystemUserxtd extends JPlugin
 		}
 		
 		$func_path 		= implode('/', $path).'/'.$file_name;
-		$include_path = JPATH_ROOT.'/'.$this->params->get('include_path', 'easyset');
+		$include_path = JPATH_ROOT.'/'.$this->params->get('include_path', 'userxtd');
 		
 		// include file.
 		if( !function_exists ( $func_name )  && !class_exists($class_name) ) :			
@@ -743,7 +744,7 @@ class plgSystemUserxtd extends JPlugin
 	
 	
 	public function includeEvent($func) {
-		$include_path = JPATH_ROOT.'/'.$this->params->get('include_path', 'easyset');
+		$include_path = JPATH_ROOT.'/'.$this->params->get('include_path', 'userxtd');
 		$event = trim($include_path, '/').'/'.'events/'.$func.'.php' ;
 		if(file_exists( $event )) return $event ;
 	}

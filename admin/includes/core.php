@@ -68,3 +68,7 @@ AKHelper::_('path.setOption', 'com_userxtd') ;
 AKHelper::setPrefix('UserxtdHelper') ;
 AKHelper::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_userxtd/helpers');
 
+
+// Includ UserXTD API
+UXHelper::_('loader.import', 'admin://class/factory') ;
+UXHelper::_('loader.import', 'admin://class/user') ;

@@ -55,6 +55,7 @@
 			label="COM_USERXTD_CONTENTINTERGATE_USER_INFORMATION"
 			description="COM_USERXTD_CONTENTINTERGATE_USER_INFORMATION_DESC"
 			default="1"
+			class="btn-group"
 		>			
 			<option value="0">JHIDE</option>
 			<option value="1">JSHOW</option>
@@ -68,7 +69,9 @@
 			label="COM_USERXTD_CONTENTINTERGATE_AVATAR"
 			description="COM_USERXTD_CONTENTINTERGATE_AVATAR_DESC"
 			default="BASIC_AVATAR"
-		/>
+		>
+			<option>JNONE</option>
+		</field>
 		
 		<field
 			name="UserInfo_TitleField"
@@ -77,6 +80,7 @@
 			description="COM_USERXTD_CONTENTINTERGATE_USERTITLE_DESC"
 			default="name"
 		>
+			<option>JNONE</option>
 			<option value="name">COM_USERXTD_CONTENTINTERGATE_USERTITLE_OPT_NAME</option>
 		</field>
 		
@@ -86,15 +90,53 @@
 			label="COM_USERXTD_CONTENTINTERGATE_ABOUT"
 			description="COM_USERXTD_CONTENTINTERGATE_ABOUT_DESC"
 			default="BASIC_ABOUT"
+		>
+			<option>JNONE</option>
+		</field>
+		
+		
+		<field
+			name="UserInfo_ImageWidth"
+			type="text"
+			label="COM_USERXTD_CONTENTINTERGATE_IMAGE_WIDTH"
+			description="COM_USERXTD_CONTENTINTERGATE_IMAGE_WIDTH_DESC"
+			size="3"
+			default="1"
 		/>
 		
+		<field
+			name="UserInfo_ImageHeight"
+			type="text"
+			label="COM_USERXTD_CONTENTINTERGATE_IMAGE_HEIGHT"
+			description="COM_USERXTD_CONTENTINTERGATE_IMAGE_HEIGHT_DESC"
+			size="3"
+			default="1"
+		/>
+		
+		<field
+			name="UserInfo_ImageCrop"
+			type="radio"
+			label="COM_USERXTD_CONTENTINTERGATE_IMAGE_CROP"
+			description="COM_USERXTD_CONTENTINTERGATE_IMAGE_CROP_DESC"
+			size="3"
+			default="1"
+			class="btn-group"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		
+		<!--
 		<field
 			name="UserInfo_WebiteField"
 			type="field_list"
 			label="COM_USERXTD_CONTENTINTERGATE_WEBSITE"
 			description="COM_USERXTD_CONTENTINTERGATE_WEBSITE_DESC"
 			default="BASIC_WEBSITE"
-		/>
+		>
+			<option>JNONE</option>
+		</field>
+		-->
 		
 	</fieldset>
 	
