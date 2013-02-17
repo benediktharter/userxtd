@@ -67,51 +67,7 @@ class UserxtdViewProfiles extends AKViewList
 		// Set title.
 		AKToolBarHelper::title( ucfirst($this->getName()) . ' ' . JText::_($this->text_prefix.'_TITLE_LIST'), 'article.png');
 		
-		$state	= $this->get('State');
-		$canDo	= AKHelper::getActions($this->option);
-		$user 	= JFactory::getUser() ;
-		$filter_state 	= $this->state->get('filter') ;
-		
-        // Get the toolbar object instance
-		$bar = JToolBar::getInstance('toolbar');
-       
-		
-		// Toolbar Buttons
-		// ========================================================================
-		if ($canDo->get('core.create') || (count($user->getAuthorisedCategories($this->option, 'core.create'))) > 0 ) {
-			JToolBarHelper::addNew( $this->item_name.'.add');
-		}
-
-		if ($canDo->get('core.edit')) {
-			JToolBarHelper::editList( $this->item_name.'.edit');
-		}
-
-		if ($canDo->get('core.edit.state')) {
-			JToolBarHelper::divider();
-			JToolBarHelper::publish( $this->list_name.'.publish', 'JTOOLBAR_PUBLISH', true);
-			JToolBarHelper::unpublish( $this->list_name.'.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-			JToolbarHelper::checkin($this->list_name.'.checkin');
-			
-			if($this->state->get('items.nested')){
-				JToolBarHelper::custom($this->list_name.'.rebuild', 'refresh.png', 'refresh_f2.png', 'JTOOLBAR_REBUILD', false);
-			}
-			
-			JToolBarHelper::divider();
-		}
-		
-		if ($canDo->get('core.delete')) {
-			JToolbarHelper::deleteList('Are you sure?', $this->list_name.'.delete');
-		}
-		
-		// Add a batch modal button
-		if ($user->authorise('core.edit') && JVERSION >= 3)
-		{
-			AKToolbarHelper::modal( 'JTOOLBAR_BATCH', 'batchModal');
-		}
-		
-		if ($canDo->get('core.admin')) {
-			AKToolBarHelper::preferences($this->option);
-		}
+		parent::addToolbar();
 	}
 	
 	

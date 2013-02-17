@@ -100,7 +100,7 @@ class AKViewList extends AKView
 			JToolBarHelper::divider();
 		}
 		
-		if ($filter_state['a.published'] == -2 && $canDo->get('core.delete')) {
+		if ( !isset($this->item[0]->a_published) || (JArrayHelper::getValue($filter_state, 'a.published') == -2 && $canDo->get('core.delete') ) ) {
 			JToolbarHelper::deleteList('Are you sure?', $this->list_name.'.delete');
 		}
 		elseif ($canDo->get('core.edit.state')) {
@@ -108,7 +108,8 @@ class AKViewList extends AKView
 		}
 		
 		// Add a batch modal button
-		if ($user->authorise('core.edit') && JVERSION >= 3)
+		$batch = AKHelper::_('path.get').'/views/'.$this->list_name.'/tmpl/default_batch.php';
+		if ($user->authorise('core.edit') && JVERSION >= 3 && JFile::exists($batch))
 		{
 			AKToolbarHelper::modal( 'JTOOLBAR_BATCH', 'batchModal');
 		}

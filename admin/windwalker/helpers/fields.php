@@ -16,8 +16,11 @@ defined('_JEXEC') or die;
 class AKHelperFields
 {
 	/*
-	 * function setFieldTable
+	 * Set element data into table format when in JModelAdmin::perpareTable();
+	 * 
 	 * @param $table
+	 * @param $attrs
+	 * @param $option
 	 */
 	
 	public static function setFieldTable($table, $attrs = null, $option = array())
@@ -72,7 +75,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function buildElement
+	 * Convert a element data to JForm XML field string.
 	 * @param 
 	 */
 	
@@ -155,7 +158,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function buildFormXML
+	 * Combine all field elements into one JForm XML with root.
 	 * @param $fields
 	 */
 	
@@ -178,7 +181,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function parseAttrs
+	 * Parse element data JSON format to array.
 	 * @param $attrs
 	 */
 	
@@ -186,15 +189,7 @@ class AKHelperFields
 	{
 		if(!$attrs) return false;
 		
-		$array = (array)json_decode($attrs);
-		
-		// Save options to new var
-		// ================================================================
-		$options = null ;
-		if(isset($array['options'])) {
-			$array['options'] = (array) $array['options'] ;
-			$options = $array['options'];
-		}
+		$array = (array)json_decode($attrs, true);
 		
 		// Rebuild Options
 		// ==================================================================
@@ -207,7 +202,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function parseElement
+	 * Convert field element string to element data array.
 	 * @param $element
 	 */
 	
@@ -242,14 +237,14 @@ class AKHelperFields
 				$i++;
 			endforeach;
 		}
-		AK::show($array);
+
 		return $array;
 	}
 	
 	
 	
 	/*
-	 * function convertJsonToArray
+	 * Convert a JSON element data to array.
 	 * @param $data
 	 */
 	
@@ -275,7 +270,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function filterFields
+	 * Use filter rules to filter value in fields.
 	 * @param $data
 	 */
 	
@@ -303,14 +298,12 @@ class AKHelperFields
 	
 	
 	/*
-	 * function filterName
+	 * Make Name as safe ID
 	 * @param $name
 	 */
 	
 	public static function filterName($name)
 	{
-		// Make Name as safe ID
-		// ==================================================================
 		$name = JFilterOutput::stringURLSafe($name);
 		$name = str_replace('-', '_', $name) ;
 		$name = strtoupper($name) ;
@@ -320,7 +313,7 @@ class AKHelperFields
 	
 	
 	/*
-	 * function checkTable
+	 * Check is Table exists needed columns?
 	 * @param $table
 	 */
 	
