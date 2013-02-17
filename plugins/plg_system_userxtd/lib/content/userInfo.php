@@ -38,6 +38,7 @@ function userInfo($context, $article, $params)
 
 	
 	$html = <<<HTML
+	<!-- UserXTD Information Box -->
 	<div class="ux-user-info-warp well">
 		<div class="ux-user-inner row-fluid">
 			<div class="ux-user-right span3">
