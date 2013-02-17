@@ -101,7 +101,7 @@
 			label="COM_USERXTD_CONTENTINTERGATE_IMAGE_WIDTH"
 			description="COM_USERXTD_CONTENTINTERGATE_IMAGE_WIDTH_DESC"
 			size="3"
-			default="1"
+			default="150"
 		/>
 		
 		<field
@@ -110,7 +110,7 @@
 			label="COM_USERXTD_CONTENTINTERGATE_IMAGE_HEIGHT"
 			description="COM_USERXTD_CONTENTINTERGATE_IMAGE_HEIGHT_DESC"
 			size="3"
-			default="1"
+			default="150"
 		/>
 		
 		<field

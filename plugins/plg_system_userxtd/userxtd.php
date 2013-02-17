@@ -443,6 +443,8 @@ class plgSystemUserxtd extends JPlugin
 					
 					foreach( $_FILES['jform']['name']['profile'] as $key =>$var ):
 					
+						if(!$var) continue ;
+						
 						// Get Field Attr
 						$width 	= $form->getFieldAttribute($key, 'width', 250, 'profile') ;
 						$height = $form->getFieldAttribute($key, 'height', 250, 'profile') ;
