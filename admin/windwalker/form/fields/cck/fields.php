@@ -69,9 +69,6 @@ class JFormFieldFields extends JFormField
 			
 			// Loading form
 			// =============================================================
-			$fieldset 	= (string) $element['fset'];
-			$fieldset 	= $fieldset ? $fieldset : 'attrs' ;
-			
 			JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
 			$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
 			$form->bind($data);
@@ -88,6 +85,8 @@ class JFormFieldFields extends JFormField
 		}
 		
 		
+		$fieldset 	= (string) $element['fset'];
+		$fieldset 	= $fieldset ? $fieldset : 'attrs' ;
 		$fields = $form->getFieldset($fieldset);
 		
 		
