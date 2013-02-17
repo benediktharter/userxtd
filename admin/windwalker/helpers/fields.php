@@ -128,7 +128,7 @@ class AKHelperFields
 		$attrs['type'] = $field_type;
 		
 		// set default
-		if(is_array($attrs['default'])){
+		if(is_array( JArrayHelper::getValue($attrs, 'default') )){
 			$attrs['default'] = implode(',', $attrs['default']);
 		}
 		
