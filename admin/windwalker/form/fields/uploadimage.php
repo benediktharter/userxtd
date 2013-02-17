@@ -51,10 +51,17 @@ class JFormFieldUploadimage extends JFormField
         $onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 		
 		if($readonly != 'false' && $readonly) {
-			return JHtml::image($this->value, $this->name);
+			return JHtml::image($this->value, $this->name, array('width' => 150));
 		}else{
-			return '<input type="file" name="' . $this->name . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
+			
+			$html = '' ;
+			if($this->value) {
+				$html .= '<div class="image-'.$this->id.'">'.JHtml::image($this->value, $this->name, array('width' => 150)).'</div>';
+			}
+			$html .= '<input type="file" name="' . $this->name . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
 				. $onchange . ' />';
+			
+			return $html;
 		}
 		
     }
@@ -67,6 +74,8 @@ class JFormFieldUploadimage extends JFormField
 	
 	public static function showImage($value)
 	{
-		return JHtml::image( $value, 'image' );
+		if($value) {
+			return JHtml::image( $value, 'image' );
+		}
 	}
 }

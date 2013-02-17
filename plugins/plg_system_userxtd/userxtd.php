@@ -405,7 +405,6 @@ class plgSystemUserxtd extends JPlugin
 		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 		$UXParams = UserxtdHelper::_('getParams');
 
-		AK::show($_FILES);AK::show($data);
 		$form = UXHelper::_('form.getFieldsByCategory', $catid);
 		
 		$userId	= JArrayHelper::getValue($data, 'id', 0, 'int');
@@ -415,6 +414,7 @@ class plgSystemUserxtd extends JPlugin
 			try
 			{
 				//Sanitize the date
+				// ===============================================================
 				if (!empty($data['profile']['dob']))
 				{
 					$date = new JDate($data['profile']['dob']);
@@ -436,7 +436,9 @@ class plgSystemUserxtd extends JPlugin
 				$q->columns(array($q->qn('user_id'), $q->qn('key'), $q->qn('value'), $q->qn('ordering')));
 				
 				
+				
 				// If has image, upload file
+				// ===============================================================
 				if(isset($_FILES['jform']['name']['profile'])){
 					
 					foreach( $_FILES['jform']['name']['profile'] as $key =>$var ):
@@ -619,6 +621,7 @@ class plgSystemUserxtd extends JPlugin
 			if (!isset($data->profile) and $userId > 0)
 			{
 				// Load the profile data from the database.
+				// ===============================================================
 				$db = JFactory::getDbo();
 				$q = $db->getQuery(true) ;
 				
@@ -642,19 +645,23 @@ class plgSystemUserxtd extends JPlugin
 				}
 				
 				
+				
 				// Merge the profile data.
+				// ===============================================================
 				$data->profile = array();
 
 				foreach ($results as $v)
 				{
 					$k = $v[0];
 					
-					// Convert String to Array
+					
+					// Convert String to Array if multiple
 					$v[3] = json_decode($v[3], true);
 					if( JArrayHelper::getValue($v[3], 'multiple') ) {
 						$v[1] = explode(',', $v[1]);
 					}
 					
+					// merge data
 					$data->profile[$k] = $v[1];
 					if ($data->profile[$k] === null)
 					{
