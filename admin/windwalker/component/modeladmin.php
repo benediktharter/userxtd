@@ -449,7 +449,7 @@ class AKModelAdmin extends JModelAdmin
 		
 		// Set Fields if CCKEngine Enabled
 		if($this->getState('CCKEngine.enabled')) {
-			AKHelper::_('fields.setFieldTable', $table, array( 'context' => "{$this->option}.{$this->item_name}" )) ;
+			AKHelper::_('fields.setFieldTable', $table, null, array( 'context' => "{$this->option}.{$this->item_name}" )) ;
 		}
 	}
 	
