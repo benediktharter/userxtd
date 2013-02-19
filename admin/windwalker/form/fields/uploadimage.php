@@ -47,6 +47,10 @@ class JFormFieldUploadimage extends JFormField
 		$readonly = (string) $this->element['readonly'] ;
 		$value	= $this->value ;
 		
+		$width 	= $this->element['width'] ? $this->element['width'] : 150 ;
+		$height = $this->element['height'] ? $this->element['height'] : 150 ;
+		$crop	= $this->element['crop'] ? $this->element['crop'] : 1 ;
+		
         // Initialize JavaScript field attributes.
         $onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 		
@@ -56,15 +60,85 @@ class JFormFieldUploadimage extends JFormField
 			
 			$html = '' ;
 			if($this->value) {
-				$html .= '<div class="image-'.$this->id.'">'.JHtml::image($this->value, $this->name, array('width' => 150)).'</div>';
+				$html .= '<div class="image-'.$this->id.'">'.JHtml::image( AKHelper::_('thumb.resize', $this->value, $width, $height, $crop) , $this->name, array()).'</div>';
 			}
-			$html .= '<input type="file" name="' . $this->name . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
+			$html .= '<input type="file" name="' . $this->getName( $this->element['name'] . '_upload' ) .'" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
 				. $onchange . ' />';
+			
+			$html .= '<label><input type="checkbox" name="' . $this->getName( $this->element['name'] . '_delete' ) .'" id="' . $this->id . '"' . ' value="1" />'.JText::_('JACTION_DELETE').'</label>';
+			$html .= '<input type="hidden" name="'.$this->name . '" value="'.$this->value.'" />';
 			
 			return $html;
 		}
 		
     }
+	
+	
+	
+	/*
+	 * function setup
+	 * @param $
+	 */
+	
+	public function setup(SimpleXMLElement $element, $value, $group = null)
+	{
+		parent::setup($element, $value, $group) ;
+		
+		if( JRequest::getVar($this->element['name'] . '_delete') == 1 ) {
+			$this->value = '' ;
+		}else{
+			
+			// Upload Image
+			// ===============================================
+			if(isset($_FILES['jform']['name']['profile'])){
+					
+				foreach( $_FILES['jform']['name']['profile'] as $key =>$var ):
+				
+					if(!$var) continue ;
+					
+					// Get Field Attr
+					$width 	= $this->element['save_width'] ? $this->element['save_width'] : 800 ;
+					$height = $this->element['save_height'] ? $this->element['save_height'] : 800 ;
+					
+					// Build File name
+					$src 	= $_FILES['jform']['tmp_name']['profile'][$key] ;
+					$var 	= explode('.', $var);
+					$date 	= JFactory::getDate( 'now' , JFactory::getConfig()->get('offset') ) ;
+					$name 	= md5((string)$date . $width . $height . $src) . '.' . array_pop( $var );
+					$url 	= "images/cck/{$date->year}/{$date->month}/{$date->day}/" . $name ;
+					
+					// A Event for extend.
+					JFactory::getApplication()->triggerEvent('onCCKEngineUploadImage', array(&$url, &$this, &$this->element)) ;
+					
+					$dest 	= JPATH_ROOT.'/'.$url ;
+					
+					// Upload First
+					JFile::upload( $src , $dest );
+					
+					// Resize image
+					$img = new JImage();
+					$img->loadFile(JPATH_ROOT.'/'.$url);
+					$img = $img->resize($width, $height);
+					
+					switch(array_pop($var)){
+						case 'gif': $type = IMAGETYPE_GIF ;break;
+						case 'png': $type = IMAGETYPE_PNG ;break;
+						default : $type = IMAGETYPE_JPEG ;break;
+					}
+					
+					// save
+					$img->toFile($dest, $type, array('quality' => 85));
+					
+					// Set in Value
+					$this->value = $url ;
+				endforeach;
+				
+			}
+		}
+		
+		return true ;
+	}
+	
 	
 	
 	/*

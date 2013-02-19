@@ -402,13 +402,42 @@ class plgSystemUserxtd extends JPlugin
 	{
 		//$result = array() ;
 		$db 	= JFactory::getDbo();
-		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
-		$UXParams = UserxtdHelper::_('getParams');
-
-		$form = UXHelper::_('form.getFieldsByCategory', $catid);
 		
+		
+		// Init Framework
+		// ===============================================================
+		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
+		include_once AKPATH_FORM.'/form.php' ;
+		$UXParams = UserxtdHelper::_('getParams');
+		
+		// For Upload Event
+		$this->user_data = $data ;
+		
+		
+		// Set Category
+		$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
+		
+		if(!is_array($catid)) {
+			$catid = array($catid);
+		}
+		
+		if(!in_array('*', $catid)) {
+			$catid = implode(',', $catid);
+		}else{
+			$catid = null ;
+		}
+		
+		
+		// Get Data and handle them
+		$form 	= UXHelper::_('form.getFieldsByCategory', $catid);
+		$form->bind($data);
+		$data['profile'] = $form->getDataForSave('profile');
 		$userId	= JArrayHelper::getValue($data, 'id', 0, 'int');
 		
+		
+		
+		// Start Building query
+		// ===============================================================
 		if ($userId && $result && isset($data['profile']) && (count($data['profile'])))
 		{
 			try
@@ -437,43 +466,8 @@ class plgSystemUserxtd extends JPlugin
 				
 				
 				
-				// If has image, upload file
-				// ===============================================================
-				if(isset($_FILES['jform']['name']['profile'])){
-					
-					foreach( $_FILES['jform']['name']['profile'] as $key =>$var ):
-					
-						if(!$var) continue ;
-						
-						// Get Field Attr
-						$width 	= $form->getFieldAttribute($key, 'width', 250, 'profile') ;
-						$height = $form->getFieldAttribute($key, 'height', 250, 'profile') ;
-						$crop 	= $form->getFieldAttribute($key, 'crop', true, 'profile') ;
-										
-						$src 	= $_FILES['jform']['tmp_name']['profile'][$key] ;
-						$var 	= explode('.', $var);
-						$name 	= $key . '.' . array_pop( $var );
-						$url 	= 'images/userxtd/'.$data['username'].'/'.$name ;
-						$dest 	= JPATH_ROOT.'/'.$url ;
-						
-						// Upload First
-						JFile::upload( $src , $dest );
-						
-						// Resize image
-						$new	= AKHelper::_('thumb.resize', $url, $width, $height, $crop) ;
-						$new	= explode('/', $new) ;
-						$new	= array_pop($new) ;
-						$new	= 'cache/thumbs/cache/'.$new ;
-						
-						JFile::move($new, $dest);
-						
-						$data['profile'][$key] = $url ;
-					endforeach;
-					
-				}
-				
-				
 				// Build query
+				// ===============================================================
 				foreach ($data['profile'] as $k => $v)
 				{
 					
@@ -679,6 +673,27 @@ class plgSystemUserxtd extends JPlugin
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
 		return $this->resultBool($result);
+	}
+	
+	
+	
+	/*
+	 * function onCCKEngineUploadImage
+	 * @param $url
+	 */
+	
+	public function onCCKEngineUploadImage($url, $field, $element = null)
+	{
+		$data 	= $this->user_data ;
+		
+		$name 	= $_FILES['jform']['name']['profile'][$field->fieldname . '_upload'] ;
+		$name	= explode('.', $name) ;
+		$ext	= array_pop( $name );
+		
+		if($data && $url) {
+			$url = "images/userxtd/{$data['username']}/" . $field->fieldname . '.' . $ext;
+		}
+		
 	}
 	
 	

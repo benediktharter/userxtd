@@ -22,7 +22,7 @@ class UserxtdHelperForm
 	 * @param $catid
 	 */
 	
-	public static function getFieldsByCategory($catid = array(), $form = null)
+	public static function getFieldsByCategory($catid = array(), $form = null, $option = array())
 	{
 		if(!$catid || count($catid) == 0) {
 			return self::getFields(null, $form);
@@ -34,7 +34,7 @@ class UserxtdHelperForm
 		
 		$catid = implode(',', $catid);
 		
-		return self::getFields("catid IN ({$catid})", $form);
+		return self::getFields("catid IN ({$catid})", $form, $option);
 	}
 	
 	
@@ -43,11 +43,15 @@ class UserxtdHelperForm
 	 * @param $condition
 	 */
 	
-	public static function getFields($condition = null, $form = null, $name = 'UserXTD')
+	public static function getFields($condition = null, $form = null, $option = array())
 	{
+		include_once AKPATH_FORM.'/form.php' ;
+		
+		$name 		= JArrayHelper::getValue($option, 'name', 'UserXTD');
+		$control 	= JArrayHelper::getValue($option, 'control', null);	
 		
 		if(!$form) {
-			$form = new JForm($name);
+			$form = new AKForm($name, array('control' => $control));
 		}
 		
 		$app = JFactory::getApplication() ;
