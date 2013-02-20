@@ -23,9 +23,9 @@ class UserxtdHelperForm
 	 */
 	
 	public static function getFieldsByCategory($catid = array(), $form = null, $option = array())
-	{
+	{	
 		if(!$catid || count($catid) == 0) {
-			return self::getFields(null, $form);
+			return self::getFields(null, $form, $option);
 		}
 		
 		if(is_string($catid)) {
@@ -59,7 +59,7 @@ class UserxtdHelperForm
 		$q 	= $db->getQuery(true) ;
 		
 		
-		if($condition) {
+		if($condition) {jexit();
 			$q->where($condition) ;
 		}
 		
@@ -76,7 +76,7 @@ class UserxtdHelperForm
 			->from("#__userxtd_fields AS a")
 			->join('LEFT', '#__categories AS b ON a.catid = b.id' )
 			->where('a.published > 0')
-			->order("a.ordering")
+			->order( isset($option['order']) ? $option['order'] : "b.lft, a.ordering")
 			;
 		
 		$db->setQuery($q);
