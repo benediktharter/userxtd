@@ -95,10 +95,10 @@ class UserxtdModelUser extends AKModelAdmin
 	 * @return	mixed	Object on success, false on failure.
 	 * @since	1.6
 	 */
-	public function getItem($pk = null)
+	public function getUser($pk = null)
 	{
-		$id = JRequest::getVar('id') ;
-		$user = UXFactory::getUser($id);
+		$id 	= JRequest::getVar('id') ;
+		$user 	= UXFactory::getUser($id);
 		
 		if($user) {
 			
@@ -108,6 +108,27 @@ class UserxtdModelUser extends AKModelAdmin
 
 		return false;
 	}
+	
+	
+	
+	/*
+	 * function getFields
+	 * @param 
+	 */
+	
+	public function getProfiles()
+	{
+		$catids = $this->getState('params')->get('CoreRegistration_Categories') ;
+		
+		if(in_array('*', $catids)) {
+			$catids = null ;
+		}
+		
+		$fields = UXHelper::_('form.getFieldsByCategory', $catids) ;
+		
+		return $fields ;
+	}
+	
 	
 	
 	/**

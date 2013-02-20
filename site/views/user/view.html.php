@@ -43,10 +43,10 @@ class UserxtdViewUser extends AKViewItem
 		$user 	= JFactory::getUser() ;
 		
 		$this->state	= $this->get('State');
+		$this->item		= $this->get('User');
 		$this->params	= $this->state->get('params');
-		$this->item		= $this->get('Item');
 		$this->fields	= $this->get('Fields');
-		$this->category	= $this->get('Category');
+		$this->profiles = $this->get('Profiles');
 		$this->canDo	= UserxtdHelper::getActions();
 		
 		$layout = $this->getLayout();
@@ -68,66 +68,66 @@ class UserxtdViewUser extends AKViewItem
 		// Dsplay Data
 		// =====================================================================================
 		$item = $this->item ;
-		$item->link = JRoute::_("index.php?option=com_userxtd&view=user&id={$item->id}&alias={$item->alias}&catid={$item->catid}");
-		$item->created_user = JFactory::getUser($item->created_by)->get('name') ;
-		$item->cat_title = $this->category->title ;
-		if($item->modified == '0000-00-00 00:00:00') {
-			$item->modified = '' ;
-		}
+		//$item->link = JRoute::_("index.php?option=com_userxtd&view=user&id={$item->id}&alias={$item->alias}&catid={$item->catid}");
+		//$item->created_user = JFactory::getUser($item->created_by)->get('name') ;
+		//$item->cat_title = $this->category->title ;
+		//if($item->modified == '0000-00-00 00:00:00') {
+		//	$item->modified = '' ;
+		//}
 		
 		
 		
 		// Can Edit
 		// =====================================================================================
-		if (!$user->get('guest')) {
-			$userId	= $user->get('id');
-			$asset	= 'com_userxtd.user.'.$item->id;
-
-			// Check general edit permission first.
-			if ($user->authorise('core.edit', $asset)) {
-				$this->params->set('access-edit', true);
-			}
-			// Now check if edit.own is available.
-			elseif (!empty($userId) && $user->authorise('core.edit.own', $asset)) {
-				// Check for a valid user and that they are the owner.
-				if ($userId == $item->created_by) {
-					$this->params->set('access-edit', true);
-				}
-			}
-		}
+		//if (!$user->get('guest')) {
+		//	$userId	= $user->get('id');
+		//	$asset	= 'com_userxtd.user.'.$item->id;
+		//
+		//	// Check general edit permission first.
+		//	if ($user->authorise('core.edit', $asset)) {
+		//		$this->params->set('access-edit', true);
+		//	}
+		//	// Now check if edit.own is available.
+		//	elseif (!empty($userId) && $user->authorise('core.edit.own', $asset)) {
+		//		// Check for a valid user and that they are the owner.
+		//		if ($userId == $item->created_by) {
+		//			$this->params->set('access-edit', true);
+		//		}
+		//	}
+		//}
 		
 		
 		
 		// View Level
 		// =====================================================================================
-		if ($access = $this->state->get('filter.access')) {
-			// If the access filter has been set, we already know this user can view.
-			$this->params->set('access-view', true);
-		}
-		else {
-			// If no access filter is set, the layout takes some responsibility for display of limited information.
-			$user = JFactory::getUser();
-			$groups = $user->getAuthorisedViewLevels();
-
-			if ($item->catid == 0 || $this->category->access === null) {
-				$this->params->set('access-view', in_array($item->access, $groups));
-			}
-			else {
-				$this->params->set('access-view', in_array($item->access, $groups) && in_array($this->category->access, $groups));
-			}
-		}
+		//if ($access = $this->state->get('filter.access')) {
+		//	// If the access filter has been set, we already know this user can view.
+		//	$this->params->set('access-view', true);
+		//}
+		//else {
+		//	// If no access filter is set, the layout takes some responsibility for display of limited information.
+		//	$user = JFactory::getUser();
+		//	$groups = $user->getAuthorisedViewLevels();
+		//
+		//	if ($item->catid == 0 || $this->category->access === null) {
+		//		$this->params->set('access-view', in_array($item->access, $groups));
+		//	}
+		//	else {
+		//		$this->params->set('access-view', in_array($item->access, $groups) && in_array($this->category->access, $groups));
+		//	}
+		//}
 		
 		
 		// Publish Date
 		// =====================================================================================
-		$pup = JFactory::getDate( $item->publish_up , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		$pdw = JFactory::getDate( $item->publish_down , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		$now = JFactory::getDate( 'now' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		$null= JFactory::getDate( '0000-00-00 00:00:00' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		
-		if( ($now < $pup && $pup != $null)  || ( $now > $pdw && $pdw != $null ) ) {
-			$item->published = 0 ;
-		}
+		//$pup = JFactory::getDate( $item->publish_up , JFactory::getConfig()->get('offset') )->toUnix(true) ;
+		//$pdw = JFactory::getDate( $item->publish_down , JFactory::getConfig()->get('offset') )->toUnix(true) ;
+		//$now = JFactory::getDate( 'now' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
+		//$null= JFactory::getDate( '0000-00-00 00:00:00' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
+		//
+		//if( ($now < $pup && $pup != $null)  || ( $now > $pdw && $pdw != $null ) ) {
+		//	$item->published = 0 ;
+		//}
 		
 		
 		
@@ -136,18 +136,18 @@ class UserxtdViewUser extends AKViewItem
 		$dispatcher	= JDispatcher::getInstance();
 		JPluginHelper::importPlugin('content');
 		
-		$item->text = $this->params->get('show_intro', 1) ? $item->introtext. $item->fulltext = $item->fulltext : $item->fulltext ;
-		$results = $dispatcher->trigger('onContentPrepare', array ('com_userxtd.user', &$item, &$this->params, 0));
+		
+		$results = $dispatcher->trigger('onUserXTDUserPrepare', array ('com_userxtd.user', &$item, &$this->params, 0));
 
 		$item->event = new stdClass();
-		$results = $dispatcher->trigger('onContentAfterTitle', array('com_userxtd.user', &$item, &$this->params, 0));
+		$results = $dispatcher->trigger('onUserXTDUserAfterTitle', array('com_userxtd.user', &$item, &$this->params, 0));
 		$item->event->afterDisplayTitle = trim(implode("\n", $results));
 
-		$results = $dispatcher->trigger('onContentBeforeDisplay', array('com_userxtd.user', &$item, &$this->params, 0));
-		$item->event->beforeDisplayContent = trim(implode("\n", $results));
+		$results = $dispatcher->trigger('onUserXTDUserBeforeDisplay', array('com_userxtd.user', &$item, &$this->params, 0));
+		$item->event->beforeDisplayUser = trim(implode("\n", $results));
 
-		$results = $dispatcher->trigger('onContentAfterDisplay', array('com_userxtd.user', &$item, &$this->params, 0));
-		$item->event->afterDisplayContent = trim(implode("\n", $results));
+		$results = $dispatcher->trigger('onUserXTDUserAfterDisplay', array('com_userxtd.user', &$item, &$this->params, 0));
+		$item->event->afterDisplayUser = trim(implode("\n", $results));
 		
 		
 		
@@ -179,7 +179,7 @@ class UserxtdViewUser extends AKViewItem
 				// Merge the menu item params with the user params so that the user params take priority
 				$temp->merge($item->params);
 				$this->params = $temp;
-
+		
 				// Check for alternative layouts (since we are not in a single-user menu item)
 				// Single-user menu item layout takes priority over alt layout for an user
 				if ($layout = $this->params->get('user_layout')) {
@@ -242,5 +242,42 @@ class UserxtdViewUser extends AKViewItem
 			
 		}
 		
+	}
+	
+	
+	
+	/*
+	 * function showInfo
+	 * @param $key
+	 */
+	
+	public function showInfo( $item, $key = null, $label = null, $strip = true, $link = null ,$class = null)
+	{
+		if(empty($item->$key)){
+			return false ;
+		}
+		
+		$lang  = $strip ? substr($key, 2) : $key ;
+		
+		if(!$label){
+			$label = JText::_('COM_{COMPONENT_NAME_UC}_'.strtoupper($lang)) ;
+		}else{
+			$label = JText::_(strtoupper($label)) ;
+		}
+		
+		$value = $item->$key ;
+		
+		if($link){
+			$value = JHtml::_('link', $link, $value);
+		}
+		
+		$lang = str_replace( '_', '-', $lang );
+		
+		$info =
+<<<INFO
+			<dt class="info-label">{$label}:</dt>
+			<dd class="info-value">{$value}</dd>
+INFO;
+		return $info ;
 	}
 }

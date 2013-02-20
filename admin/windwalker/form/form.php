@@ -56,9 +56,9 @@ class AKForm extends JForm
 		$data2 = array();
 		foreach( $fields as $field ):
 			if(method_exists($field, 'showData')){
-				$data2[$field->fieldname] = $field->value ;
-			}else{
 				$data2[$field->fieldname] = $field->showData() ;
+			}else{
+				$data2[$field->fieldname] = $field->value ;
 			}
 		endforeach;
 		

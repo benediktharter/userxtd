@@ -16,10 +16,23 @@ UserxtdHelper::_('include.bootstrap', true, true);
 
 // Create shortcuts to some parameters.
 $params		= $this->item->params;
+$profile	= $this->profiles;
 $canEdit	= $this->item->params->get('access-edit');
 $user		= JFactory::getUser();
 $item 		= $this->item ;
 $uri 		= JFactory::getURI() ;
+
+// Set Profile Data
+$data 		= $profile->getDataForShow( 'profile', array('profile' => $item->profiles) );
+$fieldsets	= $profile->getFieldsets( 'profile' );
+
+
+$exclude_fields = array() ;
+$exclude_fields[] = $avatar_field 	= $params->get('UserInfo_ImageField', 'BASIC_AVATAR');
+$exclude_fields[] = $title_field 	= $params->get('UserInfo_TitleField', 'name');
+$exclude_fields[] = $about_field 	= $params->get('UserInfo_AboutField', 'BASIC_ABOUT');
+
+$this->exclude_fields = $exclude_fields;
 ?>
 
 <script type="text/javascript">
@@ -30,7 +43,7 @@ $uri 		= JFactory::getURI() ;
 	<div id="userxtd-wrap" class="container-fluid users<?php echo $this->get('pageclass_sfx');?>">
 		<div id="userxtd-wrap-inner">
 			
-			<div class="user-item item<?php if($item->published == 0) echo ' well well-small'; ?>">
+			<div class="user-item item">
 				<div class="user-item-inner">
 					
 					
@@ -63,16 +76,6 @@ $uri 		= JFactory::getURI() ;
 					
 					
 					
-					<!-- Heading -->
-					<!-- ============================================================================= -->
-					<div class="heading">
-						<h2><?php echo $params->get('link_titles') ? JHtml::_('link', $item->link, $item->title) : $item->title ?></h2>
-					</div>
-					<!-- ============================================================================= -->
-					<!-- Heading -->
-					
-					
-					
 					<!-- afterDisplayTitle -->
 					<!-- ============================================================================= -->
 					<?php echo $this->item->event->afterDisplayTitle; ?>
@@ -82,25 +85,67 @@ $uri 		= JFactory::getURI() ;
 					
 					<!-- beforeDisplayContent -->
 					<!-- ============================================================================= -->
-					<?php echo $this->item->event->beforeDisplayContent; ?>
+					<?php echo $this->item->event->beforeDisplayUser; ?>
 					<!-- ============================================================================= -->
 					<!-- beforeDisplayContent -->
 					
 					
-					<!-- Info -->
-					<!-- ============================================================================= -->
-					<div class="info">
-						<div class="info-inner">
-							<?php echo $this->showInfo($item, 'cat_title', 	'jcategory', null, JRoute::_('index.php?option=com_userxtd&view=users&id='.$item->catid)); ?>
-							<?php echo $this->showInfo($item, 'created', 	'com_userxtd_created', null); ?>
-							<?php echo $this->showInfo($item, 'modified', 	'com_userxtd_modified', null); ?>
-							<?php echo $this->showInfo($item, 'created_user', 'com_userxtd_created_by', null); ?>
-						</div>
-					</div>
+					<div class="row-fluid">
+						<div class="span4">
+							<div class="profile-avatar">
+								<img src="<?php echo $item->get($avatar_field); ?>" class="img-polaroid" alt="UserXTD Avatar <?php echo $user->username; ?>" />
+							</div>
+							
+							<dl class="dl-horizontal">
+								
+								<!--Register Date-->
+								<dt>
+									<?php echo JText::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?>
+								</dt>
+								<dd>
+									<?php echo JFactory::getDate( $item->get('registerDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
+								</dd>
+								
+								
+								<!--Last Visit Date-->
+								<dt>
+									<?php echo JText::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?>
+								</dt>
+								<dd>
+									<?php echo JFactory::getDate( $item->get('lastvisitDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
+								</dd>
+							</dl>	
+						</div>	
 					
-					<hr class="info-separator" />
+					
+					
+						<!-- Info -->
+						<!-- ============================================================================= -->
+						<div class="info span7 offset1">
+							<div class="heading">
+								<h2><?php echo $item->get('link_titles') ? JHtml::_('link', $item->link, $item->name) : $item->name ?></h2>
+								<div class="user-name">( <?php echo $item->username; ?> )</div>
+							</div>
+							
+							<hr />
+							
+							<div class="about">
+								<?php echo $item->get($about_field); ?>
+							</div>
+						</div>
+						
+						<hr class="info-separator" />
+					</div>
 					<!-- ============================================================================= -->
 					<!-- Info -->
+					
+					
+					
+					<!-- Heading -->
+					<!-- ============================================================================= -->
+					
+					<!-- ============================================================================= -->
+					<!-- Heading -->
 					
 					
 					
@@ -110,15 +155,16 @@ $uri 		= JFactory::getURI() ;
 						<div class="content-inner row-fluid">
 							
 							<div class="span12">
-								<?php if( !empty($item->images) ): ?>
-								<div class="content-img">
-									<?php echo JHtml::_('image', $item->images, $item->title); ?>
-								</div>
-								<?php endif; ?>
 								
-								<div class="text">
-									<?php echo $item->text; ?>
-								</div>	
+								<?php
+								$this->data		= $data ;
+								foreach( $fieldsets as $fieldset ):
+									
+									$this->fieldset = $fieldset ;
+									echo $this->loadTemplate('profile');
+									
+								endforeach; ?>
+								
 							</div>
 							
 						</div>
@@ -130,7 +176,7 @@ $uri 		= JFactory::getURI() ;
 					
 					<!-- afterDisplayContent -->
 					<!-- ============================================================================= -->
-					<?php echo $this->item->event->afterDisplayContent; ?>
+					<?php echo $this->item->event->afterDisplayUser; ?>
 					<!-- ============================================================================= -->
 					<!-- afterDisplayContent -->
 					

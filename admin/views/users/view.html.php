@@ -57,9 +57,6 @@ class UserxtdViewUsers extends AKViewList
 		}
 		
 		
-		// Include com_users Language
-		UXHelper::_('lang.loadLanguage', 'com_users', 'admin');
-		
 		parent::displayWithPanel($tpl);
 	}
 

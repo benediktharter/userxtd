@@ -34,6 +34,7 @@ class UXFactory
 			$app->triggerEvent('onContentPrepareData', array('com_userxtd.profile', &$data)) ;
 			
 			$user->setProperties((array)$data->profile);
+			$user->set('profiles', (array)$data->profile) ;
 		}
 		
 		return $user ;
