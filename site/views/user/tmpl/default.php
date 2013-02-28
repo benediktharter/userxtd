@@ -47,34 +47,6 @@ $this->exclude_fields = $exclude_fields;
 				<div class="user-item-inner">
 					
 					
-					<?php if ($canEdit) : ?>
-					<!-- Edit -->
-					<!-- ============================================================================= -->
-					<div class="edit-icon btn-toolbar fltrt">
-						<div class="btn-group">
-							<?php echo JHtml::_( 'link', JRoute::_('index.php?option=com_userxtd&task=user.edit&id='.$item->id.'&return='.UserxtdHelper::_('uri.base64', 'encode', $uri->toString())) , JText::_('JTOOLBAR_EDIT'), array( 'class' => 'btn btn-small' ) ); ?>
-							<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.publish')" title="啟用"><?php echo JText::_('JTOOLBAR_ENABLE'); ?></a>
-								</li>
-								<li>
-									<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.unpublish')" title="停用"><?php echo JText::_('JTOOLBAR_DISABLE'); ?></a>
-								</li>
-							</ul>
-						  </div>
-						
-					</div>
-					<div style="display: none;">
-						<?php echo JHtml::_('grid.id', $item->id, $item->id); ?>
-					</div>
-					<!-- ============================================================================= -->
-					<!-- Edit End -->
-					<?php endif; ?>
-					
-					
 					
 					<!-- afterDisplayTitle -->
 					<!-- ============================================================================= -->
@@ -93,7 +65,7 @@ $this->exclude_fields = $exclude_fields;
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="profile-avatar">
-								<?php echo $avatar = $item->get($avatar_field); ?>
+								<?php $avatar = $item->get($avatar_field); ?>
 								<img src="<?php echo $avatar ? $avatar : JURI::root().'components/com_userxtd/images/default_avatar.png'; ?>" class="img-polaroid" alt="UserXTD Avatar <?php echo $user->username; ?>" />
 							</div>
 							
@@ -123,6 +95,38 @@ $this->exclude_fields = $exclude_fields;
 						<!-- Info -->
 						<!-- ============================================================================= -->
 						<div class="info span7 offset1">
+							
+							<?php if ($canEdit) : ?>
+							<!-- Edit -->
+							<!-- ============================================================================= -->
+							<div class="edit-icon btn-toolbar fltrt pull-right">
+								<div class="btn-group">
+									<?php echo JHtml::_( 'link', JRoute::_('index.php?option=com_userxtd&task=user.edit&id='.$item->id.'&return='.UserxtdHelper::_('uri.base64', 'encode', $uri->toString())) , '<i class="icon-edit"></i> '.JText::_('JTOOLBAR_EDIT'), array( 'class' => 'btn btn-small' ) ); ?>
+									<!--
+									<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</button>
+									
+									<ul class="dropdown-menu">
+										<li>
+											<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.publish')" title="啟用"><?php echo JText::_('JTOOLBAR_ENABLE'); ?></a>
+										</li>
+										<li>
+											<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.unpublish')" title="停用"><?php echo JText::_('JTOOLBAR_DISABLE'); ?></a>
+										</li>
+									</ul>
+									-->
+								  </div>
+								
+							</div>
+							<div style="display: none;">
+								<?php echo JHtml::_('grid.id', $item->id, $item->id); ?>
+							</div>
+							<!-- ============================================================================= -->
+							<!-- Edit End -->
+							<?php endif; ?>	
+							
+							
 							<div class="heading">
 								<h2><?php echo $item->get('link_titles') ? JHtml::_('link', $item->link, $item->name) : $item->name ?></h2>
 								<div class="user-name">( <?php echo $item->username; ?> )</div>
@@ -135,7 +139,6 @@ $this->exclude_fields = $exclude_fields;
 							</div>
 						</div>
 						
-						<hr class="info-separator" />
 					</div>
 					<!-- ============================================================================= -->
 					<!-- Info -->

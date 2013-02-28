@@ -52,7 +52,22 @@ class UserxtdModelUser extends AKModelAdmin
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
-		$form = parent::getForm($data, $loadData) ;
+		JForm::addFormPath(JPATH_ROOT.'/components/com_users/models/forms') ;
+		$form = $this->loadForm('com_userxtd.profile', 'profile', array('control' => 'jform', 'load_data' => $loadData));
+		if (empty($form))
+		{
+			return false;
+		}
+		if (!JComponentHelper::getParams('com_users')->get('change_login_name'))
+		{
+			$form->setFieldAttribute('username', 'class', '');
+			$form->setFieldAttribute('username', 'filter', '');
+			$form->setFieldAttribute('username', 'description', 'COM_USERS_PROFILE_NOCHANGE_USERNAME_DESC');
+			$form->setFieldAttribute('username', 'validate', '');
+			$form->setFieldAttribute('username', 'message', '');
+			$form->setFieldAttribute('username', 'readonly', 'true');
+			$form->setFieldAttribute('username', 'required', 'false');
+		}
 		
 		return $form ;
 	}
@@ -65,7 +80,7 @@ class UserxtdModelUser extends AKModelAdmin
 	
 	public function getFields()
 	{
-		$fields = parent::getFields();
+		$fields = array('profile');
 		
 		return $fields ;
 	}
@@ -80,9 +95,47 @@ class UserxtdModelUser extends AKModelAdmin
 	 */
 	protected function loadFormData()
 	{
-		$data = parent::loadFormData();
-		
-		return $data ;
+		if ($this->data === null) {
+
+			$userId = $this->getState('user.id');
+
+			// Initialise the table with JUser.
+			$this->data	= new JUser($userId);
+
+			// Set the base user data.
+			$this->data->email1 = $this->data->get('email');
+			$this->data->email2 = $this->data->get('email');
+
+			// Override the base user data with any data in the session.
+			$temp = (array) JFactory::getApplication()->getUserState('com_users.edit.profile.data', array());
+			foreach ($temp as $k => $v)
+			{
+				$this->data->$k = $v;
+			}
+
+			// Unset the passwords.
+			unset($this->data->password1);
+			unset($this->data->password2);
+
+			$registry = new JRegistry($this->data->params);
+			$this->data->params = $registry->toArray();
+
+			// Get the dispatcher and load the users plugins.
+			$dispatcher	= JEventDispatcher::getInstance();
+			JPluginHelper::importPlugin('user');
+
+			// Trigger the data preparation event.
+			$results = $dispatcher->trigger('onContentPrepareData', array('com_users.profile', $this->data));
+
+			// Check for errors encountered while preparing the data.
+			if (count($results) && in_array(false, $results, true))
+			{
+				$this->setError($dispatcher->getError());
+				$this->data = false;
+			}
+		}
+
+		return $this->data;
 	}
 
 	
@@ -160,6 +213,15 @@ class UserxtdModelUser extends AKModelAdmin
      */
     protected function preprocessForm(JForm $form, $data, $group = 'content')
 	{
+		if (JComponentHelper::getParams('com_users')->get('frontend_userparams'))
+		{
+			$form->loadFile('frontend', false);
+			if (JFactory::getUser()->authorise('core.login.admin'))
+			{
+				$form->loadFile('frontend_admin', false);
+			}
+		}
+		
 		return parent::preprocessForm($form, $data, $group);
 	}
 	

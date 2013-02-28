@@ -82,73 +82,40 @@ if($app->isAdmin()) {
 	}
 </script>
 
-<form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="user-form" class="form-validate">
+<form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="user-form" class="form-validate form-horizontal">
 	
 	
-	<?php if( JVERSION >= 3 ): ?>
-	<!-- Tab Buttons -->
-	<ul class="nav nav-tabs">
-		<?php foreach( $this->fields as $key => $group): ?>
-		<li class="<?php echo $key == 0 ? 'active' : ''; ?>">
-			<a href="#<?php echo $group; ?>" data-toggle="tab"><?php echo JText::_('COM_USERXTD_EDIT_FIELDS_'.$group); ?></a>
-		</li>
-		<?php endforeach; ?>
-	</ul>
-	<?php endif; ?>
-	
-	
-	<!-- Tab Bodys -->
-	<?php echo $tabs ? UserxtdHelper::_('panel.startTabs', 'userTab', array( 'active' => $this->fields[0] ) ) : null ; ?>
-		<?php foreach( $this->fields as $key => $group ): 
-				$fieldsets = $this->form->getFieldsets($group) ;
-				
-				echo $tabs ? UserxtdHelper::_('panel.addPanel' , 'userTab', JText::_('COM_USERXTD_EDIT_FIELDS_'.$group) , $group ) : null ;
-		?>
-			<div class="row-fluid">
-			
-				
-				<!-- Left Bar -->
-				<div class="span<?php echo $span_left; ?><?php echo JVERSION < 3 ? ' width-'.$width_left : '' ;?> fltlft">
-					
-					<?php foreach( $fieldsets as  $k => $fieldset ): ?>
-						
-						<?php if( empty($fieldset->align) ) $fieldset->align = 'left' ; ?>
-						<?php if( $fieldset->align == 'right' ) continue; ?>
-						
-						<!-- Fieldset -->
-						<?php $this->current_fieldset = $fieldset; ?>
-						<?php echo $this->loadTemplate('fieldset'); ?>
-						
-					<?php endforeach; ?>
-					
-				</div>
-				
-				
-				<!-- Right Bar -->
-				<div class="span<?php echo $span_right; ?><?php echo JVERSION < 3 ? ' width-'.$width_right : '' ;?> fltlft">
-					
-					<?php foreach( $fieldsets as  $k => $fieldset ): ?>
-						
-						<?php if( empty($fieldset->align) ) $fieldset->align = 'left' ; ?>
-						<?php if( $fieldset->align == 'left' ) continue; ?>
-						
-						<!-- Fieldset -->
-						<?php $this->current_fieldset = $fieldset; ?>
-						<?php echo $this->loadTemplate('fieldset'); ?>
-						
-					<?php endforeach; ?>
-					
-				</div>
-			
-			</div>
-			
-			<div class="clr"></div>
-			
-			<?php echo $tabs ? UserxtdHelper::_('panel.endPanel' , 'userTab' , $group ) : null ; ?>
-			
-		<?php endforeach; ?>
-		
-		<?php echo $tabs ? UserxtdHelper::_('panel.endTabs' ) : null ; ?>
+	<?php foreach ($this->form->getFieldsets() as $group => $fieldset):// Iterate through the form fieldsets and display each one.?>
+		<?php $fields = $this->form->getFieldset($group);?>
+		<?php if (count($fields)):?>
+		<fieldset>
+			<?php if (isset($fieldset->label)):// If the fieldset has a label set, display it as the legend.?>
+			<legend><?php echo JText::_($fieldset->label); ?></legend>
+			<?php endif;?>
+			<?php foreach ($fields as $field):// Iterate through the fields in the set and display them.?>
+				<?php if ($field->hidden):// If the field is hidden, just display the input.?>
+					<div class="control-group">
+						<div class="controls">
+							<?php echo $field->input;?>
+						</div>
+					</div>
+				<?php else:?>
+					<div class="control-group">
+						<div class="control-label">
+							<?php echo $field->label; ?>
+							<?php if (!$field->required && $field->type != 'Spacer') : ?>
+							<span class="optional"><?php echo JText::_('COM_USERS_OPTIONAL'); ?></span>
+							<?php endif; ?>
+						</div>
+						<div class="controls">
+							<?php echo $field->input; ?>
+						</div>
+					</div>
+				<?php endif;?>
+			<?php endforeach;?>
+		</fieldset>
+		<?php endif;?>
+	<?php endforeach;?>
 	
 	
 	<!-- Hidden Inputs -->

@@ -79,22 +79,19 @@ class UserxtdViewUser extends AKViewItem
 		
 		// Can Edit
 		// =====================================================================================
-		//if (!$user->get('guest')) {
-		//	$userId	= $user->get('id');
-		//	$asset	= 'com_userxtd.user.'.$item->id;
-		//
-		//	// Check general edit permission first.
-		//	if ($user->authorise('core.edit', $asset)) {
-		//		$this->params->set('access-edit', true);
-		//	}
-		//	// Now check if edit.own is available.
-		//	elseif (!empty($userId) && $user->authorise('core.edit.own', $asset)) {
-		//		// Check for a valid user and that they are the owner.
-		//		if ($userId == $item->created_by) {
-		//			$this->params->set('access-edit', true);
-		//		}
-		//	}
-		//}
+		if (!$user->get('guest')) {
+			$userId	= $user->get('id');
+			$asset	= 'com_userxtd.user.'.$item->id;
+		
+			if( $item->get('id') == $userId ) {
+				$this->params->set('access-edit', true);
+			}
+			// Now check if edit.own is available.
+			elseif (!empty($userId) && $user->authorise('core.edit', 'com_user')) {
+				// Check for a valid user and that they are the owner.
+				$this->params->set('access-edit', true);
+			}
+		}
 		
 		
 		
@@ -157,6 +154,7 @@ class UserxtdViewUser extends AKViewItem
 		// Otherwise, user params override menu item params
 		$active	= $app->getMenu()->getActive();
 		$temp	= clone ($this->params);
+		$item->params = new JRegistry($item->params) ;
 		
 		
 		// Check to see which parameters should take priority
@@ -215,7 +213,14 @@ class UserxtdViewUser extends AKViewItem
 	{
 		AKToolBarHelper::title( 'User' . ' ' . JText::_('COM_USERXTD_TITLE_ITEM_EDIT'), 'article-add.png');
 
-		parent::addToolbar();
+		JRequest::setVar('hidemainmenu', true);
+
+		$user		= JFactory::getUser();
+		$isNew		= ($this->item->id == 0);
+
+		JToolBarHelper::apply($this->item_name.'.apply');
+		JToolBarHelper::save($this->item_name.'.save');
+		JToolBarHelper::cancel($this->item_name.'.cancel');
 	}
 	
 	

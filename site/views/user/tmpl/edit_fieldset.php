@@ -32,21 +32,16 @@ $user	= JFactory::getUser();
 
 // Set value
 $fieldset = $this->current_fieldset ;
-
-// set form align
-if(!empty($fieldset->horz) && $fieldset->horz !== 'false'){
-	$form_class = 'form-horizontal' ;
-}else{
-	$form_class = '' ;
-}
 ?>
 	
-<fieldset class="adminform <?php echo $form_class; ?>">
-	<legend><?php echo JText::_('COM_USERXTD_EDIT_FIELDSET_'.$fieldset->name); ?></legend>
+<fieldset class="adminform form-horizontal">
+	<legend><?php echo isset($fieldset->label) ? $fieldset->label : JText::_('COM_USERXTD_EDIT_FIELDSET_'.$fieldset->name); ?></legend>
 	
 	<?php foreach($this->form->getFieldset($fieldset->name) as $field ): ?>
 		<div class="control-group">
-			<?php echo $field->label; ?>
+			<div class="control-label">
+				<?php echo $field->label; ?>
+			</div>
 			<div class="controls">
 				<?php echo $field->input; ?>
 			</div>
