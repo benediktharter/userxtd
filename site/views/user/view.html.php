@@ -41,6 +41,7 @@ class UserxtdViewUser extends AKViewItem
 	{
 		$app 	= JFactory::getApplication() ;
 		$user 	= JFactory::getUser() ;
+		$doc 	= JFactory::getDocument();
 		
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('User');
@@ -63,6 +64,8 @@ class UserxtdViewUser extends AKViewItem
 			parent::displayWithPanel($tpl);
 			return true ; 
 		}
+		
+		$doc->setTitle($this->item->name);
 		
 		
 		// Dsplay Data
