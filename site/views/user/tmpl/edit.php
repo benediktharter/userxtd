@@ -68,7 +68,7 @@ if($app->isAdmin()) {
 ?>
 <script type="text/javascript">
 	<?php if( $app->isSite() ): ?>
-	Userxtd.fixToolbar(40, 300) ;
+	Userxtd.fixToolbar(0, 300) ;
 	<?php endif; ?>
 	
 	Joomla.submitbutton = function(task)

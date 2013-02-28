@@ -23,7 +23,7 @@ class UserxtdControllerUser extends AKControllerForm
 	public $view_list = 'users' ;
 	public $view_item = 'user' ;
 	public $component = 'userxtd';
-
+	
 	
 	/**
      * Constructor.
@@ -201,6 +201,30 @@ class UserxtdControllerUser extends AKControllerForm
 
 		// Flush the data from the session.
 		$app->setUserState('com_userxtd.edit.profile.data', null);
+	}
+	
+	
+	
+	/*
+	 * function canael
+	 * @param 
+	 */
+	
+	public function cancel($key = null)
+	{
+		$r = parent::cancel($key);
+		
+		$app = JFactory::getApplication() ;
+		
+		$this->redirect =
+			JRoute::_(
+				'index.php?option=' . $this->option . '&view=' . $this->view_item
+				. '&id=' . $app->getUserState('com_userxtd.edit.profile.id')
+				. $this->getRedirectToListAppend(), false
+			)
+		;
+
+		return true;
 	}
 	
 	
