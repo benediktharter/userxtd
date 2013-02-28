@@ -29,6 +29,72 @@ class UserxtdModelUser extends AKModelAdmin
 	public 		$list_name = 'users' ;
 	
 	
+	/**
+	 * @var		object	The user profile data.
+	 * @since   1.6
+	 */
+	protected $data;
+
+	/**
+	 * Method to check in a user.
+	 *
+	 * @param   integer		The id of the row to check out.
+	 * @return  boolean  True on success, false on failure.
+	 * @since   1.6
+	 */
+	public function checkin($userId = null)
+	{
+		// Get the user id.
+		$userId = (!empty($userId)) ? $userId : (int) $this->getState('user.id');
+
+		if ($userId)
+		{
+			// Initialise the table with JUser.
+			$table = JTable::getInstance('User');
+
+			// Attempt to check the row in.
+			if (!$table->checkin($userId))
+			{
+				$this->setError($table->getError());
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Method to check out a user for editing.
+	 *
+	 * @param   integer		The id of the row to check out.
+	 * @return  boolean  True on success, false on failure.
+	 * @since   1.6
+	 */
+	public function checkout($userId = null)
+	{
+		// Get the user id.
+		$userId = (!empty($userId)) ? $userId : (int) $this->getState('user.id');
+
+		if ($userId)
+		{
+			// Initialise the table with JUser.
+			$table = JTable::getInstance('User');
+
+			// Get the current user object.
+			$user = JFactory::getUser();
+
+			// Attempt to check the row out.
+			if (!$table->checkout($user->get('id'), $userId))
+			{
+				$this->setError($table->getError());
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+	
 	
 	/*
 	 * function getTable
@@ -107,7 +173,7 @@ class UserxtdModelUser extends AKModelAdmin
 			$this->data->email2 = $this->data->get('email');
 
 			// Override the base user data with any data in the session.
-			$temp = (array) JFactory::getApplication()->getUserState('com_users.edit.profile.data', array());
+			$temp = (array) JFactory::getApplication()->getUserState('com_userxtd.edit.profile.data', array());
 			foreach ($temp as $k => $v)
 			{
 				$this->data->$k = $v;
@@ -125,7 +191,7 @@ class UserxtdModelUser extends AKModelAdmin
 			JPluginHelper::importPlugin('user');
 
 			// Trigger the data preparation event.
-			$results = $dispatcher->trigger('onContentPrepareData', array('com_users.profile', $this->data));
+			$results = $dispatcher->trigger('onContentPrepareData', array('com_userxtd.profile', $this->data));
 
 			// Check for errors encountered while preparing the data.
 			if (count($results) && in_array(false, $results, true))
@@ -193,7 +259,20 @@ class UserxtdModelUser extends AKModelAdmin
 	 */
 	protected function populateState()
 	{
-		parent::populateState();
+		// Get the application object.
+		$user_params	= JFactory::getApplication()->getParams('com_users');
+		$userxtd_params	= JFactory::getApplication()->getParams('com_userxtd');
+		$user_params->merge($userxtd_params);
+
+		// Get the user id.
+		$userId = JFactory::getApplication()->getUserState('com_userxtd.edit.profile.id');
+		$userId = !empty($userId) ? $userId : (int) JFactory::getUser()->get('id');
+
+		// Set the user id.
+		$this->setState('user.id', $userId);
+
+		// Load the parameters.
+		$this->setState('params', $user_params);
 	}
 	
 	
@@ -223,6 +302,59 @@ class UserxtdModelUser extends AKModelAdmin
 		}
 		
 		return parent::preprocessForm($form, $data, $group);
+	}
+	
+	
+	/**
+	 * Method to save the form data.
+	 *
+	 * @param   array  The form data.
+	 * @return  mixed  	The user id on success, false on failure.
+	 * @since   1.6
+	 */
+	public function save($data)
+	{
+		$userId = (!empty($data['id'])) ? $data['id'] : (int) $this->getState('user.id');
+
+		$user = new JUser($userId);
+
+		// Prepare the data for the user object.
+		$data['email']		= $data['email1'];
+		$data['password']	= $data['password1'];
+
+		// Unset the username if it should not be overwritten
+		if (!JComponentHelper::getParams('com_users')->get('change_login_name'))
+		{
+			unset($data['username']);
+		}
+
+		// Unset the block so it does not get overwritten
+		unset($data['block']);
+
+		// Unset the sendEmail so it does not get overwritten
+		unset($data['sendEmail']);
+
+		// Bind the data.
+		if (!$user->bind($data))
+		{
+			$this->setError(JText::sprintf('USERS PROFILE BIND FAILED', $user->getError()));
+			return false;
+		}
+
+		// Load the users plugin group.
+		JPluginHelper::importPlugin('user');
+
+		// Null the user groups so they don't get overwritten
+		$user->groups = null;
+
+		// Store the data.
+		if (!$user->save())
+		{
+			$this->setError($user->getError());
+			return false;
+		}
+
+		return $user->id;
 	}
 	
 
