@@ -17,6 +17,7 @@ function userInfo($context, $article, $params)
 	include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 	$ux 	= plgSystemUserxtd::getInstance();
 	$param 	= $ux->params ;
+	$app 	= JFactory::getApplication() ;
 	
 	// init params
 	$image_field 	= $param->get('UserInfo_ImageField', 'BASIC_AVATAR');
@@ -33,26 +34,27 @@ function userInfo($context, $article, $params)
 	$image 	= $user->get($image_field) ;
 	$image 	= AKHelper::_('thumb.resize', $image, $width, $height, $crop) ;
 	
-	$link	= JRoute::_('index.php?option=com_users&view=profile&user_id='.$user->get('id'));
+	$link	= JRoute::_('index.php?option=com_userxtd&view=user&id='.$user->get('id'));
 	$link 	= JHtml::link($link, JText::_('COM_USERXTD_USER_INFO_MORE'));
-
 	
-	$html = <<<HTML
-	<!-- UserXTD Information Box -->
-	<div class="ux-user-info-warp well">
-		<div class="ux-user-inner row-fluid">
-			<div class="ux-user-right span3">
-				<img src="{$image}" alt="{$user->get($title_field)}" />
-			</div>
-			<div class="ux-user-left span8">
-				<h2>{$user->get($title_field)}</h2>
-				<div class="ux-user-about">
-					{$user->get($about_field)}
-				</div>
-			</div>
-		</div>
-	</div>
-HTML;
+	
+	// Get Template override
+	$tpl 	= $app->getTemplate();
+	$file 	= JPATH_THEMES."/{$tpl}/html/plg_userxtd/content/userInfo.php" ;
+	
+	if(!JFile::exists($file)) {
+		$file = dirname(__FILE__).'/tmpl/userInfo.php' ;
+	}
+	
+	
+	// Start capturing output into a buffer
+	ob_start();
+	// Include the requested template filename in the local scope
+	include $file;
+
+	// Done with the requested template; get the buffer and clear it.
+	$html = ob_get_contents();
+	ob_end_clean();
 	
 	return $html;
 }

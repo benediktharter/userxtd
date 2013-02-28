@@ -62,26 +62,31 @@ class JFormFieldFields extends JFormField
 			$type = JRequest::getVar('field_type', 'text') ;
 			$form = null;
 			
-			// Event
-			JFactory::getApplication()
-				->triggerEvent( 'onCCKEngineBeforeFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
-			
 			
 			// Loading form
 			// =============================================================
 			JForm::addFormPath( AKPATH_FORM.'/forms/attr' );
+			$form = null ;
+			
+			
+			
+			// Event
+			JFactory::getApplication()
+				->triggerEvent( 'onCCKEngineBeforeFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
+			
 			$form = JForm::getInstance( 'fields', $type, array('control' => 'attrs'), false, false );
+			
+			// Event
+			JFactory::getApplication()
+				->triggerEvent( 'onCCKEngineAfterFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
+				
 			$form->bind($data);
+			
 			
 			// Set Default for Options
 			$default = JArrayHelper::getValue($data, 'default') ;
 			JRequest::setVar('field_default', $default, 'method', true) ;
 			$form_setted = true;
-			
-			
-			// Event
-			JFactory::getApplication()
-				->triggerEvent( 'onCCKEngineAfterFormLoad' , array( &$form , &$data, &$this, &$element, &$form_setted)) ;
 		}
 		
 		

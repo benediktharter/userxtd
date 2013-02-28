@@ -347,8 +347,17 @@ class plgSystemUserxtd extends JPlugin
 		}
 		
 		
-		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form);
+		// Hide some fields in registration
+		$option = JRequest::getVar('option') ;
+		$view = JRequest::getVar('view') ;
+		if($option == 'com_users' && $view == 'registration' ) {
+			$hide_in_reg = true ;
+		}else{
+			$hide_in_reg = false ;
+		}	
 		
+		
+		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form, array('hide_in_registration' => $hide_in_reg));
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
@@ -496,6 +505,18 @@ class plgSystemUserxtd extends JPlugin
 		
 		//return $this->resultBool($result);
 	}
+	
+	
+	/*
+	 * function onCCKEngineAfterFormLoad
+	 * @param &$form , &$data, &$this, &$element, &$form_setted
+	 */
+	
+	public function onCCKEngineAfterFormLoad($form = null, $data = null, $formfield = null, $element = null, $form_setted = false)
+	{
+		$form->loadFile( dirname(__FILE__).'/form/forms/fields.xml' );
+	}
+	
 	
 	
 	/**

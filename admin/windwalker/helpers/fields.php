@@ -81,7 +81,7 @@ class AKHelperFields
 		
 		
 		JFactory::getApplication()
-			->triggerEvent( 'onCCKEngineBeforeSaveField' , array( $context, &$table , &$attrs, $option)) ;
+			->triggerEvent( 'onCCKEngineAfterSaveField' , array( $context, &$table , &$attrs, $option)) ;
 	}
 	
 	
@@ -317,7 +317,18 @@ class AKHelperFields
 		// Filter Text
 		// ==================================================================
 		JForm::addFormPath(AKPATH_FORM.'/forms/attr');
+		
+		$form = null ;
+		
+		// Event
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineBeforeFormLoad' , array( &$form , &$data) ) ;
+		
 		$form = JForm::getInstance( 'fields', $field_type, array(), false, false );
+		
+		// Event
+		JFactory::getApplication()
+			->triggerEvent( 'onCCKEngineAfterFormLoad' , array( &$form , &$data) ) ;
 		
 		$data = $form->filter($data) ;
 		

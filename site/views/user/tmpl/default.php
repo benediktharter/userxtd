@@ -93,7 +93,8 @@ $this->exclude_fields = $exclude_fields;
 					<div class="row-fluid">
 						<div class="span4">
 							<div class="profile-avatar">
-								<img src="<?php echo $item->get($avatar_field); ?>" class="img-polaroid" alt="UserXTD Avatar <?php echo $user->username; ?>" />
+								<?php echo $avatar = $item->get($avatar_field); ?>
+								<img src="<?php echo $avatar ? $avatar : JURI::root().'components/com_userxtd/images/default_avatar.png'; ?>" class="img-polaroid" alt="UserXTD Avatar <?php echo $user->username; ?>" />
 							</div>
 							
 							<dl class="dl-horizontal">

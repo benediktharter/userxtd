@@ -48,7 +48,8 @@ class UserxtdHelperForm
 		include_once AKPATH_FORM.'/form.php' ;
 		
 		$name 		= JArrayHelper::getValue($option, 'name', 'UserXTD');
-		$control 	= JArrayHelper::getValue($option, 'control', null);	
+		$control 	= JArrayHelper::getValue($option, 'control', null);
+		$hide_in_reg = JArrayHelper::getValue($option, 'hide_in_registration', null);
 		
 		if(!$form) {
 			$form = new AKForm($name, array('control' => $control));
@@ -88,6 +89,12 @@ class UserxtdHelperForm
 		// ============================================================================
 		$field_groups = array();
 		foreach( $fields as $key => $field ):
+			
+			// If hide_in registration exists, do not show this field.
+			$attrs = json_decode($field->a_attrs, true) ;
+			if($hide_in_reg && JArrayHelper::getValue($attrs, 'hide_in_registration') ) {
+				continue ;
+			}
 			
 			// init array
 			if(!isset($field_groups[$field->a_catid])){
