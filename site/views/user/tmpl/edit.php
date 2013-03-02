@@ -68,7 +68,7 @@ if($app->isAdmin()) {
 ?>
 <script type="text/javascript">
 	<?php if( $app->isSite() ): ?>
-	Userxtd.fixToolbar(0, 300) ;
+	WindWalker.fixToolbar(0, 300) ;
 	<?php endif; ?>
 	
 	Joomla.submitbutton = function(task)
@@ -116,6 +116,12 @@ if($app->isAdmin()) {
 		</fieldset>
 		<?php endif;?>
 	<?php endforeach;?>
+	
+	
+	<hr />
+	<div class="bottom-actions">
+		<?php echo JToolBar::getInstance('toolbar')->render('toolbar') ; ?>
+	</div>
 	
 	
 	<!-- Hidden Inputs -->

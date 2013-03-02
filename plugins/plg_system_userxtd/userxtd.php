@@ -70,22 +70,33 @@ class plgSystemUserxtd extends JPlugin
 	*/
 	function onAfterRoute()
 	{
-		$app = JFactory::getApplication() ;
-		$option = JRequest::getVar('option') ;
-		$view 	= JRequest::getVar('view') ;
-		$layout = JRequest::getVar('layout', 'default') ;
 		
-		if($option == 'com_users') {
+		$params = JComponentHelper::getParams('com_userxtd') ;
+		
+		if($params->get('Redirect', 0))	:
+		
+			$app = JFactory::getApplication() ;
+			$option = JRequest::getVar('option') ;
+			$view 	= JRequest::getVar('view') ;
+			$layout = JRequest::getVar('layout', 'default') ;
 			
-			if( $view == 'registration' && $layout == 'default' ){
-				$app->redirect( JRoute::_('index.php?option=com_userxtd&view=registration') ) ;
+			if($option == 'com_users') {
+				
+				if( $view == 'registration' && $layout == 'default' ){
+					$app->redirect( JRoute::_('index.php?option=com_userxtd&view=registration') ) ;
+				}
+				
+				
+				if( $view == 'profile' && $layout == 'default' ){
+					$app->redirect( JRoute::_('index.php?option=com_userxtd&view=user') ) ;
+				}
+				
+				if( $view == 'profile' && $layout == 'edit' ){
+					$app->redirect( JRoute::_('index.php?option=com_userxtd&task=user.edit') ) ;
+				}
 			}
-			
-			
-			if( $view == 'profile' && $layout == 'default' ){
-				$app->redirect( JRoute::_('index.php?option=com_userxtd&view=user') ) ;
-			}
-		}
+		
+		endif;
 	}
 	
 	
