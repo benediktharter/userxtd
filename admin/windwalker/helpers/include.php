@@ -62,13 +62,15 @@ JS;
 		
 		$prefix = $app->isAdmin() ? '../' : '' ;
 		
-		JHtml::_('stylesheet', $prefix.'components/'.$option.'/includes/css/'.$com_name.'-core.css');
-		JHtml::_('stylesheet', $prefix.'components/'.$option.'/includes/css/'.$com_name.'.css');
-		
 		if($js){
 			JHtml::_('behavior.framework', true);
-			JHtml::_('script', $prefix.'components/'.$option.'/includes/js/'.$com_name.'-core.js', true);
-			JHtml::_('script', $prefix.'components/'.$option.'/includes/js/'.$com_name.'.js', true);
+			if($app->isSite()){
+				$doc->addScript( AKHelper::_('path.getWWUrl').'/assets/js/windwalker.js');
+				$doc->addScript( 'components/'.$option.'/includes/js/'.$com_name.'.js');
+			}else{
+				$doc->addScript( AKHelper::_('path.getWWUrl').'/assets/js/windwalker-admin.js');
+				$doc->addScript( 'components/'.$option.'/includes/js/'.$com_name.'-admin.js');
+			}
 		}
 	}
 	
@@ -177,6 +179,14 @@ JS;
 		$files 	= JFolder::files(AKHelper::_('path.get', $client).'/'.$path, ".css$", true);
 		$doc 	= JFactory::getDocument();
 		$option = JRequest::getVar('option') ;
+		$app = JFactory::getApplication() ;
+		
+		if($app->isSite()){
+			$doc->addStylesheet( AKHelper::_('path.getWWUrl').'/assets/css/windwalker.css');
+		}
+		else{
+			$doc->addStylesheet( AKHelper::_('path.getWWUrl').'/assets/css/windwalker-admin.css');
+		}
 		
 		foreach( $files as $key => $file ):
 			$name = explode('-', $file) ;

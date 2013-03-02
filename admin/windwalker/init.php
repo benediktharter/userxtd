@@ -55,3 +55,4 @@ $lang->load('lib_windwalker', JPATH_BASE, null, false, false)
             || $lang->load('lib_windwalker', AKPATH_ROOT , null, false, false)
             || $lang->load('lib_windwalker', JPATH_BASE, $lang->getDefault(), false, false)
             || $lang->load('lib_windwalker', AKPATH_ROOT , $lang->getDefault(), false, false);
+

@@ -15,6 +15,8 @@ class AKHelper extends AKProxy
 {
 	static $config = array();
 	
+	static $version ;
+	
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
@@ -111,6 +113,24 @@ class AKHelper extends AKProxy
 		self::$config[$option]->loadFile( AKHelper::_('path.getAdmin', $option).'/includes/config.json' );
 		
 		return self::$config[$option]->get($key, $default) ;
+	}
+	
+	
+	/*
+	 * function getVersion
+	 * @param 
+	 */
+	
+	public static function getVersion()
+	{
+		if(self::$version) {
+			return self::$version ;
+		}
+		
+		$xml = AKHelper::_('path.getAdmin').'/'.substr(AKHelper::_('path.getOption'), 4).'.xml' ;
+		$xml = JFactory::getXML($xml, true) ;
+		
+		return self::$version = $xml->version ;
 	}
 }
 

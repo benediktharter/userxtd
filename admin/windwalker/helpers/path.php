@@ -18,6 +18,8 @@ class AKHelperPath
 	
 	static public $default_option = 'com_content' ;
 	
+	static public $overrides	= array();
+	
 	/*
 	 * function admin
 	 * @param $option
@@ -57,6 +59,8 @@ class AKHelperPath
 			return self::getSite($option) ;
 		}elseif($client == 'admin'){
 			return self::getAdmin($option) ;
+		}elseif($client == 'ww' || $client == 'windwalker'){
+			return AKPATH_ROOT ;
 		}else{
 			return $path = JPATH_BASE."/components/{$option}" ;
 		}
@@ -115,5 +119,43 @@ class AKHelperPath
 			return $path = '/' . AKHelper::_('uri.pathAddSubfolder', $path);
 		}
 		
+	}
+	
+	
+	
+	/*
+	 * function getOverridePath
+	 * @param $path
+	 */
+	
+	public static function getOverridePath($path)
+	{
+		if( !empty( self::$overrides[ $path ] ) ) {
+			return self::$overrides[ $path ] ;
+		}else{
+			return $path ;
+		}
+	}
+	
+	
+	/*
+	 * function setOverridePath
+	 * @param $origin
+	 */
+	
+	public static function addOverridePath($origin, $override)
+	{
+		self::$overrides[$origin] = $override ;
+	}
+	
+	
+	/*
+	 * function removeOverridePath
+	 * @param $path
+	 */
+	
+	public static function removeOverridePath($path)
+	{
+		unset( self::$overrides[$path] );
 	}
 }

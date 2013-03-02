@@ -163,7 +163,7 @@ class AKModelAdmin extends JModelAdmin
 		
 		
 		// Set Nested Item
-		$table = $this->getTable();
+		$table = $this->getTable(ucfirst($this->item_name));
 		if( $table instanceof JTableNested ){
 			$nested = true ;
 		}else{
@@ -311,7 +311,7 @@ class AKModelAdmin extends JModelAdmin
 		
 		
 		// Get an instance of the table object.
-		$table = $this->getTable();
+		$table = $this->getTable(ucfirst($this->item_name));
 
 		if (!$table->rebuild())
 		{
@@ -342,7 +342,7 @@ class AKModelAdmin extends JModelAdmin
 	public function saveorderNested($idArray = null, $lft_array = null)
 	{
 		// Get an instance of the table object.
-		$table = $this->getTable();
+		$table = $this->getTable(ucfirst($this->item_name));
 
 		if (!$table->saveorder($idArray, $lft_array))
 		{
@@ -373,7 +373,7 @@ class AKModelAdmin extends JModelAdmin
 		
 		
 		// alias
-        if( isset($table->alias) ) {
+        if( property_exists($table, 'alias') ) {
 			
 			if(!$table->alias){
 				$table->alias = JFilterOutput::stringURLSafe( trim($table->title) ) ;
@@ -387,22 +387,22 @@ class AKModelAdmin extends JModelAdmin
 		}
 		
 		// created date
-		if(isset($table->created) && !$table->created){
+		if(property_exists($table ,'created') && !$table->created){
 			$table->created = $date->toSql(true);
 		}
 		
 		// modified date
-		if(isset($table->modified) && $table->id){
+		if(property_exists($table, 'modified') && $table->id){
 			$table->modified = $date->toSql(true);
 		}
 		
 		// created user
-		if(isset($table->created_by) && !$table->created_by){
+		if(property_exists($table, 'created_by') && !$table->created_by){
 			$table->created_by = $user->get('id');
 		}
 		
 		// modified user
-		if(isset($table->modified_by) && $table->id){
+		if(property_exists($table, 'modified_by') && $table->id){
 			$table->modified_by = $user->get('id');
 		}
 		
@@ -419,11 +419,11 @@ class AKModelAdmin extends JModelAdmin
 		if( $table instanceof JTableNested ){
 			$table->parent_id = $table->parent_id ? $table->parent_id : 1 ;
 			
-			$old = $this->getTable() ;
+			$old = $this->getTable(ucfirst($this->item_name)) ;
 			$old->load($table->id) ;
 			
 			if($table->parent_id != $old->get('parent_id')) {
-				$parent = $this->getTable();
+				$parent = $this->getTable(ucfirst($this->item_name));
 				$parent->load( $table->parent_id );
 				$table->catid = $parent->catid ;
 				
@@ -437,12 +437,9 @@ class AKModelAdmin extends JModelAdmin
 				}
 			}
 			
-		}else{
-			if (!$table->id) {
-				// Set ordering to the last item if not set
-				if (!$table->ordering) {
-					$table->reorder('catid = '.(int) $table->catid.' AND published >= 0');
-				}
+		}elseif( property_exists($table , 'ordering') ){
+			if (empty($table->id)) {
+				$this->setOrderPosition($table) ;
 			}
 		}
 		
@@ -451,6 +448,98 @@ class AKModelAdmin extends JModelAdmin
 		if($this->getState('CCKEngine.enabled')) {
 			AKHelper::_('fields.setFieldTable', $table, null, array( 'context' => "{$this->option}.{$this->item_name}" )) ;
 		}
+	}
+	
+	
+	
+	/*
+	 * function setOrderPosition
+	 * @param $position
+	 */
+	
+	public function setOrderPosition($table, $position = null)
+	{
+		if($position == 'first') {
+			if (!$table->ordering) {
+				$table->reorder('catid = '.(int) $table->catid.' AND published >= 0');
+			}
+		}else{
+	
+			// Set ordering to the last item if not set
+			if (empty($table->ordering)) {
+				$db = JFactory::getDbo();
+				$db->setQuery('SELECT MAX(ordering) FROM #__'.$this->component.'_'.$this->list_name);
+				$max = $db->loadResult();
+
+				$table->ordering = $max+1;
+			}
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * Method to duplicate modules.
+	 *
+	 * @param   array  &$pks  An array of primary key IDs.
+	 *
+	 * @return  boolean  True if successful.
+	 *
+	 * @since   1.6
+	 * @throws  Exception
+	 */
+	public function duplicate(&$pks)
+	{
+		// Initialise variables.
+		$user	= JFactory::getUser();
+		$db		= $this->getDbo();
+
+		// Access checks.
+		if (!$user->authorise('core.create', 'com_'.$this->component))
+		{
+			throw new Exception(JText::_('JERROR_CORE_CREATE_NOT_PERMITTED'));
+		}
+
+		$table = $this->getTable();
+
+		foreach ($pks as $pk)
+		{
+			if ($table->load($pk, true))
+			{
+				// Reset the id to create a new record.
+				$table->id = 0;
+
+				// Alter the title.
+				$m = null;
+				if (preg_match('#\((\d+)\)$#', $table->title, $m))
+				{
+					$table->title = preg_replace('#\(\d+\)$#', '('.($m[1] + 1).')', $table->title);
+				}
+				else
+				{
+					$table->title .= ' (2)';
+				}
+				// Unpublish duplicate module
+				$table->published = 0;
+
+				if (!$table->check() || !$table->store())
+				{
+					throw new Exception($table->getError());
+				}
+
+			}
+			else
+			{
+				throw new Exception($table->getError());
+			}
+		}
+
+
+		// Clear modules cache
+		$this->cleanCache();
+
+		return true;
 	}
 	
 	
@@ -532,7 +621,7 @@ class AKModelAdmin extends JModelAdmin
             }
 			
 			// If is Nested, rebuild all
-			$table = $this->getTable();
+			$table = $this->getTable(ucfirst($this->item_name));
 			if($table instanceof JTableNested){
 				$this->rebuild();
 			}
@@ -588,7 +677,7 @@ class AKModelAdmin extends JModelAdmin
 	protected function batchCopyNested($value, $pks, $contexts)
 	{
 		$parentId 	= $value ? (int) $value : 1 ;
-		$table 		= $this->getTable();
+		$table 		= $this->getTable(ucfirst($this->item_name));
 		$db 		= $this->getDbo();
 		$user 		= JFactory::getUser();
 		$extension 	= $this->option;
@@ -779,7 +868,7 @@ class AKModelAdmin extends JModelAdmin
 	{
 		$parentId = (int) $value;
 
-		$table 	= $this->getTable();
+		$table 	= $this->getTable(ucfirst($this->item_name));
 		$db 	= $this->getDbo();
 		$query 	= $db->getQuery(true);
 		$user 	= JFactory::getUser();

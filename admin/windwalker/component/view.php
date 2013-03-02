@@ -69,7 +69,7 @@ class AKView extends JViewLegacy
 		
 		$info =
 <<<INFO
-		<div class="{$lang} {$class} fltlft">
+		<div class="{$lang} {$class}">
 			<span class="label">{$label}:</span>
 			<span class="value">{$value}</span>
 		</div>

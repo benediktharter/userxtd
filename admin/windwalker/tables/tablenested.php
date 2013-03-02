@@ -28,7 +28,7 @@ class AKTableNested extends JTableNested
      */
     protected function _getAssetTitle()
     {
-        if( isset($this->title) )
+        if( property_exists($this , 'title') && $this->title)
 			return $this->title ;
 		else
 			return $this->_getAssetName() ;
