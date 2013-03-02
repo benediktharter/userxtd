@@ -41,6 +41,7 @@ if( $app->isSite() ){
 	UserxtdHelper::_('lang.loadAll', $lang->getTag());
 	
 	// Include com_users Language
+	UXHelper::_('lang.loadLanguage', 'com_users', 'site');
 	UXHelper::_('lang.loadLanguage', 'com_users', 'admin');
 	
 	// Include Joomla! admin css
@@ -56,6 +57,7 @@ if( $app->isSite() ){
 	
 	// Include com_users Language
 	UXHelper::_('lang.loadLanguage', 'com_users', 'site');
+	UXHelper::_('lang.loadLanguage', 'com_users', 'admin');
 }
 
 

@@ -43,6 +43,17 @@ class UserxtdViewUser extends AKViewItem
 		$user 	= JFactory::getUser() ;
 		$doc 	= JFactory::getDocument();
 		
+		
+		// Check for Access
+		$id = JRequest::getVar('id') ;
+		if($user->guest && !$id) {
+			$uri = JFactory::getURI() ;
+			$app->redirect( JRoute::_('index.php?option=com_users&view=login&return='.UXHelper::_('uri.base64', 'encode', $uri->toString())) );
+			return true;
+		}
+		
+		
+		
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('User');
 		$this->params	= $this->state->get('params');
@@ -62,7 +73,7 @@ class UserxtdViewUser extends AKViewItem
 			$this->form	= $this->get('Form');
 			
 			parent::displayWithPanel($tpl);
-			return true ; 
+			return true ;
 		}
 		
 		$doc->setTitle($this->item->name);
@@ -71,12 +82,6 @@ class UserxtdViewUser extends AKViewItem
 		// Dsplay Data
 		// =====================================================================================
 		$item = $this->item ;
-		//$item->link = JRoute::_("index.php?option=com_userxtd&view=user&id={$item->id}&alias={$item->alias}&catid={$item->catid}");
-		//$item->created_user = JFactory::getUser($item->created_by)->get('name') ;
-		//$item->cat_title = $this->category->title ;
-		//if($item->modified == '0000-00-00 00:00:00') {
-		//	$item->modified = '' ;
-		//}
 		
 		
 		
@@ -95,39 +100,6 @@ class UserxtdViewUser extends AKViewItem
 				$this->params->set('access-edit', true);
 			}
 		}
-		
-		
-		
-		// View Level
-		// =====================================================================================
-		//if ($access = $this->state->get('filter.access')) {
-		//	// If the access filter has been set, we already know this user can view.
-		//	$this->params->set('access-view', true);
-		//}
-		//else {
-		//	// If no access filter is set, the layout takes some responsibility for display of limited information.
-		//	$user = JFactory::getUser();
-		//	$groups = $user->getAuthorisedViewLevels();
-		//
-		//	if ($item->catid == 0 || $this->category->access === null) {
-		//		$this->params->set('access-view', in_array($item->access, $groups));
-		//	}
-		//	else {
-		//		$this->params->set('access-view', in_array($item->access, $groups) && in_array($this->category->access, $groups));
-		//	}
-		//}
-		
-		
-		// Publish Date
-		// =====================================================================================
-		//$pup = JFactory::getDate( $item->publish_up , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		//$pdw = JFactory::getDate( $item->publish_down , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		//$now = JFactory::getDate( 'now' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		//$null= JFactory::getDate( '0000-00-00 00:00:00' , JFactory::getConfig()->get('offset') )->toUnix(true) ;
-		//
-		//if( ($now < $pup && $pup != $null)  || ( $now > $pdw && $pdw != $null ) ) {
-		//	$item->published = 0 ;
-		//}
 		
 		
 		

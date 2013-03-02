@@ -31,6 +31,9 @@
 
 
 /* FORM */
+#userxtd-wrap input.required {
+	background-color: #d5eeff;
+}
 
 
 /* FOOTER */
