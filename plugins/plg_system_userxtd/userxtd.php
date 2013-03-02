@@ -68,19 +68,23 @@ class plgSystemUserxtd extends JPlugin
 	* Converting the site URL to fit to the HTTP request
 	*
 	*/
-	function onAfterInitialise()
+	function onAfterRoute()
 	{
 		$app = JFactory::getApplication() ;
 		$option = JRequest::getVar('option') ;
 		$view 	= JRequest::getVar('view') ;
-		$layout = JRequest::getVar('layout', 'defult') ;
+		$layout = JRequest::getVar('layout', 'default') ;
 		
 		if($option == 'com_users') {
 			
 			if( $view == 'registration' && $layout == 'default' ){
-				
+				$app->redirect( JRoute::_('index.php?option=com_userxtd&view=registration') ) ;
 			}
 			
+			
+			if( $view == 'profile' && $layout == 'default' ){
+				$app->redirect( JRoute::_('index.php?option=com_userxtd&view=user') ) ;
+			}
 		}
 	}
 	
