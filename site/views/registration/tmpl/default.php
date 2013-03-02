@@ -65,7 +65,7 @@ $fieldsets = $this->form->getFieldsets();
 	
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_userxtd&view=registration'); ?>" method="post"
+<form action="<?php echo JRoute::_('index.php?option=com_users&task=registration.register'); ?>" method="post"
 		name="adminForm" id="adminForm" class="form-horizontal" enctype="multipart/form-data">
 
 	<div id="userxtd-wrap" class="container-fluid registration<?php echo $this->get('pageclass_sfx');?>">
@@ -118,7 +118,7 @@ $fieldsets = $this->form->getFieldsets();
 			<?php echo JText::_('JCANCEL');?>
 		</a>
 		
-		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="task" value="registration.register" />
 		<input type="hidden" name="return" value="<?php echo base64_encode($uri->toString()); ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>

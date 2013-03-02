@@ -61,6 +61,32 @@ class plgSystemUserxtd extends JPlugin
 	}
 	
 	
+	// System Events
+	// ======================================================================================
+	
+	/**
+	* Converting the site URL to fit to the HTTP request
+	*
+	*/
+	function onAfterInitialise()
+	{
+		$app = JFactory::getApplication() ;
+		$option = JRequest::getVar('option') ;
+		$view 	= JRequest::getVar('view') ;
+		$layout = JRequest::getVar('layout', 'defult') ;
+		
+		if($option == 'com_users') {
+			
+			if( $view == 'registration' && $layout == 'default' ){
+				
+			}
+			
+		}
+	}
+	
+	
+	
+	
 	// Content Events
 	// ======================================================================================
 	
