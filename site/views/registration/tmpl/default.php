@@ -58,7 +58,6 @@ $fieldsets = $this->form->getFieldsets();
 		$('adminForm').addEvent('submit', function(e){
 			if( !v.isValid($('adminForm')) ) {
 				v.scroll = 0 ;
-				console.log(e);
 				e.stop();
 			}
 		});
@@ -111,8 +110,14 @@ $fieldsets = $this->form->getFieldsets();
 	</div>
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary validate"><?php echo JText::_('JREGISTER');?></button>
-			<a class="btn" href="<?php echo JRoute::_('');?>" title="<?php echo JText::_('JCANCEL');?>"><?php echo JText::_('JCANCEL');?></a>
+		<button type="submit" class="btn btn-primary validate">
+			<?php echo JText::_('JREGISTER');?>
+		</button>
+		
+		<a class="btn" href="<?php echo JRoute::_('');?>" title="<?php echo JText::_('JCANCEL');?>">
+			<?php echo JText::_('JCANCEL');?>
+		</a>
+		
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="return" value="<?php echo base64_encode($uri->toString()); ?>" />
 		<?php echo JHtml::_('form.token'); ?>

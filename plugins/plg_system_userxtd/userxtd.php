@@ -348,16 +348,14 @@ class plgSystemUserxtd extends JPlugin
 		
 		
 		// Hide some fields in registration
-		$option = JRequest::getVar('option') ;
-		$view = JRequest::getVar('view') ;
-		if($option == 'com_users' && $view == 'registration' ) {
-			$hide_in_reg = true ;
-		}else{
-			$hide_in_reg = false ;
-		}	
+		$context = $this->getContext() ;
+		$array 	= array();
+		if( in_array($context, $this->allow_context) ) {
+			$array['hide_in_registration'] = true ;
+		}
 		
 		
-		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form, array('hide_in_registration' => $hide_in_reg));
+		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form, $array);
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
@@ -795,5 +793,20 @@ class plgSystemUserxtd extends JPlugin
 		endforeach;
 		
 		return true ;
+	}
+	
+	
+	/*
+	 * function getContext
+	 * @param 
+	 */
+	
+	public function getContext()
+	{
+		$option 	= JRequest::getVar('option') ;
+		$view 		= JRequest::getVar('view') ;
+		$context 	= "{$option}.{$view}" ;
+		
+		return $context ;
 	}
 }
