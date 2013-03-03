@@ -208,8 +208,10 @@ class UserxtdViewUser extends AKViewItem
 	public function handleFields()
 	{
 		$form = $this->form ;
+		$UserParams = JComponentHelper::getParams('com_users') ;
 		
 		parent::handleFields();
+		
 		
 		// for Joomla! 3.0
 		if(JVERSION >= 3) {

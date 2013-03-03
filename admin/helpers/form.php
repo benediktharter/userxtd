@@ -60,7 +60,7 @@ class UserxtdHelperForm
 		$q 	= $db->getQuery(true) ;
 		
 		
-		if($condition) {jexit();
+		if($condition) {
 			$q->where($condition) ;
 		}
 		

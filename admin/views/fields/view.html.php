@@ -73,6 +73,8 @@ class UserxtdViewFields extends AKViewList
 		AKToolBarHelper::title( ucfirst($this->getName()) . ' ' . JText::_($this->text_prefix.'_TITLE_LIST'), 'article.png');
 		
 		parent::addToolbar();
+		
+		UXHelper::_('userConfigButton') ;
 	}
 	
 	

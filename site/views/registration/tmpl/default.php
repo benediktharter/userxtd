@@ -16,7 +16,7 @@ JHtml::_('behavior.formvalidation');
 UserxtdHelper::_('include.bootstrap', true, true);
 $doc = JFactory::getDocument();
 
-// Set Script
+// Set FormCheck Script
 //$doc->addScript( 	 JURI::root().'/components/com_userxtd/includes/js/formcheck/lang/en.js' );
 //$doc->addScript( 	 JURI::root().'/components/com_userxtd/includes/js/formcheck/formcheck.js' );
 //$doc->addStylesheet( JURI::root().'/components/com_userxtd/includes/js/formcheck/theme/classic/formcheck.css' ) ;
@@ -27,13 +27,7 @@ $user		= JFactory::getUser();
 $uri 		= JFactory::getURI() ;
 
 $fieldsets = $this->form->getFieldsets();
-
-//JText::script('COM_USERXTD_SCRIPT_TEST') ;
 ?>
-
-<script type="text/javascript">
-	// jQuery('.dropdown-toggle').dropdown();
-</script>
 
 <script type="text/javascript">
 	

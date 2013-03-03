@@ -73,7 +73,7 @@ class plgSystemUserxtd extends JPlugin
 		
 		$params = JComponentHelper::getParams('com_userxtd') ;
 		
-		if($params->get('Redirect', 0))	:
+		if($params->get('CoreRegistration_Redirect', 0))	:
 		
 			$app = JFactory::getApplication() ;
 			$option = JRequest::getVar('option') ;
@@ -662,8 +662,8 @@ class plgSystemUserxtd extends JPlugin
 	public function onContentPrepareData($context, $data)
 	{
 		$result = array() ;
-		include_once AKPATH_FORM.'/fields/uploadimage.php';
-		JHtml::register('users.uploadimage', array('JFormFieldUploadimage', 'showImage'));
+		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/helpers/fieldshow.php' ;
+		JHtml::register('users.uploadimage', array('UserxtdHelperFieldshow', 'showImage'));
 		
 		// Check we are manipulating a valid form.	
 		if (!in_array($context, $this->allow_context))

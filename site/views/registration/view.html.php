@@ -41,6 +41,13 @@ class UserxtdViewRegistration extends AKViewItem
 	{
 		$app 	= JFactory::getApplication() ;
 		$user 	= JFactory::getUser() ;
+		$this->user_params = JComponentHelper::getParams('com_users') ;
+		
+		if(!$this->user_params->get('allowUserRegistration', 1)) {
+			$app->redirect( JRoute::_('index.php?option=com_users&view=login') ) ;
+			return false ;
+		}
+		
 		
 		$this->state	= $this->get('State');
 		$this->params	= $this->state->get('params');

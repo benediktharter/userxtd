@@ -72,6 +72,21 @@ class UserxtdHelper extends AKProxy
 	}
 	
 	
+	/*
+	 * function userConfigButton
+	 * @param 
+	 */
+	
+	public static function userConfigButton()
+	{
+		$user = JFactory::getUser() ;
+		
+		if ($user->authorise('core.admin', 'com_users')) {
+			AKToolBarHelper::preferences('com_users', 550, 875, 'COM_USERXTD_TOOLBAR_COM_USERS_CONFIG');
+		}
+	}
+	
+	
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *

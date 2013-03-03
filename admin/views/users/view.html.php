@@ -78,6 +78,7 @@ class UserxtdViewUsers extends AKViewList
 			AKToolBarHelper::preferences($this->option);
 		}
 		
+		UXHelper::_('userConfigButton') ;
 		//parent::addToolbar();
 	}
 	
