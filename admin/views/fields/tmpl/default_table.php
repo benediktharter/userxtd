@@ -58,36 +58,36 @@ if( JVERSION >= 3 ) {
 			</th>
 			<?php endif; ?>
 			
-			<th width="1%">
+			<th width="1%" class="center">
 				<input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
 			</th>
 			
-			<th width="">
+			<th width="" class="center">
 				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
-			</th>
+			</th class="center">
 			
-			<th>
+			<th class="center">
+				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
+			</th class="center">
+			
+			<th class="center">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_TYPE', 'a.field_type', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th>
-				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
-			</th>
-			
-			<th>
+			<th class="center">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_LABEL', 'a.lael', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th>
+			<th class="center">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_NAME', 'a.name', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th width="5%" class="nowrap">
+			<th width="5%" class="nowrap center">
 				<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $listDirn, $listOrder); ?>
 			</th>
 			
 			<?php if( JVERSION < 3 ): ?>
-			<th width="10%">
+			<th width="10%" class="center">
 				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ORDERING', $orderCol, $listDirn, $listOrder); ?>
 				<?php if ($canOrder && $saveOrder) :?>
 					<?php echo JHtml::_('grid.order',  $this->items, 'filesave.png', 'fields.saveorder'); ?>
@@ -95,11 +95,11 @@ if( JVERSION >= 3 ) {
 			</th>
 			<?php endif; ?>
 			
-			<th width="10%">
+			<th width="10%" class="center">
 				<?php echo JHtml::_('grid.sort',  'JAUTHOR', 'c.name', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th width="1%" class="nowrap">
+			<th width="1%" class="nowrap center">
 				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 			</th>
 
@@ -132,45 +132,6 @@ if( JVERSION >= 3 ) {
 		$canCheckin	= $user->authorise('core.manage',		'com_userxtd.field.'.$item->a_id) || $item->a_checked_out == $userId || $item->a_checked_out == 0;
 		$canChange	= $user->authorise('core.edit.state',	'com_userxtd.field.'.$item->a_id) && $canCheckin;
 		$canEditOwn = $user->authorise('core.edit.own',		'com_userxtd.field.'.$item->a_id) && $item->c_id == $userId;
-		
-		// Nested ordering
-		if($nested){
-			
-			if($item->a_id == 1) {
-				$item->a_title = JText::_('JGLOBAL_ROOT') ;
-				$canEdit 	= false ;
-				$canChange 	= false ;
-				$canEditOwn = false ;
-			}
-			
-			$orderkey = array_search($item->a_id, $this->ordering[$item->a_parent_id]);
-		
-			// Get the parents of item for sorting
-			if ($item->a_level > 1)
-			{
-				$parentsStr = "";
-				$_currentParentId = $item->a_parent_id;
-				$parentsStr = " ".$_currentParentId;
-				for ($n = 0; $n < $item->a_level; $n++)
-				{
-					foreach ($this->ordering as $k => $v)
-					{
-						$v = implode("-", $v);
-						$v = "-".$v."-";
-						if (strpos($v, "-" . $_currentParentId . "-") !== false)
-						{
-							$parentsStr .= " ".$k;
-							$_currentParentId = $k;
-							break;
-						}
-					}
-				}
-			}
-			else
-			{
-				$parentsStr = "";
-			}
-		}
 
 		?>
 		<tr class="row<?php echo $i % 2; ?>"
@@ -215,18 +176,6 @@ if( JVERSION >= 3 ) {
 			
 			<td class="center">
 				<?php echo $item->get('b_title'); ?>
-			</td>
-			
-			<td class="center">
-				<!-- Title -->
-				<?php if ($canEdit || $canEditOwn) : ?>
-					<a href="<?php echo JRoute::_('index.php?option=com_userxtd&task=field.edit&id='.$item->a_id);//.'&field_type='.$item->a_field_type); ?>">
-						<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
-					</a>
-				<?php else: ?>
-					<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
-				<?php endif; ?>
-				
 			</td>
 			
 			<td class="n/owrap has-context">
@@ -309,6 +258,18 @@ if( JVERSION >= 3 ) {
 						?>
 				</div>
 				<?php endif; ?>
+			</td>
+			
+			<td class="center">
+				<!-- Title -->
+				<?php if ($canEdit || $canEditOwn) : ?>
+					<a href="<?php echo JRoute::_('index.php?option=com_userxtd&task=field.edit&id='.$item->a_id);//.'&field_type='.$item->a_field_type); ?>">
+						<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+					</a>
+				<?php else: ?>
+					<?php echo JText::_('LIB_WINDWALKER_FIELDTYPE_'.($item->get('a_field_type') ? $item->get('a_field_type') : 'text')); ?>
+				<?php endif; ?>
+				
 			</td>
 			
 			<td class="center">

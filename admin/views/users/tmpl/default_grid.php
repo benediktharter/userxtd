@@ -88,7 +88,7 @@ foreach( $this->items as $k => $item ):
 		// Checkbox TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= null ;
+			$th[$column]['option']['class'] 	= 'user-data' ;
 			$th[$column]['option']['width'] 	= '1%' ;
 			$th[$column]['content'] 			= '<input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />';
 		}
@@ -121,7 +121,7 @@ foreach( $this->items as $k => $item ):
 		// Example TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= 'center' ;
+			$th[$column]['option']['class'] 	= 'center user-data' ;
 			//$th[$column]['option']['width'] 	= '5%' ;
 			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder);
 		}
@@ -154,7 +154,7 @@ foreach( $this->items as $k => $item ):
 		// Example TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= 'center' ;
+			$th[$column]['option']['class'] 	= 'center user-data' ;
 			//$th[$column]['option']['width'] 	= '5%' ;
 			$th[$column]['content'] 			= JHtml::_('grid.sort',  'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder);
 		}
@@ -187,7 +187,7 @@ foreach( $this->items as $k => $item ):
 		// Example TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= null ;
+			$th[$column]['option']['class'] 	= 'user-data' ;
 			$th[$column]['option']['width'] 	= '5%' ;
 			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_ENABLED', 'a.enabled', $listDirn, $listOrder);
 		}
@@ -224,7 +224,7 @@ foreach( $this->items as $k => $item ):
 		// Example TH
 		// -----------------------------------------
 		if($k == 0){
-			$th[$column]['option']['class'] 	= null ;
+			$th[$column]['option']['class'] 	= 'user-data' ;
 			$th[$column]['option']['width'] 	= '5%' ;
 			$th[$column]['content'] 			= JHtml::_('grid.sort',  'COM_USERS_HEADING_ACTIVATED', 'a.activation', $listDirn, $listOrder);
 		}
@@ -252,6 +252,9 @@ foreach( $this->items as $k => $item ):
 	
 	
 	
+	
+	$width 	 = 70 / count($this->keys) ;
+	
 	foreach( $this->keys as $i => $key ):
 		if(!$key) continue;
 		
@@ -266,14 +269,15 @@ foreach( $this->items as $k => $item ):
 			// -----------------------------------------
 			if($k == 0){
 				$th[$column]['option']['class'] 	= 'center' ;
-				$th[$column]['option']['width'] 	= null ;
+				$th[$column]['option']['width'] 	= '' ;
+				$th[$column]['option']['style']		= "max-width: {$width}%;";
 				$th[$column]['content'] 			= JHtml::_('grid.sort',  $field->title, $key, $listDirn, $listOrder) . '<div class="small" style="font-weight: normal;">('.$field->label.')</div>' ;
 			}
 			
 			
 			// Example TD Option
 			// -----------------------------------------
-			$option['class'] = 'nowrap center' ;
+			$option['class'] = 'nowrap center hasTip' ;
 			
 			
 			// Example TD Content
@@ -281,8 +285,11 @@ foreach( $this->items as $k => $item ):
 			
 			$content = $item->get($key) ;
 			$content = JFilterOutput::cleanText($content) ;
-			$content = JString::substr($content, 0, 20) ;
 			
+			//$width   = $width ? $width : 0 ;
+			$content = '<div class="field-value-wrap" style=" max-height: 40px; text-overflow:ellipsis; overflow: hidden;">'.$content.'</div>';
+			//$content = JString::substr($content, 0, 20) ;
+			$option['title'] = strip_tags($content) ;
 			
 			// Put in $td
 			// -----------------------------------------

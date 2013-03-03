@@ -42,35 +42,35 @@ $show_root	= JRequest::getVar('show_root') ;
 	<thead>
 		<tr>
 			
-			<th width="1%">
+			<th width="1%" class="center">
 				<input type="checkbox" name="checkall-toggle" value="" onclick="Joomla.checkAll(this)" />
 			</th>
 			
-			<th>
+			<th class="center">
 				<?php echo JHtml::_('grid.sort',  'COM_USERXTD_USER_ID', 'a.user_id', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th class="nowrap">
+			<th class="nowrap center"  width="20%">
 				<?php echo JHtml::_('grid.sort',  'COM_USERXTD_USER_USERNAME', 'd.name', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th >
+			<th  class="center" width="10%">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_NAME', 'b.name', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th >
+			<th  class="center" width="10%">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_LABEL', 'b.label', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th >
+			<th  class="center">
 				<?php echo JHtml::_('grid.sort',  'LIB_WINDWALKER_FIELD_ATTR_VALUE', 'a.value', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th >
+			<th  class="center" width="10%">
 				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'c.id', $listDirn, $listOrder); ?>
 			</th>
 			
-			<th width="1%" class="nowrap">
+			<th width="1%" class="nowrap center">
 				<?php echo JHtml::_('grid.sort',  'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 			</th>
 			
