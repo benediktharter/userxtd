@@ -179,8 +179,12 @@ class UserxtdTableField extends JTable
 		$q->select("name")
 			->from($this->_tbl)
 			->where("name='{$this->name}'")
-			->where("id != {$this->id}")
 			;
+			
+		if($this->id) {
+			$q->where("id != {$this->id}");
+		}
+		
 		$db->setQuery($q);
 		$result = $db->loadResult();
 		
