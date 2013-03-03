@@ -61,7 +61,7 @@ class UserxtdControllerUser extends AKControllerForm
 
 		// Get the previous user id (if any) and the current user id.
 		$previousId = (int) $app->getUserState('com_userxtd.edit.profile.id');
-		$userId = $this->input->getInt('id', null, 'array');
+		$userId = JRequest::getVar('id') ;
 
 		// Check if the user is trying to edit another users profile.
 		if ($userId != $loginUserId && !$user->authorise('core.manage'))

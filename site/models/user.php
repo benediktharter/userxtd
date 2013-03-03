@@ -187,11 +187,10 @@ class UserxtdModelUser extends AKModelAdmin
 			$this->data->params = $registry->toArray();
 
 			// Get the dispatcher and load the users plugins.
-			$dispatcher	= JEventDispatcher::getInstance();
 			JPluginHelper::importPlugin('user');
 
 			// Trigger the data preparation event.
-			$results = $dispatcher->trigger('onContentPrepareData', array('com_userxtd.profile', $this->data));
+			$results = JFactory::getApplication()->triggerEvent('onContentPrepareData', array('com_userxtd.profile', $this->data));
 
 			// Check for errors encountered while preparing the data.
 			if (count($results) && in_array(false, $results, true))

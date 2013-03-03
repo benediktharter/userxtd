@@ -59,10 +59,4 @@
 	</config>
 	
 	
-	<updateservers>
-		<!--<server type="collection">http://userxtd.com/list.xml</server>-->
-		<server type="extension" priority="1" name="Asikart Userxtd Plugin">http://update.asikart.com/plugins/plg_userxtd.xml</server>
-	</updateservers>
-	
-	
 </extension>

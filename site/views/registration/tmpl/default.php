@@ -104,7 +104,7 @@ $fieldsets = $this->form->getFieldsets();
 	</div>
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary validate">
+		<button type="submit" class="btn btn-primary">
 			<?php echo JText::_('JREGISTER');?>
 		</button>
 		

@@ -73,7 +73,12 @@ class UserxtdViewUser extends AKViewItem
 			
 			$this->form	= $this->get('Form');
 			
-			parent::displayWithPanel($tpl);
+			if(JVERSION >= 3 ){
+				parent::displayWithPanel($tpl);
+			}else{
+				$this->addToolbar();
+				parent::display($tpl);
+			}
 			return true ;
 		}
 		

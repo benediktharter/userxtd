@@ -20,11 +20,12 @@ UserxtdHelper::_('include.core');
 $app = JFactory::getApplication() ;
 if( JVERSION >= 3){
 	JHtml::_('formbehavior.chosen', 'select');
+	
 	if($app->isSite()){
 		UserxtdHelper::_('include.fixBootstrapToJoomla');
 	}
 }else{
-	UserxtdHelper::_('include.bluestork');
+	UserxtdHelper::_('include.bootstrap');
 	// UserxtdHelper::_('include.fixBootstrapToJoomla');
 }
 
@@ -80,6 +81,10 @@ if($app->isAdmin()) {
 			alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
 		}
 	}
+	
+	window.addEvent('domready', function(){
+		$$('#toolbar-apply a').addClass('btn btn-primary');
+	});
 </script>
 
 <form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="user-form" class="form-validate form-horizontal" enctype="multipart/form-data">
@@ -119,10 +124,16 @@ if($app->isAdmin()) {
 	
 	
 	<hr />
-	<div class="bottom-actions">
+	<div class="form-actions">
 		<?php echo JToolBar::getInstance('toolbar')->render('toolbar') ; ?>
 	</div>
 	
+	
+	<?php if( JVERSION < 3 ): ?>
+	<div class="form-actions">
+		
+	</div>
+	<?php endif; ?>
 	
 	<!-- Hidden Inputs -->
 	<div id="hidden-inputs">
