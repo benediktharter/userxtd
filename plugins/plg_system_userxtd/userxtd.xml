@@ -33,6 +33,7 @@
 		<filename plugin="userxtd">userxtd.php</filename>
 		<filename>index.html</filename>
 		<filename>install.php</filename>
+		<folder>form</folder>
 		<folder>language</folder>
 		<folder>lib</folder>
 	</files>
