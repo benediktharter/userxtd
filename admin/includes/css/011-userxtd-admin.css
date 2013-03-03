@@ -31,7 +31,22 @@
 
 
 /* FORM */
+.joomla25 .ak-cck-attrs {
+	float: left;
+	width: 100%;
+	padding-left: 130px;
+}
 
+.joomla25 .ak-cck-attrs #attrs_name,
+.joomla25 .ak-cck-attrs #attrs_label,
+.joomla25 .ak-cck-attrs #attrs_description {
+	width: 250px;
+	font-size: 1.5em;
+}
+
+.joomla25 .ak-cck-attrs .control-group {
+	min-height: 50px;
+}
 
 /* FOOTER */
 

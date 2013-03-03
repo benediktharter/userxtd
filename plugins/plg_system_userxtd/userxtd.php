@@ -554,7 +554,11 @@ class plgSystemUserxtd extends JPlugin
 	
 	public function onCCKEngineAfterFormLoad($form = null, $data = null, $formfield = null, $element = null, $form_setted = false)
 	{
+		// Add Hide reg field
 		$form->loadFile( dirname(__FILE__).'/form/forms/fields.xml' );
+		
+		// label do not required
+		$form->setFieldAttribute('label', 'required','false') ;
 	}
 	
 	

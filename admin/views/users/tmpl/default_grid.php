@@ -22,7 +22,24 @@ $saveOrder	= $listOrder == 'a.ordering';
 jimport('libraries.joomla.html.jgrid');
 include_once AKPATH_HTML.'/grid.php';
 
-
+?>
+<script type="text/javascript">
+	window.addEvent('domready', function(){
+		var w 	= $$('#j-main-container')[0].getWidth() ;
+		var tr 	= $$('table.adminlist tbody tr')[0] ;
+		var d 	= $$('table.adminlist thead th.user-data') ;
+		var n 	= tr.getElements('.field-value-wrap').length ;
+		
+		var data_w = 0 ;
+		
+		d.each(function(e){
+			data_w += e.getWidth();
+		}) ;
+		
+		$$('.field-value-wrap').setStyle('width', (w - data_w - 200) / n ) ;
+	});	
+</script>
+<?php
 
 // Set Table
 // =================================================================================

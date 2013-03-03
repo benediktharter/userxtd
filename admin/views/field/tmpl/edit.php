@@ -87,7 +87,7 @@ if($app->isAdmin()) {
 	}
 </script>
 
-<div id="<?php echo (JVERSION >= 3) ? 'joomla30' : 'joomla25' ?>">
+<div id="userxtd-field-edit" class="<?php echo (JVERSION >= 3) ? 'joomla30' : 'joomla25' ?>">
 
 <form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="field-form" class="form-validate">
 	
