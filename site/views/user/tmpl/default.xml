@@ -13,7 +13,7 @@
 
 			<field name="id" type="user"
 				label="COM_USERXTD_SELECT_USER"
-				description="CCOM_USERXTD_SELECT_USER_DESC"
+				description="COM_USERXTD_SELECT_USER_DESC"
 			/>
 		</fieldset>
 	</fields>

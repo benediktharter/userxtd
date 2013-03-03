@@ -70,7 +70,7 @@ class UserxtdViewFields extends AKViewList
 	protected function addToolbar()
 	{
 		// Set title.
-		AKToolBarHelper::title( ucfirst($this->getName()) . ' ' . JText::_($this->text_prefix.'_TITLE_LIST'), 'article.png');
+		AKToolBarHelper::title( JText::_($this->text_prefix.'_TITLE_FIELDS_LIST'), 'article.png');
 		
 		parent::addToolbar();
 		

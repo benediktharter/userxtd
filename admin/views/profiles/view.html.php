@@ -64,10 +64,18 @@ class UserxtdViewProfiles extends AKViewList
 	 */
 	protected function addToolbar()
 	{
-		// Set title.
-		AKToolBarHelper::title( ucfirst($this->getName()) . ' ' . JText::_($this->text_prefix.'_TITLE_LIST'), 'article.png');
+		$canDo	= AKHelper::getActions($this->option);
 		
-		parent::addToolbar();
+		// Set title.
+		AKToolBarHelper::title( JText::_($this->text_prefix.'_TITLE_PROFILES_LIST'), 'article.png');
+		
+		if ($canDo->get('core.delete')) {
+			JToolbarHelper::deleteList('Are you sure?', $this->list_name.'.delete');
+		}
+		
+		if ($canDo->get('core.admin')) {
+			AKToolBarHelper::preferences($this->option);
+		}
 		
 		UXHelper::_('userConfigButton') ;
 	}

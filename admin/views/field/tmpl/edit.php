@@ -92,18 +92,6 @@ if($app->isAdmin()) {
 <form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="field-form" class="form-validate">
 	
 	
-	<?php if( JVERSION >= 3 ): ?>
-	<!-- Tab Buttons -->
-	<ul class="nav nav-tabs">
-		<?php foreach( $this->fields as $key => $group): ?>
-		<li class="<?php echo $key == 0 ? 'active' : ''; ?>">
-			<a href="#<?php echo $group; ?>" data-toggle="tab"><?php echo JText::_('COM_USERXTD_EDIT_FIELDS_'.$group); ?></a>
-		</li>
-		<?php endforeach; ?>
-	</ul>
-	<?php endif; ?>
-	
-	
 	<!-- Tab Bodys -->
 	<?php echo $tabs ? UserxtdHelper::_('panel.startTabs', 'fieldTab', array( 'active' => $this->fields[0] ) ) : null ; ?>
 		<?php foreach( $this->fields as $key => $group ): 

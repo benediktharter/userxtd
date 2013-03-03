@@ -100,7 +100,7 @@
 			<option value="1">JSHOW</option>
 		</field>
 		
-
+		<field type="spacer" hr="true" />
 		
 		<field
 			name="UserInfo_ImageField"
@@ -133,6 +133,20 @@
 			<option>JNONE</option>
 		</field>
 		
+		<field type="spacer" hr="true" />
+		
+		<field
+			name="UserInfo_ImageCrop"
+			type="radio"
+			label="COM_USERXTD_CONFIG_CONTENTINTERGATE_IMAGE_CROP"
+			description="COM_USERXTD_CONFIG_CONTENTINTERGATE_IMAGE_CROP_DESC"
+			size="3"
+			default="1"
+			class="btn-group"
+		>
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
 		
 		<field
 			name="UserInfo_ImageWidth"
@@ -151,19 +165,6 @@
 			size="3"
 			default="150"
 		/>
-		
-		<field
-			name="UserInfo_ImageCrop"
-			type="radio"
-			label="COM_USERXTD_CONFIG_CONTENTINTERGATE_IMAGE_CROP"
-			description="COM_USERXTD_CONFIG_CONTENTINTERGATE_IMAGE_CROP_DESC"
-			size="3"
-			default="1"
-			class="btn-group"
-		>
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
 		
 		<!--
 		<field

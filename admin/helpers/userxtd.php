@@ -38,9 +38,9 @@ class UserxtdHelper extends AKProxy
 			$folders = JFolder::folders(JPATH_ADMINISTRATOR.'/components/com_userxtd/views');
 			
 			foreach( $folders as $folder ){
-				if( substr($folder, -2) == 'is' || substr($folder, -1) == 's'){
+				if( substr($folder, -2) == 'es' || substr($folder, -1) == 's'){
 					JHtmlSidebar::addEntry(
-						ucfirst($folder) . ' ' . JText::_('COM_USERXTD_TITLE_LIST'),
+						JText::_('COM_USERXTD_TITLE_'.$folder.'_LIST'),
 						'index.php?option=com_userxtd&view='.$folder,
 						$vName == $folder
 					);
@@ -58,9 +58,9 @@ class UserxtdHelper extends AKProxy
 			$folders = JFolder::folders(JPATH_ADMINISTRATOR.'/components/com_userxtd/views');
 			
 			foreach( $folders as $folder ){
-				if( substr($folder, -2) == 'is' || substr($folder, -1) == 's'){
+				if( substr($folder, -2) == 'es' || substr($folder, -1) == 's'){
 					JSubMenuHelper::addEntry(
-						ucfirst($folder) . ' ' . JText::_('COM_USERXTD_TITLE_LIST'),
+						JText::_('COM_USERXTD_TITLE_'.$folder.'_LIST'),
 						'index.php?option=com_userxtd&view='.$folder,
 						$vName == $folder
 					);

@@ -638,11 +638,37 @@ class plgSystemUserxtd extends JPlugin
 	 * @return	boolean
 	 * @since	1.6
 	 */
-	public function onUserAfterDelete($user, $succes, $msg)
+	public function onUserAfterDelete($user, $success, $msg)
 	{
 		$result = array() ;
-		
-		// Code here
+				
+		if (!$success)
+		{
+			// return false;
+		}
+
+		$userId	= JArrayHelper::getValue($user, 'id', 0, 'int');
+
+		if ($userId)
+		{
+			try
+			{
+				$db = JFactory::getDbo();
+				$q = $db->getQuery(true) ;
+				
+				$q->delete('#__userxtd_profiles')
+					->where('user_id = '.$userId)
+					;
+				
+				$db->setQuery($q);
+				$db->execute();
+			}
+			catch (Exception $e)
+			{
+				$this->_subject->setError($e->getMessage());
+				return false;
+			}
+		}
 		
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
