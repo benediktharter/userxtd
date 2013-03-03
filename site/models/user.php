@@ -353,7 +353,11 @@ class UserxtdModelUser extends AKModelAdmin
 			$this->setError($user->getError());
 			return false;
 		}
-
+		
+		// Remove session
+		$session = JFactory::getSession();
+		$session->set('user', $user) ;
+		
 		return $user->id;
 	}
 	
