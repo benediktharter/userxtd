@@ -70,6 +70,7 @@ class UserxtdViewUser extends AKViewItem
 		}
 		
 		if( $layout == 'edit' ) {
+			
 			$this->form	= $this->get('Form');
 			
 			parent::displayWithPanel($tpl);
@@ -172,6 +173,25 @@ class UserxtdViewUser extends AKViewItem
 				$this->setLayout($layout);
 			}
 		}
+		
+		
+		
+		// Show params
+		// =====================================================================================
+
+		$show_cats = $this->params->get('CoreRegistration_Categories_Show') ;
+		$show_cats = is_array($show_cats) ? $show_cats : array($show_cats);
+		
+		if(in_array('global', $show_cats)) {
+			$show_cats = JComponentHelper::getParams('com_userxtd')->get('CoreRegistration_Categories_Show') ;
+		}
+		
+		if( !in_array('*', $show_cats) ) {
+			$this->params->set('show_categories', $show_cats) ;
+		}else{
+			$this->params->set('show_categories', '*') ;
+		}
+		
 		
 		$item->params = $this->params ;
 		

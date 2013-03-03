@@ -39,6 +39,19 @@
 			<option value="*">JALL</option>
 		</field>
 		
+		<field name="CoreRegistration_Categories_Show"
+             type="category"
+             default="*"
+			 extension="com_userxtd"
+             label="COM_USERXTD_CONFIG_CORE_REGISTRATION_CATEGORIES_SHOW"
+             description="COM_USERXTD_CONFIG_CORE_REGISTRATION_CATEGORIES_SHOW_DESC"
+			 multiple="true"
+		>
+			<option value="*">JALL</option>
+		</field>
+		
+		<field type="spacer" hr="true" />
+		
 		<field
 			name="CoreRegistration_Redirect"
 			type="radio"

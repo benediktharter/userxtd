@@ -126,8 +126,10 @@ if($app->isAdmin()) {
 	
 	<!-- Hidden Inputs -->
 	<div id="hidden-inputs">
+		<input type="hidden" name="return" value="<?php echo JRequest::getVar('return') ; ?>" />
+		<input type="hidden" name="jform[id]" value="<?php echo $this->state->get('user.id');?>" />
 		<input type="hidden" name="option" value="com_userxtd" />
-		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="task" value="user.save" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 	<div class="clr"></div>

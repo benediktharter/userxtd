@@ -89,7 +89,7 @@ class UserxtdControllerUser extends AKControllerForm
 		}
 
 		// Redirect to the edit screen.
-		$this->setRedirect(JRoute::_('index.php?option=com_userxtd&view=user&layout=edit', false));
+		$this->setRedirect(JRoute::_('index.php?option=com_userxtd&view=user&layout=edit'.$this->getRedirectToItemAppend(), false));
 	}
 	
 	
@@ -107,8 +107,9 @@ class UserxtdControllerUser extends AKControllerForm
 
 		$app	= JFactory::getApplication();
 		$model	= $this->getModel('User', 'UserxtdModel', array('ignore_request' => false));
-		$user	= JFactory::getUser();
-		$userId	= (int) $user->get('id');
+		$jform 	= JRequest::getVar('jform') ;
+		$userId	= $jform['id'] ;
+		$user	= JFactory::getUser($userId);
 
 		// Get the user data.
 		$data = $app->input->post->get('jform', array(), 'array');
@@ -149,7 +150,7 @@ class UserxtdControllerUser extends AKControllerForm
 
 			// Redirect back to the edit screen.
 			$userId = (int) $app->getUserState('com_userxtd.edit.profile.id');
-			$this->setRedirect(JRoute::_('index.php?option=com_userxtd&task=user&layout=edit&id='.$userId, false));
+			$this->setRedirect(JRoute::_('index.php?option=com_userxtd&task=user&layout=edit&id='.$userId.$this->getRedirectToItemAppend(), false));
 			return false;
 		}
 
@@ -165,7 +166,7 @@ class UserxtdControllerUser extends AKControllerForm
 			// Redirect back to the edit screen.
 			$userId = (int) $app->getUserState('com_userxtd.edit.profile.id');
 			$this->setMessage(JText::sprintf('COM_USERS_PROFILE_SAVE_FAILED', $model->getError()), 'warning');
-			$this->setRedirect(JRoute::_('index.php?option=com_userxtd&view=user&layout=edit&id='.$userId, false));
+			$this->setRedirect(JRoute::_('index.php?option=com_userxtd&view=user&layout=edit&id='.$userId.$this->getRedirectToItemAppend(), false));
 			return false;
 		}
 
@@ -179,7 +180,7 @@ class UserxtdControllerUser extends AKControllerForm
 
 				// Redirect back to the edit screen.
 				$this->setMessage(JText::_('COM_USERS_PROFILE_SAVE_SUCCESS'));
-				$this->setRedirect(JRoute::_(($redirect = $app->getUserState('com_userxtd.edit.profile.redirect')) ? $redirect : 'index.php?option=com_userxtd&view=user&layout=edit&hidemainmenu=1', false));
+				$this->setRedirect(JRoute::_(($redirect = $app->getUserState('com_userxtd.edit.profile.redirect')) ? $redirect : 'index.php?option=com_userxtd&view=user&layout=edit&hidemainmenu=1'.$this->getRedirectToItemAppend(), false));
 				break;
 
 			default:
@@ -195,7 +196,7 @@ class UserxtdControllerUser extends AKControllerForm
 
 				// Redirect to the list screen.
 				$this->setMessage(JText::_('COM_USERS_PROFILE_SAVE_SUCCESS'));
-				$this->setRedirect(JRoute::_(($redirect = $app->getUserState('com_userxtd.edit.profile.redirect')) ? $redirect : 'index.php?option=com_userxtd&view=user&id='.$return, false));
+				$this->setRedirect(JRoute::_(($redirect = $app->getUserState('com_userxtd.edit.profile.redirect')) ? $redirect : 'index.php?option=com_userxtd&view=user&id='.$return.$this->getRedirectToItemAppend(), false));
 				break;
 		}
 
@@ -216,13 +217,13 @@ class UserxtdControllerUser extends AKControllerForm
 		
 		$app = JFactory::getApplication() ;
 		
-		$this->redirect =
+		$this->setRedirect (
 			JRoute::_(
 				'index.php?option=' . $this->option . '&view=' . $this->view_item
 				. '&id=' . $app->getUserState('com_userxtd.edit.profile.id')
 				. $this->getRedirectToListAppend(), false
 			)
-		;
+		);
 
 		return true;
 	}

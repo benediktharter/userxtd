@@ -33,6 +33,7 @@ $exclude_fields[] = $title_field 	= $params->get('UserInfo_TitleField', 'name');
 $exclude_fields[] = $about_field 	= $params->get('UserInfo_AboutField', 'BASIC_ABOUT');
 
 $this->exclude_fields = $exclude_fields;
+$show_cats = $this->params->get('show_categories', '*') ;
 ?>
 
 <script type="text/javascript">
@@ -163,6 +164,12 @@ $this->exclude_fields = $exclude_fields;
 								<?php
 								$this->data		= $data ;
 								foreach( $fieldsets as $fieldset ):
+									
+									if( $show_cats != '*'
+									   && !in_array( str_replace('userxtd-cat-', '', $fieldset->name) ,$show_cats) )
+									{
+										continue;
+									}
 									
 									$this->fieldset = $fieldset ;
 									echo $this->loadTemplate('profile');

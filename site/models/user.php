@@ -217,6 +217,8 @@ class UserxtdModelUser extends AKModelAdmin
 	public function getUser($pk = null)
 	{
 		$id 	= JRequest::getVar('id') ;
+		$id 	= $id ? $id : null ;
+		
 		$user 	= UXFactory::getUser($id);
 		
 		if($user) {

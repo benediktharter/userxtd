@@ -208,6 +208,13 @@ function UserxtdParseRoute($segments)
 	// REST URI end
 	*/
 	
+	// Get active menu
+	$app   	= JApplication::getInstance('site');
+	$menu  	= $app->getMenu(true);
+	$item 	= $menu->getActive() ;	
+	
+	
+	//array_unshift( $segments , $item->query['view']) ;
 	
 	foreach( $params as $param ):
 		if ($count)
@@ -221,6 +228,8 @@ function UserxtdParseRoute($segments)
 			}
 		}
 	endforeach;
+	
+
 	
 	/*
 	if ($count)
