@@ -253,7 +253,9 @@ foreach( $this->items as $k => $item ):
 	
 	
 	
-	$width 	 = 70 / count($this->keys) ;
+	$c		 = count($this->keys) ;
+	$c		 = $c ? $c : 1 ;
+	$width 	 = 70 / $c ;
 	
 	foreach( $this->keys as $i => $key ):
 		if(!$key) continue;
