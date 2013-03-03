@@ -391,7 +391,8 @@ class plgSystemUserxtd extends JPlugin
 		// Hide some fields in registration
 		$context = $this->getContext() ;
 		$array 	= array();
-		if( in_array($context, $this->allow_context) ) {
+		$reg_contexxt = array( 'com_users.registration', 'com_userxtd.registration' );
+		if( in_array($context, $reg_contexxt) || $this->get('hide_registration_field')) {
 			$array['hide_in_registration'] = true ;
 		}
 		
@@ -540,9 +541,9 @@ class plgSystemUserxtd extends JPlugin
 		}
 		
 		
-		//if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
+		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
-		//return $this->resultBool($result);
+		return true;
 	}
 	
 	
