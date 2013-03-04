@@ -12,7 +12,11 @@ defined('_JEXEC') or die;
 function userInfo($context, $article, $params)
 {
 	// Detect Context
-	if( $context != 'com_content.article' ) return ;
+	$option = JRequest::getVar('option') ;
+	$view 	= JRequest::getVar('view') ;
+	$layout = JRequest::getVar('layout', 'default') ;
+	if( $option != 'com_content' || $view != 'article' || $layout != 'default' ) return true ;
+	
 	
 	include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 	$ux 	= plgSystemUserxtd::getInstance();
