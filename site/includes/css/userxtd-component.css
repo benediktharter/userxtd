@@ -11,3 +11,12 @@
 #userxtd-wrap .user-item .profile-info-inner {
 	padding-left: 15px;
 }
+
+
+#member-profile fieldset dt label{
+	display: inline;
+}
+
+#user-form #member-profile fieldset {
+	border: none;
+}

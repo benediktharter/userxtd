@@ -104,11 +104,11 @@ $fieldsets = $this->form->getFieldsets();
 	</div>
 	
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="btn btn-primary button">
 			<?php echo JText::_('JREGISTER');?>
 		</button>
 		
-		<a class="btn" href="<?php echo JRoute::_('');?>" title="<?php echo JText::_('JCANCEL');?>">
+		<a class="btn button" href="<?php echo JRoute::_('');?>" title="<?php echo JText::_('JCANCEL');?>">
 			<?php echo JText::_('JCANCEL');?>
 		</a>
 		

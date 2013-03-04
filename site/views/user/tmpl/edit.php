@@ -87,55 +87,59 @@ if($app->isAdmin()) {
 	});
 </script>
 
-<form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post" name="adminForm" id="user-form" class="form-validate form-horizontal" enctype="multipart/form-data">
+<form action="<?php echo JRoute::_( JFactory::getURI()->toString() ); ?>" method="post"
+	name="adminForm" id="user-form" class="profile-edit form-validate form-horizontal" enctype="multipart/form-data">
 	
-	
-	<?php foreach ($this->form->getFieldsets() as $group => $fieldset):// Iterate through the form fieldsets and display each one.?>
-		<?php $fields = $this->form->getFieldset($group);?>
-		<?php if (count($fields)):?>
-		<fieldset>
-			<?php if (isset($fieldset->label)):// If the fieldset has a label set, display it as the legend.?>
-			<legend><?php echo JText::_($fieldset->label); ?></legend>
-			<?php endif;?>
-			<?php foreach ($fields as $field):// Iterate through the fields in the set and display them.?>
-				<?php if ($field->hidden):// If the field is hidden, just display the input.?>
-					<div class="control-group">
-						<div class="controls">
-							<?php echo $field->input;?>
-						</div>
-					</div>
-				<?php else:?>
-					<div class="control-group">
-						<div class="control-label">
-							<?php echo $field->label; ?>
-							<?php if (!$field->required && $field->type != 'Spacer') : ?>
-							<span class="optional"><?php echo JText::_('COM_USERS_OPTIONAL'); ?></span>
-							<?php endif; ?>
-						</div>
-						<div class="controls">
-							<?php echo $field->input; ?>
-						</div>
-					</div>
+	<div id="member-profile">
+		<?php foreach ($this->form->getFieldsets() as $group => $fieldset):// Iterate through the form fieldsets and display each one.?>
+			<?php $fields = $this->form->getFieldset($group);?>
+			<?php if (count($fields)):?>
+			<fieldset>
+				<?php if (isset($fieldset->label)):// If the fieldset has a label set, display it as the legend.?>
+				<legend><?php echo JText::_($fieldset->label); ?></legend>
 				<?php endif;?>
-			<?php endforeach;?>
-		</fieldset>
-		<?php endif;?>
-	<?php endforeach;?>
-	
-	
-	
-	<?php if( JVERSION < 3 ): ?>
-	<div class="form-actions">
-		<a type="submit" class="btn btn-primary" onclick="Joomla.submitbutton('user.save')">
-			<?php echo JText::_('JTOOLBAR_SAVE');?>
-		</a>
+				
+				<dl>
+				<?php foreach ($fields as $field):// Iterate through the fields in the set and display them.?>
+					<?php if ($field->hidden):// If the field is hidden, just display the input.?>
+						<dd class="control-group">
+							<div class="controls">
+								<?php echo $field->input;?>
+							</div>
+						</dd>
+					<?php else:?>
+						<div class="">
+							<dt class="">
+								<?php echo $field->label; ?>
+								<?php if (!$field->required && $field->type != 'Spacer') : ?>
+								<span class="optional"><?php echo JText::_('COM_USERS_OPTIONAL'); ?></span>
+								<?php endif; ?>
+							</dt>
+							<dd class="">
+								<?php echo $field->input; ?>
+							</dd>
+						</div>
+					<?php endif;?>
+				<?php endforeach;?>
+				</dl>
+			</fieldset>
+			<?php endif;?>
+		<?php endforeach;?>
 		
-		<a class="btn" href="#" title="<?php echo JText::_('JCANCEL');?>" onclick="Joomla.submitbutton('user.cancel')">
-			<?php echo JText::_('JCANCEL');?>
-		</a>
+		
+		
+		<?php if( JVERSION < 3 ): ?>
+		<div class="form-actions">
+			<a type="submit" class="btn btn-primary" onclick="Joomla.submitbutton('user.save')">
+				<?php echo JText::_('JTOOLBAR_SAVE');?>
+			</a>
+			
+			<a class="btn button" href="#" title="<?php echo JText::_('JCANCEL');?>" onclick="Joomla.submitbutton('user.cancel')">
+				<?php echo JText::_('JCANCEL');?>
+			</a>
+		</div>
+		<?php endif; ?>	
 	</div>
-	<?php endif; ?>
-	
 	
 	<!-- Hidden Inputs -->
 	<div id="hidden-inputs">
