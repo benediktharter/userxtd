@@ -67,7 +67,7 @@ class UserxtdViewProfiles extends AKViewList
 		$canDo	= AKHelper::getActions($this->option);
 		
 		// Set title.
-		AKToolBarHelper::title( JText::_($this->text_prefix.'_TITLE_PROFILES_LIST'), 'article.png');
+		AKToolBarHelper::title( JText::_('COM_USERXTD') . ': ' . JText::_($this->text_prefix.'_TITLE_PROFILES_LIST'), 'article.png');
 		
 		if ($canDo->get('core.delete')) {
 			JToolbarHelper::deleteList('Are you sure?', $this->list_name.'.delete');

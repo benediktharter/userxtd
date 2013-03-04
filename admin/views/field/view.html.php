@@ -63,7 +63,7 @@ class UserxtdViewField extends AKViewItem
 	 */
 	protected function addToolbar()
 	{
-		AKToolBarHelper::title( JText::_('COM_USERXTD_TITLE_FIELD_EDIT'), 'article-add.png');
+		AKToolBarHelper::title( JText::_('COM_USERXTD') . ': ' . JText::_('COM_USERXTD_TITLE_FIELD_EDIT'), 'article-add.png');
 		
 		parent::addToolbar();
 	}
