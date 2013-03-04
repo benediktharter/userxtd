@@ -24,6 +24,7 @@ function userInfo($context, $article, $params)
 	$param 	= $ux->params ;
 	$app 	= JFactory::getApplication() ;
 	$doc 	= JFactory::getDocument();
+	UXHelper::_('lang.loadLanguage', 'com_userxtd', 'admin');
 	
 	if($app->isAdmin()) return true ;
 	
@@ -52,6 +53,9 @@ function userInfo($context, $article, $params)
 	
 	$link	= JRoute::_('index.php?option=com_userxtd&view=user&id='.$user->get('id'));
 	$link 	= JHtml::link($link, JText::_('COM_USERXTD_USER_INFO_MORE'));
+	
+	$website_link = $user->get($website_field) ;
+	$website_link = $website_link ? JHtml::link($website_link, JText::_('COM_USERXTD_USER_INFO_WEBSITE')) : null;
 	
 	
 	// Get Template override

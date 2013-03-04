@@ -28,3 +28,17 @@
 .ux-user-info-warp .ux-user-right-inner {
 	padding-left: 15px;
 }
+
+.ux-user-info-warp .ux-user-inner {
+	position: relative ;
+}
+
+.ux-user-info-warp .ux-user-about {
+	margin-bottom: 30px;
+}
+
+.ux-user-info-warp .more-about {
+	position: absolute ;
+	bottom: 1px;
+	right: 1px;
+}

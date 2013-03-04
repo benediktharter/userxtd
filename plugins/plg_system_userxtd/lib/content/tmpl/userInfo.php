@@ -23,10 +23,11 @@ defined('_JEXEC') or die;
 				<h2 class="ux-user-info-heading"><?php echo $user->get($title_field); ?></h2>
 				<div class="ux-user-about">
 					<?php echo $user->get($about_field); ?>
-				</div>	
+				</div>
 			</div>
 		</div>
-		<div class="pull-right">
+		<div class="pull-right more-about">
+			<?php echo $website_link ? $website_link . ' | ' : '' ; ?>
 			<?php echo $link; ?>
 		</div>
 	</div>

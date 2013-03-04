@@ -133,6 +133,16 @@
 			<option>JNONE</option>
 		</field>
 		
+		<field
+			name="UserInfo_WebiteField"
+			type="field_list"
+			label="COM_USERXTD_CONTENTINTERGATE_WEBSITE"
+			description="COM_USERXTD_CONTENTINTERGATE_WEBSITE_DESC"
+			default="BASIC_WEBSITE"
+		>
+			<option>JNONE</option>
+		</field>
+		
 		<field type="spacer" hr="true" />
 		
 		<field
@@ -193,18 +203,6 @@
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
-		
-		<!--
-		<field
-			name="UserInfo_WebiteField"
-			type="field_list"
-			label="COM_USERXTD_CONTENTINTERGATE_WEBSITE"
-			description="COM_USERXTD_CONTENTINTERGATE_WEBSITE_DESC"
-			default="BASIC_WEBSITE"
-		>
-			<option>JNONE</option>
-		</field>
-		-->
 		
 	</fieldset>
 	
