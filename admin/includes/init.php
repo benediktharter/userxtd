@@ -14,6 +14,7 @@ defined('_JEXEC') or die;
 $doc 	= JFactory::getDocument();
 $app 	= JFactory::getApplication();
 $lang 	= JFactory::getLanguage();
+$params = JComponentHelper::getParams('com_userxtd') ;
 
 
 
@@ -43,6 +44,14 @@ if( $app->isSite() ){
 	// Include com_users Language
 	UXHelper::_('lang.loadLanguage', 'com_users', 'site');
 	UXHelper::_('lang.loadLanguage', 'com_users', 'admin');
+	
+	
+	// Include Bootstrap
+	if($params->get('UserInfo_IncludeCSS_Component', 1)) {
+		UXHelper::_('include.bootstrap', true, true) ;
+		$doc->addStyleSheet('components/com_userxtd/includes/css/userxtd-component.css');
+	}
+	
 	
 	// Include Joomla! admin css
 	UserxtdHelper::_('include.sortedStyle', 'includes/css');

@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.framework', true);
 JHtml::_('behavior.formvalidation');
-UserxtdHelper::_('include.bootstrap', true, true);
+// UserxtdHelper::_('include.bootstrap', true, true);
 $doc = JFactory::getDocument();
 
 // Set FormCheck Script

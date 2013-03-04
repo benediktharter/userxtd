@@ -12,7 +12,7 @@
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.framework');
-UserxtdHelper::_('include.bootstrap', true, true);
+//UserxtdHelper::_('include.bootstrap', true, true);
 
 // Create shortcuts to some parameters.
 $params		= $this->item->params;
@@ -21,6 +21,7 @@ $canEdit	= $this->item->params->get('access-edit');
 $user		= JFactory::getUser();
 $item 		= $this->item ;
 $uri 		= JFactory::getURI() ;
+$isSelf		= ( $user->id == $item->id ) ;
 
 // Set Profile Data
 $data 		= $profile->getDataForShow( 'profile', array('profile' => $item->profiles) );
@@ -64,82 +65,66 @@ $show_cats = $this->params->get('show_categories', '*') ;
 					
 					
 					<div class="row-fluid">
-						<div class="span4">
-							<div class="profile-avatar">
+						<div class="profile-avatar span4">
+								
+							<div class="profile-avatar-inner">
 								<?php $avatar = $item->get($avatar_field); ?>
 								<img src="<?php echo $avatar ? $avatar : JURI::root().'components/com_userxtd/images/default_avatar.png'; ?>" class="img-polaroid" alt="UserXTD Avatar <?php echo $user->username; ?>" />
 							</div>
 							
-							<dl class="dl-horizontal">
-								
-								<!--Register Date-->
-								<dt>
-									<?php echo JText::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?>
-								</dt>
-								<dd>
-									<?php echo JFactory::getDate( $item->get('registerDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
-								</dd>
-								
-								
-								<!--Last Visit Date-->
-								<dt>
-									<?php echo JText::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?>
-								</dt>
-								<dd>
-									<?php echo JFactory::getDate( $item->get('lastvisitDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
-								</dd>
-							</dl>	
 						</div>	
 					
 					
 					
 						<!-- Info -->
 						<!-- ============================================================================= -->
-						<div class="info span7 offset1">
-							
-							<?php if ($canEdit) : ?>
-							<!-- Edit -->
-							<!-- ============================================================================= -->
-							<div class="edit-icon btn-toolbar fltrt pull-right">
-								<div class="btn-group">
-									<?php echo JHtml::_( 'link', JRoute::_('index.php?option=com_userxtd&task=user.edit&id='.$item->id.'&return='.UserxtdHelper::_('uri.base64', 'encode', $uri->toString())) , '<i class="icon-edit"></i> '.JText::_('JTOOLBAR_EDIT'), array( 'class' => 'btn btn-small' ) ); ?>
-									<!--
-									<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-										<span class="caret"></span>
-									</button>
-									
-									<ul class="dropdown-menu">
-										<li>
-											<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.publish')" title="啟用"><?php echo JText::_('JTOOLBAR_ENABLE'); ?></a>
-										</li>
-										<li>
-											<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.unpublish')" title="停用"><?php echo JText::_('JTOOLBAR_DISABLE'); ?></a>
-										</li>
-									</ul>
-									-->
-								  </div>
+						<div class="profile-info span8">
+							<div class="profile-info-inner">
 								
-							</div>
-							<div style="display: none;">
-								<?php echo JHtml::_('grid.id', $item->id, $item->id); ?>
-							</div>
-							<!-- ============================================================================= -->
-							<!-- Edit End -->
-							<?php endif; ?>	
-							
-							
-							<div class="heading">
-								<h2><?php echo $item->get('link_titles') ? JHtml::_('link', $item->link, $item->name) : $item->name ?></h2>
-								<div class="user-name">( <?php echo $item->username; ?> )</div>
-							</div>
-							
-							<hr />
-							
-							<div class="about">
-								<?php echo $item->get($about_field); ?>
-							</div>
-						</div>
+								<?php if ($canEdit) : ?>
+								<!-- Edit -->
+								<!-- ============================================================================= -->
+								<div class="edit-icon btn-toolbar fltrt pull-right">
+									<div class="btn-group">
+										<?php echo JHtml::_( 'link', JRoute::_('index.php?option=com_userxtd&task=user.edit&id='.$item->id.'&return='.UserxtdHelper::_('uri.base64', 'encode', $uri->toString())) , '<i class="icon-edit"></i> '.JText::_('JTOOLBAR_EDIT'), array( 'class' => 'btn btn-small' ) ); ?>
+										<!--
+										<button class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+										</button>
+										
+										<ul class="dropdown-menu">
+											<li>
+												<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.publish')" title="啟用"><?php echo JText::_('JTOOLBAR_ENABLE'); ?></a>
+											</li>
+											<li>
+												<a class="jgrid" href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $item->id; ?>','users.unpublish')" title="停用"><?php echo JText::_('JTOOLBAR_DISABLE'); ?></a>
+											</li>
+										</ul>
+										-->
+									  </div>
+									
+								</div>
+								<div style="display: none;">
+									<?php echo JHtml::_('grid.id', $item->id, $item->id); ?>
+								</div>
+								<!-- ============================================================================= -->
+								<!-- Edit End -->
+								<?php endif; ?>	
+								
+								
+								<div class="heading">
+									<h2><?php echo $item->get('link_titles') ? JHtml::_('link', $item->link, $item->name) : $item->name ?></h2>
+									<div class="user-name">( <?php echo $item->username; ?> )</div>
+								</div>
+								
+								<hr />
+								
+								<div class="about">
+									<?php echo $item->get($about_field); ?>
+								</div>
+							</div>	
 						
+						</div>
 					</div>
 					<!-- ============================================================================= -->
 					<!-- Info -->
@@ -156,8 +141,8 @@ $show_cats = $this->params->get('show_categories', '*') ;
 					
 					<!-- Content -->
 					<!-- ============================================================================= -->
-					<div class="content">
-						<div class="content-inner row-fluid">
+					<div class="profile-content">
+						<div class="profile-content-inner row-fluid">
 							
 							<div class="span12">
 								
@@ -183,7 +168,29 @@ $show_cats = $this->params->get('show_categories', '*') ;
 					<!-- ============================================================================= -->
 					<!-- Content End -->
 					
-					
+					<?php if( $isSelf ): ?>
+					<hr />
+					<dl class="dl-horizontal">
+									
+						<!--Register Date-->
+						<dt>
+							<?php echo JText::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?>
+						</dt>
+						<dd>
+							<?php echo JFactory::getDate( $item->get('registerDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
+						</dd>
+						
+						
+						<!--Last Visit Date-->
+						<dt>
+							<?php echo JText::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?>
+						</dt>
+						<dd>
+							<?php echo JFactory::getDate( $item->get('lastvisitDate') , JFactory::getConfig()->get('offset') )->format('Y-m-d') ; ?>
+						</dd>
+						
+					</dl>
+					<?php endif; ?>
 					
 					<!-- afterDisplayContent -->
 					<!-- ============================================================================= -->

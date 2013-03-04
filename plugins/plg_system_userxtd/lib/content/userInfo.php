@@ -18,10 +18,14 @@ function userInfo($context, $article, $params)
 	if( $option != 'com_content' || $view != 'article' || $layout != 'default' ) return true ;
 	
 	
+	// Include Component Core
 	include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 	$ux 	= plgSystemUserxtd::getInstance();
 	$param 	= $ux->params ;
 	$app 	= JFactory::getApplication() ;
+	$doc 	= JFactory::getDocument();
+	
+	if($app->isAdmin()) return true ;
 	
 	// init params
 	$image_field 	= $param->get('UserInfo_ImageField', 'BASIC_AVATAR');
@@ -31,6 +35,14 @@ function userInfo($context, $article, $params)
 	$width 			= $param->get('UserInfo_ImageWidth', 150);
 	$height 		= $param->get('UserInfo_ImageHeight', 150);
 	$crop 			= $param->get('UserInfo_ImageCrop', 1);
+	$include_css	= $param->get('UserInfo_IncludeCSS_Article', 1);
+	
+	
+	// Include CSS
+	if($include_css) {
+		$doc->addStyleSheet('administrator/components/com_userxtd/includes/bootstrap/css/bootstrap.min.css');
+		$doc->addStyleSheet('components/com_userxtd/includes/css/userxtd-userinfo.css');
+	}
 	
 	
 	// handle params

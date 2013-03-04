@@ -13,13 +13,17 @@ defined('_JEXEC') or die;
 <!-- UserXTD Information Box -->
 <div class="ux-user-info-warp well">
 	<div class="ux-user-inner row-fluid">
-		<div class="ux-user-right span3">
-			<img src="<?php echo $image; ?>" alt="<?php echo $user->get($title_field); ?>" />
+		<div class="ux-user-left span3">
+			<div class="ux-user-left-inner">
+				<img src="<?php echo $image; ?>" alt="<?php echo $user->get($title_field); ?>" />
+			</div>
 		</div>
-		<div class="ux-user-left span8">
-			<h2><?php echo $user->get($title_field); ?></h2>
-			<div class="ux-user-about">
-				<?php echo $user->get($about_field); ?>
+		<div class="ux-user-right span8">
+			<div class="ux-user-right-inner">
+				<h2 class="ux-user-info-heading"><?php echo $user->get($title_field); ?></h2>
+				<div class="ux-user-about">
+					<?php echo $user->get($about_field); ?>
+				</div>	
 			</div>
 		</div>
 		<div class="pull-right">

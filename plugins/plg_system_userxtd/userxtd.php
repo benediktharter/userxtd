@@ -43,8 +43,9 @@ class plgSystemUserxtd extends JPlugin
 			'com_userxtd.profile', 'com_userxtd.user', 'com_userxtd.registration'
 		);
 		
-		// Set Form
 		
+		$UXParams = JComponentHelper::getParams('com_userxtd') ;
+		$this->params->merge($UXParams) ;
 		
 		self::$_self = $this ;
     }

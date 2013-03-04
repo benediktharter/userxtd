@@ -25,7 +25,7 @@ if( JVERSION >= 3){
 		UserxtdHelper::_('include.fixBootstrapToJoomla');
 	}
 }else{
-	UserxtdHelper::_('include.bootstrap');
+	// UserxtdHelper::_('include.bootstrap');
 	// UserxtdHelper::_('include.fixBootstrapToJoomla');
 }
 
@@ -123,17 +123,19 @@ if($app->isAdmin()) {
 	<?php endforeach;?>
 	
 	
-	<hr />
-	<div class="form-actions">
-		<?php echo JToolBar::getInstance('toolbar')->render('toolbar') ; ?>
-	</div>
-	
 	
 	<?php if( JVERSION < 3 ): ?>
 	<div class="form-actions">
+		<a type="submit" class="btn btn-primary" onclick="Joomla.submitbutton('user.save')">
+			<?php echo JText::_('JTOOLBAR_SAVE');?>
+		</a>
 		
+		<a class="btn" href="#" title="<?php echo JText::_('JCANCEL');?>" onclick="Joomla.submitbutton('user.cancel')">
+			<?php echo JText::_('JCANCEL');?>
+		</a>
 	</div>
 	<?php endif; ?>
+	
 	
 	<!-- Hidden Inputs -->
 	<div id="hidden-inputs">
