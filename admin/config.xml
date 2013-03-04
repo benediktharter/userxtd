@@ -5,6 +5,35 @@
 		description="COM_USERXTD_COMPONENT_DESC"
 		addfieldpath="administrator/components/com_userxtd/models/fields"
 	>
+		
+		
+		<field
+			name="CoreRegistration_Redirect"
+			type="radio"
+			label="COM_USERXTD_CONFIG_CORE_REGISTRATION_REDIRECT"
+			description="COM_USERXTD_CONFIG_CORE_REGISTRATION_REDIRECT_DESC"
+			default="0"
+			class="btn-group"
+		>			
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		
+		<field
+			name="captcha"
+			type="plugins"
+			folder="captcha"
+			default=""
+			label="COM_USERXTD_CONFIG_CAPTCHA"
+			description="COM_USERXTD_CONFIG_CAPTCHA_DESC"
+			filter="cmd" >
+			<option
+				value="">JOPTION_USE_DEFAULT</option>
+			<option
+				value="0">JOPTION_DO_NOT_USE</option>
+		</field>
+		
+		<field type="spacer" hr="true" />
 <!--
         <field name="field_list"
              type="field_list"
@@ -50,40 +79,6 @@
 			<option value="*">JALL</option>
 		</field>
 		
-		<field type="spacer" hr="true" />
-		
-		<field
-			name="CoreRegistration_Redirect"
-			type="radio"
-			label="COM_USERXTD_CONFIG_CORE_REGISTRATION_REDIRECT"
-			description="COM_USERXTD_CONFIG_CORE_REGISTRATION_REDIRECT_DESC"
-			default="0"
-			class="btn-group"
-		>			
-			<option value="0">JNO</option>
-			<option value="1">JYES</option>
-		</field>
-		
-		<field
-			name="captcha"
-			type="plugins"
-			folder="captcha"
-			default=""
-			label="COM_USERXTD_CONFIG_CAPTCHA"
-			description="COM_USERXTD_CONFIG_CAPTCHA_DESC"
-			filter="cmd" >
-			<option
-				value="">JOPTION_USE_DEFAULT</option>
-			<option
-				value="0">JOPTION_DO_NOT_USE</option>
-		</field>
-<!--		
-		<field name="limit"
-			type="text"
-			default="20"
-			label="數量"
-		/>
--->		
 	</fieldset>
 	
 	<fieldset name="content_intergate">
@@ -136,8 +131,8 @@
 		<field
 			name="UserInfo_WebiteField"
 			type="field_list"
-			label="COM_USERXTD_CONTENTINTERGATE_WEBSITE"
-			description="COM_USERXTD_CONTENTINTERGATE_WEBSITE_DESC"
+			label="COM_USERXTD_CONFIG_CONTENTINTERGATE_WEBSITE"
+			description="COM_USERXTD_CONFIG_CONTENTINTERGATE_WEBSITE_DESC"
 			default="BASIC_WEBSITE"
 		>
 			<option>JNONE</option>
