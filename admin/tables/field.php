@@ -18,6 +18,9 @@ jimport('joomla.database.tablenested');
  */
 class UserxtdTableField extends JTable
 {
+	public $currentAssetId ;
+	
+	
 	/**
 	 * Constructor
 	 *
