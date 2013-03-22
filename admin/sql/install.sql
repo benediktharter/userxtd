@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `#__userxtd_fields` (
   `name` varchar(255) NOT NULL,
   `attrs` text NOT NULL,
   `field_type` char(20) NOT NULL,
+  `required` int(1) NOT NULL,
   `element` mediumtext NOT NULL,
   `created` datetime NOT NULL,
   `created_by` int(11) NOT NULL,

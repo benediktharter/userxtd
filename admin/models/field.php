@@ -156,6 +156,10 @@ class UserxtdModelField extends AKModelAdmin
 		$db = JFactory::getDbo();
 		$q = $db->getQuery(true) ;
 		
+		// Set Required
+		$attrs = JRequest::get('attrs') ;
+		$table->required = $attrs['required'] == 'false' ? 0 : 1 ;
+		
 		if (!$table->ordering && !$table->id) {
 			$q->select("MAX(ordering)")
 				->from("#__userxtd_fields")

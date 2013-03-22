@@ -83,6 +83,10 @@ if( JVERSION >= 3 ) {
 			</th>
 			
 			<th width="5%" class="nowrap center">
+				<?php echo JHtml::_('grid.sort',  'JOPTION_REQUIRED', 'a.required', $listDirn, $listOrder); ?>
+			</th>
+			
+			<th width="5%" class="nowrap center">
 				<?php echo JHtml::_('grid.sort',  'JPUBLISHED', 'a.published', $listDirn, $listOrder); ?>
 			</th>
 			
@@ -281,7 +285,27 @@ if( JVERSION >= 3 ) {
 			</td>
 			
 			<td class="center">
-				<?php echo JHtml::_('jgrid.published', $item->a_published, $i, 'fields.', $canChange, 'cb', $item->a_publish_up, $item->a_publish_down); ?>
+				<?php if( $item->a_required ): ?>
+					<?php
+						if(JVERSION >= 3) {
+							echo '<i class="icon-publish"></i>' ;
+						}else{
+							echo JHtml::_('image', JURI::root().'/administrator/templates/bluestork/images/admin/tick.png', 'Required') ;
+						}
+					?>
+				<?php else: ?>
+					<?php
+						if(JVERSION >= 3) {
+							echo '<i class="icon-unpublish"></i>' ;
+						}else{
+							echo JHtml::_('image', JURI::root().'/administrator/templates/bluestork/images/admin/disabled.png', 'Not Required') ;
+						}
+					?>
+				<?php endif; ?>
+			</td>
+			
+			<td class="center">
+				<?php echo JHtml::_('jgrid.published', $item->a_published, $i, 'fields.', $canChange, 'cb'); ?>
 			</td>
 			
 			<?php if( JVERSION < 3 ): ?>

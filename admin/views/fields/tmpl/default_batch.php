@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_userxtd
+ * @subpackage  com_flower
  *
  * @copyright   Copyright (C) 2012 Asikart. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -21,52 +21,30 @@ $published = $this->state->get('filter.a_published');
 		<h3><?php echo JText::_('COM_USERXTD_BATCH_OPTIONS');?></h3>
 	</div>
 <?php else: ?>
-<fieldset class="batch">
+<fieldset class="batch adminform">
 	<legend><?php echo JText::_('COM_USERXTD_BATCH_OPTIONS');?></legend>
 	
 <?php endif; ?>
 	
-	<div class="modal-body">
+	<div class="modal-body form-horizontal">
 	
 		<p><?php echo JText::_('COM_USERXTD_BATCH_TIP'); ?></p>
 		
-		<?php if( isset($this->items[0]->a_access) ): ?>
+		<?php
+			// Remove parent_id in none Nested items.
+			if( !$this->state->get('items.nested') ){
+				$this->filter['batch']->removeField('parent_id') ;
+			}
+		?>
+		
+		<?php foreach( $this->filter['batch']->getFieldset('batch') as $field ): ?>
 		<div class="control-group">
+			<?php echo $field->label; ?>
 			<div class="controls">
-			<?php echo JHtml::_('batch.access');?>
+				<?php echo $field->input; ?>
 			</div>
 		</div>
-		<?php endif; ?>
-		
-		
-		<?php if( isset($this->items[0]->a_language) ): ?>
-		<div class="control-group">
-			<div class="controls">
-			<?php echo JHtml::_('batch.language'); ?>
-			</div>
-		</div>
-		<?php endif; ?>
-		
-		
-		<?php if( $this->state->get('items.nested') ): ?>
-		<div class="control-group">
-			<?php echo $this->filter['filter']->getField('parent_id')->label; ?>
-			<div class="controls">
-				<?php echo JHtml::_('select.genericlist', $this->filter['filter']->getField('parent_id')->getOptions(),
-						'batch[parent_id]'); ?>
-			</div>
-		</div>
-		<?php endif; ?>
-		
-	
-		<?php if ($published >= 0) : ?>
-		
-		<div class="control-group">
-			<div class="controls">
-			<?php echo JHtml::_('batch.item', 'com_userxtd');?>
-			</div>
-		</div>
-		<?php endif; ?>
+		<?php endforeach; ?>
 
 	</div>
 	

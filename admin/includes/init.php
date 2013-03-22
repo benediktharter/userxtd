@@ -73,5 +73,8 @@ if( $app->isSite() ){
 // Detect version
 UserxtdHelper::_('plugin.attachPlugins');
 
+// Enable CCK Engine
 JForm::addFieldPath(AKPATH_FORM.'/fields/cck');
-//JForm::addFormPath(AKPATH_FORM.'/forms');
+
+// Debug
+define('AKDEBUG', UserxtdHelper::_('system.getConfig', 'system.debug')) ;
