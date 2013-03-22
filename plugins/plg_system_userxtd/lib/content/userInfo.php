@@ -15,7 +15,7 @@ function userInfo($context, $article, $params)
 	$option = JRequest::getVar('option') ;
 	$view 	= JRequest::getVar('view') ;
 	$layout = JRequest::getVar('layout', 'default') ;
-	if( $option != 'com_content' || $view != 'article' || $layout != 'default' ) return true ;
+	if( $option != 'com_content' || $view != 'article' || $layout != 'default' ) return ;
 	
 	
 	// Include Component Core
@@ -26,7 +26,7 @@ function userInfo($context, $article, $params)
 	$doc 	= JFactory::getDocument();
 	UXHelper::_('lang.loadLanguage', 'com_userxtd', 'admin');
 	
-	if($app->isAdmin()) return true ;
+	if($app->isAdmin()) return ;
 	
 	// init params
 	$image_field 	= $param->get('UserInfo_ImageField', 'BASIC_AVATAR');

@@ -238,7 +238,8 @@ class UserxtdModelUser extends AKModelAdmin
 	
 	public function getProfiles()
 	{
-		$catids = $this->getState('params')->get('CoreRegistration_Categories') ;
+		$catids = $this->getState('params')->get('CoreRegistration_Categories', array()) ;
+		$catids = (array) $catids ;
 		
 		if(in_array('*', $catids)) {
 			$catids = null ;
