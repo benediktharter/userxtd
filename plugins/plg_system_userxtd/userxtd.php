@@ -199,7 +199,7 @@ class plgSystemUserxtd extends JPlugin
 		$result = null ;
 		
 		// Code here
-		$result = $this->call('content.userInfo', $context, &$article, &$params) ;
+		$result = $this->call('content.userInfo', $context, $article, $params) ;
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
