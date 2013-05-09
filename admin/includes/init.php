@@ -32,6 +32,9 @@ define('USERXTD_SELF' , JPATH_COMPONENT);
 // Core init, it can use by module, plugin or other component.
 include_once JPath::clean( JPATH_ADMINISTRATOR . "/components/com_userxtd/includes/core.php" ) ;
 
+// Set default option to path helper, then AKHelperPath will helpe us get admin path.
+AKHelper::_('path.setOption', 'com_userxtd') ;
+
 
 // Some useful settings
 if( $app->isSite() ){
