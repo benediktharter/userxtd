@@ -67,5 +67,5 @@ AKHelper::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_userxtd/helpers'
 
 
 // Includ UserXTD API
-UXHelper::_('loader.import', 'admin://class/factory') ;
-UXHelper::_('loader.import', 'admin://class/user') ;
+include_once JPath::clean( JPATH_ADMINISTRATOR . "/components/com_userxtd/class/factory.php" ) ;
+//include_once JPath::clean( JPATH_ADMINISTRATOR . "/components/com_userxtd/class/user.php" ) ;
