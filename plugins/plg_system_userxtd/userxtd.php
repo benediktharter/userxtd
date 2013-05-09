@@ -345,7 +345,7 @@ class plgSystemUserxtd extends JPlugin
 		$db 	= JFactory::getDbo();
 		$q 		= $db->getQuery(true) ;
 		$UXParams= UserxtdHelper::_('getParams');
-		UXHelper::_('include.sortedStyle', 'includes/css' );
+		UXHelper::_('include.sortedStyle', 'includes/css', 'com_userxtd' );
 		
 		
 		// Prepare Data
