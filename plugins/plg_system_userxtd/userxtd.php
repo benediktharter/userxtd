@@ -337,10 +337,20 @@ class plgSystemUserxtd extends JPlugin
 	 */
 	function onContentPrepareForm($form, $data)
 	{
+        $app = JFactory::getApplication() ;
+        
+        // Check we are manipulating a valid form.
+		$name = $form->getName();
+		if (!in_array($name, $this->allow_context))
+		{
+			return true;
+		}
+        
+        // Include UserXTD core API.
 		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
 		JForm::addFieldPath(AKPATH_FORM.'/fields');
 		
-		$app 	= JFactory::getApplication() ;
+		
 		$result = null ;
 		$db 	= JFactory::getDbo();
 		$q 		= $db->getQuery(true) ;
@@ -366,14 +376,6 @@ class plgSystemUserxtd extends JPlugin
 			$this->_subject->setError('JERROR_NOT_A_FORM');
 			return false;
 		}
-		
-		// Check we are manipulating a valid form.
-		$name = $form->getName();
-		if (!in_array($name, $this->allow_context))
-		{
-			return true;
-		}
-		
 		
 		// Set Category
 		$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
