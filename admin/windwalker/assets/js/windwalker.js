@@ -6,21 +6,39 @@
  *
  * Generator: AKHelper
  * Author: Asika
- *//* Fix Bluestork and Joomla! Conflict */
+ */
+
+
+/* Fix Bluestork and Joomla! Conflict */
 window.addEvent( 'domready', function(){
     var modal = $$('#ak-panel-wrap a.modal') ;
     setTimeout(function(){ modal.removeClass('modal'); }, 500 );
-} );var WindWalker = {
-    fixToolbar: function(top, duration){        top = top || 0 ;
-        duration = duration || 300 ;        // fix sub nav on scroll    
+} );
+
+
+var WindWalker = {
+    fixToolbar: function(top, duration){
+
+        top = top || 0 ;
+        duration = duration || 300 ;
+
+        // fix sub nav on scroll    
         jQuery(document).ready(function($) {
             var $win = $(window)
             , $nav = $('.subhead')
             , navTop = $('.subhead').length && $('.subhead').offset().top - top
-            , isFixed = 0            processScroll();            // hack sad times - holdover until rewrite for 2.1
+            , isFixed = 0
+
+            processScroll();
+
+            // hack sad times - holdover until rewrite for 2.1
             $nav.on('click', function () {
               if (!isFixed) setTimeout(function () {  $win.scrollTop($win.scrollTop() - 47) }, 10)
-            })            $win.on('scroll', processScroll)            function processScroll() {
+            })
+
+            $win.on('scroll', processScroll)
+
+            function processScroll() {
               var i, scrollTop = $win.scrollTop()
               if (scrollTop >= navTop && !isFixed) {
                   isFixed = 1
@@ -43,15 +61,25 @@ window.addEvent( 'domready', function(){
     * @param (mix)         targetKeyChar     key code (int) or key char (string)
     * @param (function) callBack        The call back function, do not include ().
     *
-    */   detectKeyPress : function(e, targetKeyChar, callBack, selector, options){
+    */
+
+   detectKeyPress : function(e, targetKeyChar, callBack, selector, options){
        var keynum
        var keychar
-       var numcheck       if(window.event) // For IE
+       var numcheck
+
+       if(window.event) // For IE
        {
-           keynum = e.keyCode       }else if(e.which) // For Netscape/Firefox/Opera
+           keynum = e.keyCode
+
+       }else if(e.which) // For Netscape/Firefox/Opera
        {
            keynum = e.which
-       }       keychar = String.fromCharCode(keynum)       if( typeOf(targetKeyChar) == 'string' ) {
+       }
+
+       keychar = String.fromCharCode(keynum)
+
+       if( typeOf(targetKeyChar) == 'string' ) {
            if(targetKeyChar == keychar) {
                callBack(selector, options) ;
            }
@@ -61,4 +89,6 @@ window.addEvent( 'domready', function(){
            }
        }
    }
-} ;var Windwalker = WindWalker ;
+} ;
+
+var Windwalker = WindWalker ;

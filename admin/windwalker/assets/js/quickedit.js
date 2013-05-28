@@ -7,6 +7,9 @@
  * Generator: AKHelper
  * Author: Asika
  */
+
+
+
 var AKQuickEdit = ({
     
     init : function(config){
@@ -295,7 +298,9 @@ var AKQuickEdit = ({
             
             input.focus();
             
-        }    }
+        }
+
+    }
     
     ,
     
@@ -321,4 +326,8 @@ var AKQuickEdit = ({
             });
         });
     }
-}) ;AKQuickEdit.profiler = true ;
+}) ;
+
+AKQuickEdit.profiler = true ;
+
+

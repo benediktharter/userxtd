@@ -1,11 +1,24 @@
-/*Style with support for rainbow parens*/pre ::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
-pre ::selection { background:#FF5E99; color:#fff; text-shadow: none; }pre code {
+/*
+
+Style with support for rainbow parens
+
+*/
+
+pre ::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
+pre ::selection { background:#FF5E99; color:#fff; text-shadow: none; }
+
+pre code {
   display: block; padding: 0.5em;
   background: #474949; color: #D1D9E1;
-}pre .body,
+}
+
+
+pre .body,
 pre .collection {
    color: #D1D9E1;
-}pre .comment,
+}
+
+pre .comment,
 pre .template_comment,
 pre .diff .header,
 pre .doctype,
@@ -13,14 +26,20 @@ pre .lisp .string,
 pre .javadoc {
   color: #969896;
   font-style: italic;
-}pre .keyword,
+}
+
+pre .keyword,
 pre .clojure .attribute,
 pre .winutils,
 pre .javascript .title,
 pre .addition,
 pre .css .tag {
   color: #cc99cc;
-}pre .number { color: #f99157; }pre .command,
+}
+
+pre .number { color: #f99157; }
+
+pre .command,
 pre .string,
 pre .tag .value,
 pre .phpdoc,
@@ -28,7 +47,9 @@ pre .tex .formula,
 pre .regexp,
 pre .hexcolor {
   color: #8abeb7;
-}pre .title,
+}
+
+pre .title,
 pre .localvars,
 pre .function .title,
 pre .chunk,
@@ -38,10 +59,14 @@ pre .lisp .title,
 pre .identifier
 {
   color: #b5bd68;
-}pre .class .keyword
+}
+
+pre .class .keyword
 {
   color: #f2777a;
-}pre .variable,
+}
+
+pre .variable,
 pre .lisp .body,
 pre .smalltalk .number,
 pre .constant,
@@ -52,15 +77,21 @@ pre .id,
 pre .lisp .title,
 pre .clojure .title .built_in {
    color: #ffcc66;
-}pre .tag .title,
+}
+
+pre .tag .title,
 pre .rules .property,
 pre .django .tag .keyword,
 pre .clojure .title .built_in {
   font-weight: bold;
-}pre .attribute,
+}
+
+pre .attribute,
 pre .clojure .title {
   color: #81a2be;
-}pre .preprocessor,
+}
+
+pre .preprocessor,
 pre .pi,
 pre .shebang,
 pre .symbol,
@@ -72,8 +103,12 @@ pre .important,
 pre .subst,
 pre .cdata {
   color: #f99157;
-}pre .deletion {
+}
+
+pre .deletion {
   color: #dc322f;
-}pre .tex .formula {
+}
+
+pre .tex .formula {
   background: #eee8d5;
 }

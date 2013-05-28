@@ -75,8 +75,14 @@ background-image: linear-gradient(top, #eeeeee 20%, #ffffff 80%);
 border-bottom-left-radius: 0;
 border-bottom-right-radius: 0;
 }
-.MultiSelect .monitor.active div {}
-.MultiSelect .monitor.active div div {}.MultiSelect ul {
+.MultiSelect .monitor.active div {
+
+}
+.MultiSelect .monitor.active div div {
+
+}
+
+.MultiSelect ul {
     position: absolute;
     z-index: 1000;
     top: 24px;

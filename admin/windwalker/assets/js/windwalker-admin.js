@@ -6,6 +6,12 @@
  *
  * Generator: AKHelper
  * Author: Asika
- */var WindWalker = {
+ */
+
+
+var WindWalker = {
     
-} ;var Windwalker = WindWalker ;
+} ;
+
+
+var Windwalker = WindWalker ;

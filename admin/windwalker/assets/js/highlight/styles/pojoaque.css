@@ -1,10 +1,18 @@
-/*Pojoaque Style by Jason Tate
+/*
+
+Pojoaque Style by Jason Tate
 http://web-cms-designs.com/ftopict-10-pojoaque-style-for-highlight-js-code-highlighter.html
-Based on Solarized Style from http://ethanschoonover.com/solarized*/pre code {
+Based on Solarized Style from http://ethanschoonover.com/solarized
+
+*/
+
+pre code {
   display: block; padding: 0.5em;
   color: #DCCF8F;
   background: url(./pojoaque.jpg) repeat scroll left top #181914;
-}pre .comment,
+}
+
+pre .comment,
 pre .template_comment,
 pre .diff .header,
 pre .doctype,
@@ -12,7 +20,9 @@ pre .lisp .string,
 pre .javadoc {
   color: #586e75;
   font-style: italic;
-}pre .keyword,
+}
+
+pre .keyword,
 pre .css .rule .keyword,
 pre .winutils,
 pre .javascript .title,
@@ -22,7 +32,9 @@ pre .css .tag,
 pre .clojure .title,
 pre .nginx .title {
   color: #B64926;
-}pre .number,
+}
+
+pre .number,
 pre .command,
 pre .string,
 pre .tag .value,
@@ -31,7 +43,9 @@ pre .tex .formula,
 pre .regexp,
 pre .hexcolor {
   color: #468966;
-}pre .title,
+}
+
+pre .title,
 pre .localvars,
 pre .function .title,
 pre .chunk,
@@ -42,7 +56,9 @@ pre .clojure .built_in,
 pre .identifier,
 pre .id {
   color: #FFB03B;
-}pre .attribute,
+}
+
+pre .attribute,
 pre .variable,
 pre .lisp .body,
 pre .smalltalk .number,
@@ -51,13 +67,21 @@ pre .class .title,
 pre .parent,
 pre .haskell .type {
   color: #b58900;
-}pre .css .attribute {
+}
+
+pre .css .attribute {
   color: #b89859;
-}pre .css .number,pre .css .hexcolor{
+}
+
+pre .css .number,pre .css .hexcolor{
   color: #DCCF8F;
-}pre .css .class {
+}
+
+pre .css .class {
   color: #d3a60c;
-}pre .preprocessor,
+}
+
+pre .preprocessor,
 pre .pi,
 pre .shebang,
 pre .symbol,
@@ -69,8 +93,12 @@ pre .important,
 pre .subst,
 pre .cdata {
   color: #cb4b16;
-}pre .deletion {
+}
+
+pre .deletion {
   color: #dc322f;
-}pre .tex .formula {
+}
+
+pre .tex .formula {
   background: #073642;
 }

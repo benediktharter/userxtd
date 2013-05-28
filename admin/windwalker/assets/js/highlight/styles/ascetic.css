@@ -1,7 +1,15 @@
-﻿/*Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>*/pre code {
+﻿/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+
+*/
+
+pre code {
   display: block; padding: 0.5em;
   background: white; color: black;
-}pre .string,
+}
+
+pre .string,
 pre .tag .value,
 pre .filter .argument,
 pre .addition,
@@ -11,7 +19,9 @@ pre .apache .cbracket,
 pre .nginx .built_in,
 pre .tex .formula {
   color: #888;
-}pre .comment,
+}
+
+pre .comment,
 pre .template_comment,
 pre .shebang,
 pre .doctype,
@@ -20,7 +30,9 @@ pre .javadoc,
 pre .deletion,
 pre .apache .sqbracket {
   color: #CCC;
-}pre .keyword,
+}
+
+pre .keyword,
 pre .tag .title,
 pre .ini .title,
 pre .lisp .title,
