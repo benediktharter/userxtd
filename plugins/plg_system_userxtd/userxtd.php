@@ -198,8 +198,9 @@ class plgSystemUserxtd extends JPlugin
 		$app 	= JFactory::getApplication();
 		$result = null ;
 		
-		// Code here
-		$result = $this->call('content.userInfo', $context, $article, $params) ;
+		if( $this->params->get('UserInfo', 1) ){
+			$result = $this->call('content.userInfo', $context, $article, $params) ;
+		}
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
