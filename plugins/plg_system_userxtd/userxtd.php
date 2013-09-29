@@ -336,7 +336,7 @@ class plgSystemUserxtd extends JPlugin
 	 * @return	boolean
 	 * @since	1.6
 	 */
-	function onContentPrepareForm($form, $data)
+	public function onContentPrepareForm($form, $data)
 	{
         $app = JFactory::getApplication() ;
         
@@ -460,8 +460,14 @@ class plgSystemUserxtd extends JPlugin
 	public function onUserAfterSave($data, $isNew, $result, $error)
 	{
 		//$result = array() ;
+		$input  = JFactory::getApplication()->input ;
 		$db 	= JFactory::getDbo();
 		
+		// don't do anything when activate.
+		if($input->get('task') == 'activate')
+		{
+			return true;
+		}
 		
 		// Init Framework
 		// ===============================================================
