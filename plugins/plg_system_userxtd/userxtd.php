@@ -384,6 +384,7 @@ class plgSystemUserxtd extends JPlugin
 		$reg_context     = array( 'com_users.registration', 'com_userxtd.registration' );
 		$profile_context = array( 'com_users.profile');
 		
+		$catid = null;
 		if( in_array($context, $reg_context) || $this->get('hide_registration_field'))
 		{
 			$array['hide_in_registration'] = true ;
