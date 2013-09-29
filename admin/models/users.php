@@ -226,7 +226,7 @@ class UserxtdModelUsers extends AKModelList
 		
 		// Search
 		// ========================================================================
-		if($search['index']){
+		if(!empty($search['index'])){
 			
 			if($this->getState( 'search.fulltext' )){
 				$fields = $this->getFullSearchFields();

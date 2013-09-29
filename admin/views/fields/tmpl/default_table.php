@@ -66,7 +66,7 @@ if( JVERSION >= 3 ) {
 				<?php echo JHtml::_('grid.sort',  'JCATEGORY', 'b.title', $listDirn, $listOrder); ?>
 			</th class="center">
 			
-			<th class="center">
+			<th width="15%" class="center">
 				<?php echo JHtml::_('grid.sort',  'JGLOBAL_TITLE', 'a.title', $listDirn, $listOrder); ?>
 			</th class="center">
 			
