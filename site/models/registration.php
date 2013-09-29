@@ -90,9 +90,46 @@ class UserxtdModelRegistration extends JModelAdmin
 	 */
 	protected function loadFormData()
 	{
-		$data = parent::loadFormData();
-		
-		return $data ;
+		if ($this->data === null) {
+
+			$userId = $this->getState('user.id');
+
+			// Initialise the table with JUser.
+			$this->data	= new JUser($userId);
+
+			// Set the base user data.
+			$this->data->email1 = $this->data->get('email');
+			$this->data->email2 = $this->data->get('email');
+
+			// Override the base user data with any data in the session.
+			$temp = (array) JFactory::getApplication()->getUserState('com_users.registration.data', array());
+			foreach ($temp as $k => $v)
+			{
+				$this->data->$k = $v;
+			}
+
+			// Unset the passwords.
+			unset($this->data->password1);
+			unset($this->data->password2);
+
+			$registry = new JRegistry($this->data->params);
+			$this->data->params = $registry->toArray();
+
+			// Get the dispatcher and load the users plugins.
+			JPluginHelper::importPlugin('user');
+
+			// Trigger the data preparation event.
+			$results = JFactory::getApplication()->triggerEvent('onContentPrepareData', array('com_userxtd.profile', $this->data));
+
+			// Check for errors encountered while preparing the data.
+			if (count($results) && in_array(false, $results, true))
+			{
+				//$this->setError($dispatcher->getError());
+				$this->data = false;
+			}
+		}
+
+		return $this->data;
 	}
 
 	
