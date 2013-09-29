@@ -65,6 +65,9 @@ if( $app->isSite() ){
 }
 
 
+// Include Fields
+JForm::addFieldPath( AKPATH_FORM.'/fields');
+
 // Detect version
 UserxtdHelper::_('plugin.attachPlugins');
 

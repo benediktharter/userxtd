@@ -191,7 +191,17 @@ class UserxtdTableField extends JTable
 		$db->setQuery($q);
 		$result = $db->loadResult();
 		
-		if($result) {
+		if($result && !$this->id)
+		{
+			$this->name = str_replace('-', '_', JString::increment($this->name, 'dash'));
+			
+			$attr = json_decode($this->attrs);
+			$attr->name = str_replace('-', '_', JString::increment($attr->name, 'dash'));
+			
+			$this->attrs = json_encode($attr);
+		}
+		elseif($result)
+		{
 			$e = new JException(JText::_('COM_USERXTD_FIELD_NAME_EXISTS'));
 			$this->setError($e);
 			
