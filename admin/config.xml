@@ -68,7 +68,7 @@
 			<option value="*">JALL</option>
 		</field>
 		
-		<field name="CoreRegistration_Categories_Show"
+		<field name="CoreRegistration_Categories_InUserInfo"
              type="category"
              default="*"
 			 extension="com_userxtd"

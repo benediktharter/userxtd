@@ -39,6 +39,10 @@
 	cursor: pointer;
 }
 
+.dl-horizontal dd {
+	height: 2em;
+}
+
 
 /* FOOTER */
 

@@ -195,7 +195,7 @@ class UserxtdModelUser extends AKModelAdmin
 			// Check for errors encountered while preparing the data.
 			if (count($results) && in_array(false, $results, true))
 			{
-				$this->setError($dispatcher->getError());
+				//$this->setError($dispatcher->getError());
 				$this->data = false;
 			}
 		}

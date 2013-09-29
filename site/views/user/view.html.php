@@ -184,11 +184,11 @@ class UserxtdViewUser extends AKViewItem
 		// Show params
 		// =====================================================================================
 
-		$show_cats = $this->params->get('CoreRegistration_Categories_Show') ;
+		$show_cats = $this->params->get('CoreRegistration_Categories_InUserInfo') ;
 		$show_cats = is_array($show_cats) ? $show_cats : array($show_cats);
 		
 		if(in_array('global', $show_cats)) {
-			$show_cats = JComponentHelper::getParams('com_userxtd')->get('CoreRegistration_Categories_Show') ;
+			$show_cats = JComponentHelper::getParams('com_userxtd')->get('CoreRegistration_Categories_InUserInfo') ;
 		}
 		
 		if( !in_array('*', $show_cats) ) {

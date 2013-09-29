@@ -355,7 +355,7 @@ class plgSystemUserxtd extends JPlugin
 		$result = null ;
 		$db 	= JFactory::getDbo();
 		$q 		= $db->getQuery(true) ;
-		$UXParams= UserxtdHelper::_('getParams');
+		$UXParams= UserxtdHelper::_('getParams', 'com_userxtd');
 		UXHelper::_('include.sortedStyle', 'includes/css', 'com_userxtd' );
 		
 		
@@ -378,9 +378,24 @@ class plgSystemUserxtd extends JPlugin
 			return false;
 		}
 		
-		// Set Category
-		$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
+		// Hide some fields in registration
+		$context = $this->getContext() ;
+		$array 	= array();
+		$reg_context     = array( 'com_users.registration', 'com_userxtd.registration' );
+		$profile_context = array( 'com_users.profile');
 		
+		if( in_array($context, $reg_context) || $this->get('hide_registration_field'))
+		{
+			$array['hide_in_registration'] = true ;
+			
+			$catid = $UXParams->get('CoreRegistration_Categories', array('*'));
+		}
+		elseif(in_array($context, $profile_context))
+		{
+			$catid = $UXParams->get('CoreRegistration_Categories_InUserInfo', array('*'));
+		}
+		
+		// Set category
 		if(!is_array($catid)) {
 			$catid = array($catid);
 		}
@@ -389,15 +404,6 @@ class plgSystemUserxtd extends JPlugin
 			$catid = implode(',', $catid);
 		}else{
 			$catid = null ;
-		}
-		
-		
-		// Hide some fields in registration
-		$context = $this->getContext() ;
-		$array 	= array();
-		$reg_contexxt = array( 'com_users.registration', 'com_userxtd.registration' );
-		if( in_array($context, $reg_contexxt) || $this->get('hide_registration_field')) {
-			$array['hide_in_registration'] = true ;
 		}
 		
 		
@@ -696,6 +702,7 @@ class plgSystemUserxtd extends JPlugin
 	public function onContentPrepareData($context, $data)
 	{
 		$result = array() ;
+		$params = JComponentHelper::getParams('com_userxtd') ;
 		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/helpers/fieldshow.php' ;
 		JHtml::register('users.uploadimage', array('UserxtdHelperFieldshow', 'showImage'));
 		
@@ -715,6 +722,14 @@ class plgSystemUserxtd extends JPlugin
 				// ===============================================================
 				$db = JFactory::getDbo();
 				$q = $db->getQuery(true) ;
+				
+				// Filter categories
+				$cats = (array) $params->get('CoreRegistration_Categories_InUserInfo', array('*'));
+				
+				if(!in_array('*', $cats))
+				{
+					$q->where('b.catid IN (' . implode(',', $cats) . ')');
+				}
 				
 				$q->select("a.key, a.value, b.field_type, b.attrs")
 					->from("#__userxtd_profiles AS a")
