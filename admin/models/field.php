@@ -158,19 +158,30 @@ class UserxtdModelField extends AKModelAdmin
 		
 		// Set Required
 		$attrs = JRequest::get('attrs') ;
-		$table->required = $attrs['required'] == 'false' ? 0 : 1 ;
 		
-		if (!$table->ordering && !$table->id) {
-			$q->select("MAX(ordering)")
-				->from("#__userxtd_fields")
-				->where('catid='.$table->catid)
-				;
-			$db->setQuery($q);
-			$max = $db->loadResult();
-			$table->ordering = $max+1;
+		if($attrs['required'] == 'false' || !$attrs['required'])
+		{
+			$table->required = 0;
+		}
+		else
+		{
+			$table->required = 1;
 		}
 		
 		parent::prepareTable($table);
 	}
 	
+	/**
+     * Method to set new item ordering as first or last.
+     * 
+     * @param   JTable  $table      Item table to save.
+     * @param   string  $position   'first' or other are last.
+     *
+     * @return  type    
+     */
+	public function setOrderPosition($table, $position = null)
+	{
+		// "first" or "last"
+		parent::setOrderPosition($table, 'last') ;
+	}
 }
