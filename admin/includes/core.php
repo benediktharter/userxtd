@@ -11,6 +11,15 @@
 // no direct access
 defined('_JEXEC') or die;
 
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
+
+// Define
+// ========================================================================
+define('USERXTD_SITE' , JPATH_ROOT . '/components/com_userxtd' );
+define('USERXTD_ADMIN', JPATH_ADMINISTRATOR . '/components/com_userxtd');
+define('USERXTD_SELF' , JPATH_BASE . '/components/com_userdxtd');
+
 
 // Detect is AKHelper exists
 // ===============================================================

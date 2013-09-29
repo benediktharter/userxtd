@@ -18,14 +18,6 @@ $params = JComponentHelper::getParams('com_userxtd') ;
 
 
 
-// Define
-// ========================================================================
-define('USERXTD_SITE' , JPATH_COMPONENT_SITE );
-define('USERXTD_ADMIN', JPATH_COMPONENT_ADMINISTRATOR);
-define('USERXTD_SELF' , JPATH_COMPONENT);
-
-
-
 // Include Helpers
 // ========================================================================
 
