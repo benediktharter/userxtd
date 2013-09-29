@@ -28,6 +28,8 @@ class UserxtdModelRegistration extends JModelAdmin
 	public 		$item_name = 'registration' ;
 	public 		$list_name = 'registrations' ;
 	
+	public      $data;
+	
 	
 	
 	/**

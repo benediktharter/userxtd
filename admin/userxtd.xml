@@ -100,10 +100,5 @@
 	</plugins>
 	
 	
-	<updateservers>
-        <server type="extension" priority="1" name="Asikart Userxtd Component">http://update.asikart.com/component/com_userxtd.xml</server>
-    </updateservers>
-	
-	
 </extension>
 
