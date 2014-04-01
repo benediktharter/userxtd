@@ -1,4 +1,4 @@
-# Asikart UserXTD
+# Asikart UserXTD (AUX) [![Analytics](https://ga-beacon.appspot.com/UA-48372917-1/userxtd/readme)](https://github.com/igrigorik/ga-beacon)
 
 User profile extended component for Joomla CMS
 
@@ -16,6 +16,9 @@ FREE in beta Period
 
 [DEMO][7] Account: demo / demo
 
+## [![Donate](http://f.cl.ly/items/201r3g370r0r461l3x2b/btn_donate_LG.gif)](http://ext.asikart.com/donate-us.html)
+
+Help us making our extensions more perfectly.
 
 ## FEATURES
 
