@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component"
-	version="3.2"
+	version="3.3"
 	method="upgrade">
 	<name>com_userxtd</name>
-	<creationDate>2014-1-11</creationDate>
+	<creationDate>2014-6-4</creationDate>
 	<copyright>Copyright (C) 2014. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<author>Asika</author>
@@ -14,13 +14,11 @@
 
 	<scriptfile>install.php</scriptfile>
 
-	<!-- do not re install sql when generator working.
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/install.sql</file>
 		  </sql>
 	</install>
-	-->
 
 	<uninstall>
 		<sql>
@@ -35,6 +33,7 @@
 		<folder>controller</folder>
 		<folder>helper</folder>
 		<folder>images</folder>
+		<folder>layouts</folder>
 		<folder>model</folder>
 		<folder>view</folder>
 		<filename>componenet.php</filename>
@@ -47,19 +46,19 @@
 	<administration>
 		<menu>COM_USERXTD</menu>
 
-		<!-- Submenu
-			Note that all & must be escaped to &amp; for the file to be valid
-			XML and be parsed by the installer
 		<submenu>
-
-			<menu link="option=com_userxtd&amp;view=fields"
-				view="fields">com_userxtd_fields
-			</menu>
 			<menu link="option=com_categories&amp;extension=com_userxtd"
-				view="categories">jcategories
-			</menu>
+				alt="Weblinks/Links">jcategory</menu>
+
+			<menu link="option=com_userxtd&amp;view=fields" view="fields"
+				alt="Weblinks/Links">com_userxtd_fields</menu>
+
+			<menu link="option=com_userxtd&amp;view=profiles" view="profiles"
+				alt="Weblinks/Links">com_userxtd_profiles</menu>
+
+			<menu link="option=com_userxtd&amp;view=users" view="users"
+				alt="Weblinks/Links">com_userxtd_users</menu>
 		</submenu>
-		-->
 
 		<files folder="admin">
 			<folder>asset</folder>
@@ -69,6 +68,7 @@
 			<folder>helpers</folder>
 			<folder>images</folder>
 			<folder>language</folder>
+			<folder>layouts</folder>
 			<folder>model</folder>
 			<folder>sql</folder>
 			<folder>src</folder>
@@ -85,11 +85,10 @@
 	</administration>
 
 	<modules>
-		<!--<module>mod_userxtd</module>-->
 	</modules>
 
 	<plugins>
-		<!--<plugin>plg_system_userxtd</plugin>-->
+		<plugin>plg_system_userxtd</plugin>
 	</plugins>
 
 	<!--
