@@ -16,14 +16,14 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class UserxtdTableField extends Table
+class UserxtdTableField extends JTable
 {
 	/**
 	 * Constructor
 	 */
-	public function __construct()
+	public function __construct($db)
 	{
-		parent::__construct('#__userxtd_fields');
+		parent::__construct('#__userxtd_fields', 'id', $db);
 	}
 
 	/**
@@ -88,6 +88,14 @@ class UserxtdTableField extends Table
 	 */
 	public function store($updateNulls = false)
 	{
+		if (property_exists($this, 'params') && !empty($this->params))
+		{
+			if (is_array($this->params) || is_object($this->params))
+			{
+				$this->params = json_encode($this->params);
+			}
+		}
+
 		return parent::store($updateNulls);
 	}
 

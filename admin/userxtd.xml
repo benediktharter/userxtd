@@ -47,7 +47,7 @@
 		<menu>COM_USERXTD</menu>
 
 		<submenu>
-			<menu link="option=com_categories&amp;extension=com_userxtd"
+			<menu link="option=com_categories&amp;extension=com_userxtd" view="categories"
 				alt="Weblinks/Links">jcategory</menu>
 
 			<menu link="option=com_userxtd&amp;view=fields" view="fields"
