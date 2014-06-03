@@ -348,15 +348,16 @@ class plgSystemUserxtd extends JPlugin
 		}
         
         // Include UserXTD core API.
-		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/includes/core.php' ;
+		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/src/init.php' ;
+
 		JForm::addFieldPath(AKPATH_FORM.'/fields');
 		
 		
 		$result = null ;
 		$db 	= JFactory::getDbo();
 		$q 		= $db->getQuery(true) ;
-		$UXParams= UserxtdHelper::_('getParams', 'com_userxtd');
-		UXHelper::_('include.sortedStyle', 'includes/css', 'com_userxtd' );
+		$UXParams= \Windwalker\System\ExtensionHelper::getParams('com_userxtd');
+		// UXHelper::_('include.sortedStyle', 'includes/css', 'com_userxtd' );
 		
 		
 		// Prepare Data
@@ -408,7 +409,7 @@ class plgSystemUserxtd extends JPlugin
 		}
 		
 		
-		$form = UXHelper::_('form.getFieldsByCategory', $catid, $form, $array);
+		$form = UserxtdHelperForm::getFieldsByCategory($catid, $form, $array);
 		
 		if( $path = $this->includeEvent(__FUNCTION__) ) @include $this->includeEvent(__FUNCTION__);
 		
@@ -710,7 +711,7 @@ class plgSystemUserxtd extends JPlugin
 	{
 		$result = array() ;
 		$params = JComponentHelper::getParams('com_userxtd') ;
-		include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/helpers/fieldshow.php' ;
+		// include_once JPATH_ADMINISTRATOR.'/components/com_userxtd/helper/fieldshow.php' ;
 		JHtml::register('users.uploadimage', array('UserxtdHelperFieldshow', 'showImage'));
 		
 		// Check we are manipulating a valid form.	
