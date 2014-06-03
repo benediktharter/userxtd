@@ -348,7 +348,9 @@ class PlgSystemUserxtd extends JPlugin
 		$db = JFactory::getDbo();
 
 		// don't do anything when activate.
-		if ($this->input->get('task') == 'activate')
+		$allowTask = array('save', 'apply', 'save2new');
+
+		if (! in_array($this->input->get('task'), $allowTask))
 		{
 			return;
 		}
@@ -356,8 +358,6 @@ class PlgSystemUserxtd extends JPlugin
 		// Init Framework
 		// ===============================================================
 		$this->initComponent();
-
-		include_once AKPATH_FORM . '/form.php';
 
 		$UXParams = \Windwalker\System\ExtensionHelper::getParams('com_userxtd');
 
