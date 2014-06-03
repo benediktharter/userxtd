@@ -33,6 +33,7 @@
 		<filename>install.php</filename>
 		<folder>form</folder>
 		<folder>language</folder>
+		<folder>src</folder>
 	</files>
 
 	<config>
