@@ -12,11 +12,11 @@ use Windwalker\Controller\Resolver\ControllerDelegator;
 defined('_JEXEC') or die;
 
 /**
- * Userxtd Profile delegator.
+ * Userxtd Users delegator.
  *
  * @since 1.0
  */
-class UserxtdControllerProfileDelegator extends ControllerDelegator
+class UserxtdControllerUsersDelegator extends ControllerDelegator
 {
 	/**
 	 * Register aliases.
@@ -36,10 +36,6 @@ class UserxtdControllerProfileDelegator extends ControllerDelegator
 	 */
 	protected function createController($class)
 	{
-		$this->config['allow_url_params'] = array(
-			'type'
-		);
-
 		return parent::createController($class);
 	}
 }
