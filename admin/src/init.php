@@ -16,6 +16,9 @@ JLoader::registerNamespace('Userxtd', JPATH_ADMINISTRATOR . '/components/com_use
 JLoader::registerNamespace('Windwalker', __DIR__);
 JLoader::register('UserxtdComponent', JPATH_BASE . '/components/com_userxtd/component.php');
 
+// UserXTD API
+\JLoader::register('UXFactory', __DIR__ . '/Class/factory.php');
+
 // CCK
 $container = \Windwalker\DI\Container::getInstance('com_userxtd');
 
