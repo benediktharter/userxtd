@@ -253,8 +253,6 @@ class PlgSystemUserxtd extends JPlugin
 		// Include UserXTD core API.
 		$this->initComponent();
 
-		JForm::addFieldPath(AKPATH_FORM . '/fields');
-
 		$result = null;
 		$UXParams = JComponentHelper::getParams('com_userxtd');
 
@@ -571,7 +569,7 @@ class PlgSystemUserxtd extends JPlugin
 
 		$params = JComponentHelper::getParams('com_userxtd');
 
-		JHtml::register('users.uploadimage', array('UserxtdHelperFieldshow', 'showImage'));
+		JHtml::register('users.uploadimage', array('\\Userxtd\\Form\\FieldDisplay', 'showImage'));
 
 		// Check we are manipulating a valid form.
 		if (!in_array($context, $this->allow_context))

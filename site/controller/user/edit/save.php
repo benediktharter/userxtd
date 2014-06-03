@@ -43,7 +43,7 @@ class UserxtdControllerUserEditSave extends \Windwalker\Controller\Edit\SaveCont
 	public function redirectToList($msg = null, $type = 'message')
 	{
 		$this->redirect(
-			\Windwalker\Router\Route::_('com_userxtd.user'),
+			\Windwalker\Router\Route::_('com_userxtd.user_id', array('id' => $this->recordId)),
 			$msg,
 			$type
 		);

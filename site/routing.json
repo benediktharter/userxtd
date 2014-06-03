@@ -1,7 +1,7 @@
 {
-	"users": {
-		"pattern": "users/:id",
-		"view" : "users"
+	"user_id": {
+		"pattern": ":id",
+		"view" : "user"
 	},
 
 	"user": {
