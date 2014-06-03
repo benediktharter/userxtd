@@ -11,6 +11,8 @@
 			<option value="*">JALL</option>
 			<option value="field.title">JGLOBAL_TITLE</option>
 			<option value="category.title">JCATEGORY</option>
+			<option value="field.label">LIB_WINDWALKER_FIELD_ATTR_LABEL</option>
+			<option value="field.name">LIB_WINDWALKER_FIELD_ATTR_NAME</option>
 		</field>
 
 		<field

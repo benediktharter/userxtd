@@ -72,10 +72,9 @@ class UserxtdModelProfiles extends ListModel
 		$queryHelper = $this->getContainer()->get('model.profiles.helper.query', Container::FORCE_NEW);
 
 		$queryHelper->addTable('profile', '#__userxtd_profiles')
-			->addTable('category',  '#__categories', 'profile.catid      = category.id')
-			->addTable('user',      '#__users',      'profile.created_by = user.id')
-			->addTable('viewlevel', '#__viewlevels', 'profile.access     = viewlevel.id')
-			->addTable('lang',      '#__languages',  'profile.language   = lang.lang_code');
+			->addTable('field',  '#__userxtd_fields', 'profile.key = field.name')
+			->addTable('category',  '#__categories', 'field.catid      = category.id')
+			->addTable('user',      '#__users',      'profile.user_id = user.id');
 
 		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
@@ -101,7 +100,7 @@ class UserxtdModelProfiles extends ListModel
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = 'ASC')
+	protected function populateState($ordering = 'profile.id', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)

@@ -65,6 +65,15 @@ class UserxtdViewProfilesHtml extends GridView
 	protected $viewList = 'profiles';
 
 	/**
+	 * Property fields.
+	 *
+	 * @var  array
+	 */
+	protected $fields = array(
+		'state' => 'published'
+	);
+
+	/**
 	 * Method to instantiate the view.
 	 *
 	 * @param Model            $model     The model object.
@@ -116,15 +125,26 @@ class UserxtdViewProfilesHtml extends GridView
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
-		// Get default button set.
-		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
+		$state = $this->data->state ? : new Joomla\Registry\Registry;
+		$grid  = $this->data->grid;
 
-		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
-		{
-			$buttonSet['trash']['access']  = false;
-			$buttonSet['delete']['access'] = true;
-		}
+		$filterState = $state->get('filter', array());
+
+		// Get default button set.
+		$buttonSet = array(
+			'delete' => array(
+				'handler' => 'deleteList',
+				'args'     => array($this->viewList . '.state.delete'),
+				'access'  => $canDo->get('core.delete'),
+				'priority' => 400
+			),
+
+			'preferences' => array(
+				'handler' => 'preferences',
+				'access'   => 'core.edit',
+				'priority' => 100
+			),
+		);
 
 		return $buttonSet;
 	}
