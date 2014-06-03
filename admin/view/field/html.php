@@ -80,6 +80,19 @@ class UserxtdViewFieldHtml extends EditView
 	}
 
 	/**
+	 * setTitle
+	 *
+	 * @param string $title
+	 * @param string $icons
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'stack')
+	{
+		parent::setTitle(\JText::_('COM_USERXTD_TITLE_FIELD_EDIT'), $icons);
+	}
+
+	/**
 	 * Prepare data hook.
 	 *
 	 * @return  void

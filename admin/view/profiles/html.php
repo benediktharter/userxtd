@@ -107,6 +107,19 @@ class UserxtdViewProfilesHtml extends GridView
 	}
 
 	/**
+	 * setTitle
+	 *
+	 * @param string $title
+	 * @param string $icons
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'stack')
+	{
+		parent::setTitle(\JText::_('COM_USERXTD_TITLE_PROFILES_LIST'), $icons);
+	}
+
+	/**
 	 * Prepare data hook.
 	 *
 	 * @return  void
@@ -144,6 +157,14 @@ class UserxtdViewProfilesHtml extends GridView
 				'access'   => 'core.edit',
 				'priority' => 100
 			),
+
+			'user_config' => array(
+				'handler' => function()
+					{
+						\JToolbarHelper::preferences('com_users', 550, 875, 'COM_USERXTD_TOOLBAR_COM_USERS_CONFIG');
+					},
+				'access' => $this->container->get('user')->authorise('core.admin', 'com_users')
+			)
 		);
 
 		return $buttonSet;

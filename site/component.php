@@ -34,9 +34,6 @@ final class UserxtdComponent extends \Userxtd\Component\UserxtdComponent
 	{
 		parent::prepare();
 
-		\Windwalker\Helper\LanguageHelper::loadLanguage('com_users', 'site');
-		\Windwalker\Helper\LanguageHelper::loadLanguage('com_users', 'admin');
-
 		// Load admin language
 		$lang = JFactory::getLanguage();
 		$lang->load('', JPATH_ADMINISTRATOR);

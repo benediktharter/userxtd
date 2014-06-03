@@ -56,6 +56,10 @@ abstract class UserxtdComponent extends Component
 		// Register tasks
 		TaskMapper::register($this);
 
+		// Load Users language
+		\Windwalker\Helper\LanguageHelper::loadLanguage('com_users', 'site');
+		\Windwalker\Helper\LanguageHelper::loadLanguage('com_users', 'admin');
+
 		parent::prepare();
 	}
 

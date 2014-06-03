@@ -43,7 +43,7 @@ abstract class UserxtdHelper
 			if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
 			{
 				JHtmlSidebar::addEntry(
-					JText::sprintf(sprintf('COM_USERXTD_%s_TITLE_LIST', strtoupper($folder))),
+					JText::sprintf(sprintf('COM_USERXTD_TITLE_%s_LIST', strtoupper($folder))),
 					'index.php?option=com_userxtd&view=' . $view,
 					($vName == $view)
 				);
