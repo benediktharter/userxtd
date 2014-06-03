@@ -65,6 +65,24 @@ class UserxtdViewUserHtml extends ItemHtmlView
 	protected $viewList = 'users';
 
 	/**
+	 * prepareRender
+	 *
+	 * @return  void
+	 */
+	protected function prepareRender()
+	{
+		$user = $this->container->get('user');
+		$input = $this->container->get('input');
+
+		if (! $input->get('id') && $user->get('guest'))
+		{
+			$this->container->get('app')->redirect(JUri::root());
+		}
+
+		parent::prepareRender();
+	}
+
+	/**
 	 * Prepare data hook.
 	 *
 	 * @return  void
