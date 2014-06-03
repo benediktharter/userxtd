@@ -7,6 +7,8 @@
  */
 
 // no direct access
+use Userxtd\Router\Route;
+
 defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
@@ -121,19 +123,21 @@ class PlgSystemUserxtd extends JPlugin
 
 			if ($option == 'com_users')
 			{
+				$this->initComponent();
+
 				if ($view == 'registration' && $layout == 'default')
 				{
-					$this->app->redirect(JRoute::_('index.php?option=com_userxtd&view=registration'));
+					$this->app->redirect(Route::_('register'));
 				}
 
 				if ($view == 'profile' && $layout == 'default')
 				{
-					$this->app->redirect(JRoute::_('index.php?option=com_userxtd&view=user'));
+					$this->app->redirect(Route::_('user'));
 				}
 
 				if ($view == 'profile' && $layout == 'edit')
 				{
-					$this->app->redirect(JRoute::_('index.php?option=com_userxtd&task=user.edit'));
+					$this->app->redirect(Route::_('user_layout', array('task' => 'user.edit.edit', 'layout' => 'edit', 'id' => $this->input->get('id'))));
 				}
 			}
 		}
