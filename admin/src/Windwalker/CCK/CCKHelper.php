@@ -8,7 +8,14 @@
 
 namespace Windwalker\CCK;
 
+// No direct access
+defined('_JEXEC') or die;
 
+/**
+ * Class CCKHelper
+ *
+ * @since 1.0
+ */
 class CCKHelper
 {
 	/**

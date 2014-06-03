@@ -11,6 +11,9 @@ namespace Userxtd\Form;
 use Windwalker\CCK\Form;
 use Windwalker\DI\Container;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class FormHelper
  *

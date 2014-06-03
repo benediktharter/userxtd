@@ -15,6 +15,9 @@ use Windwalker\Image\Thumb;
 use Windwalker\System\ExtensionHelper;
 use Windwalker\View\Layout\FileLayout;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class UserInfo
  *

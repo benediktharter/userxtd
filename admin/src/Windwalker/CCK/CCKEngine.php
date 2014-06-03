@@ -11,6 +11,9 @@ namespace Windwalker\CCK;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * CCK Engine to handle fields and datas.
  *

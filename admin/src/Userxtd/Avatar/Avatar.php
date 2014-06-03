@@ -8,6 +8,9 @@
 
 namespace Userxtd\Avatar;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class Avatar
  *

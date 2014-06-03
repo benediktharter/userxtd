@@ -10,6 +10,9 @@ namespace Userxtd\Component;
 
 use Windwalker\Component\Component;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * The component task mapper.
  *

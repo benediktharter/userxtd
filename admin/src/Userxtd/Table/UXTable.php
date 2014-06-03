@@ -8,6 +8,9 @@
 
 namespace Userxtd\Table;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class UXTable
  *

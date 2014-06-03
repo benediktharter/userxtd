@@ -8,6 +8,9 @@
 
 namespace Userxtd\Form;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class FieldDisplay
  *

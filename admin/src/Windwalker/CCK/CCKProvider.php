@@ -11,6 +11,9 @@ namespace Windwalker\CCK;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class CCKProvider
  *
