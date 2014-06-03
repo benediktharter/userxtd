@@ -1,0 +1,16 @@
+{
+	"users": {
+		"pattern": "users/:id",
+		"view" : "users"
+	},
+
+	"user": {
+		"pattern": "user/:id",
+		"view" : "user"
+	},
+
+	"user_layout": {
+		"pattern": ":layout/:id",
+		"view" : "user"
+	}
+}

@@ -305,7 +305,7 @@ class PlgSystemUserxtd extends JPlugin
 			$catid = null;
 		}
 
-		$form = UserxtdHelperForm::getFieldsByCategory($catid, $form, $array);
+		$form = \Userxtd\Form\FormHelper::getFieldsByCategory($catid, $form, $array);
 
 		return $result;
 	}
@@ -380,7 +380,7 @@ class PlgSystemUserxtd extends JPlugin
 		}
 
 		// Get Data and handle them
-		$form = UserxtdHelperForm::getFieldsByCategory($catid);
+		$form = \Userxtd\Form\FormHelper::getFieldsByCategory($catid);
 
 		$form->bind($data);
 

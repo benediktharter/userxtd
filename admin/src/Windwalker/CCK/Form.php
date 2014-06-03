@@ -67,6 +67,7 @@ class Form extends \JForm
 		}
 
 		$fields = $this->getGroup($profile);
+
 		$data2  = array();
 
 		foreach ($fields as $field)
