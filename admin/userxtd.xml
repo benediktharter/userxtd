@@ -9,7 +9,7 @@
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
 	<authorUrl>http://asikart.com</authorUrl>
-	<version>1.0.0</version>
+	<version>1.0.0-beta10</version>
 	<description>COM_USERXTD_XML_DESCRIPTION</description>
 
 	<scriptfile>install.php</scriptfile>
@@ -91,11 +91,9 @@
 		<plugin>plg_system_userxtd</plugin>
 	</plugins>
 
-	<!--
 	<updateservers>
-		<server type="extension" priority="1" name="Asikart Userxtd Component">http://update.asikart.com/component/com_userxtd.xml</server>
+		<server type="extension" priority="1" name="Asikart Userxtd Component">https://raw.githubusercontent.com/asikart/userxtd/staging/update.xml</server>
 	</updateservers>
-	-->
 
 </extension>
 
