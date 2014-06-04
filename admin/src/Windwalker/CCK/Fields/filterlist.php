@@ -8,9 +8,11 @@
  */
 
 // No direct access
+use Windwalker\Helper\XmlHelper;
+
 defined('_JEXEC') or die;
 
-JForm::addFieldPath(AKPATH_FORM . '/fields');
+JForm::addFieldPath(__DIR__);
 JFormHelper::loadFieldType('List');
 
 /**
@@ -28,22 +30,30 @@ class JFormFieldFilterlist extends JFormFieldList
 	 */
 	public $type = 'Filterlist';
 
+	/**
+	 * Property value.
+	 *
+	 * @var mixed
+	 */
 	public $value;
 
+	/**
+	 * Property name.
+	 *
+	 *  string@var
+	 */
 	public $name;
 
 	/**
 	 * Method to get the field input markup.
 	 *
-	 * @return    string    The field input markup.
-	 * @since    1.6
+	 * @return  string  The field input markup.
 	 */
 	public function getOptions()
 	{
-
 		if ($this->value)
 		{
-			$this->value = (string) $this->element['default'];
+			$this->value = XmlHelper::get($this->element, 'default');
 		}
 
 		$element = $this->element;
@@ -72,9 +82,11 @@ class JFormFieldFilterlist extends JFormFieldList
 		if ($includes)
 		{
 			$includes = explode(',', $includes);
-			foreach ($includes as &$include):
+
+			foreach ($includes as &$include)
+			{
 				$include = trim($include);
-			endforeach;
+			}
 
 			$types = $includes;
 		}
@@ -85,9 +97,11 @@ class JFormFieldFilterlist extends JFormFieldList
 		if ($excludes)
 		{
 			$excludes = explode(',', $excludes);
-			foreach ($excludes as &$exclude):
+
+			foreach ($excludes as &$exclude)
+			{
 				$exclude = trim($exclude);
-			endforeach;
+			}
 		}
 		else
 		{
@@ -97,7 +111,8 @@ class JFormFieldFilterlist extends JFormFieldList
 		// Set Options
 		$options = array();
 
-		foreach ($types as $type):
+		foreach ($types as $type)
+		{
 			$type = str_replace('.xml', '', $type);
 
 			// Excludes
@@ -110,7 +125,7 @@ class JFormFieldFilterlist extends JFormFieldList
 				'select.option', (string) $type,
 				JText::_('LIB_WINDWALKER_FILTERLIST_' . strtoupper($type))
 			);
-		endforeach;
+		}
 
 		// Merge any additional options in the XML definition.
 		$options = array_merge(parent::getOptions(), $options);

@@ -226,7 +226,7 @@ class PlgSystemUserxtd extends JPlugin
 	 *
 	 * @return  void
 	 */
-	public function onContentAfterSave($context, &$article, $isNew)
+	public function onContentAfterSave($context, $article, $isNew)
 	{
 		return;
 	}
