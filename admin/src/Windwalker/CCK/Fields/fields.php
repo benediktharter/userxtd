@@ -190,6 +190,8 @@ class JFormFieldFields extends JFormField
 	 */
 	public function addFieldJs()
 	{
+		JHtmlBehavior::framework(true);
+
 		$asset = $this->container->get('helper.asset');
 		$input = $this->container->get('input');
 

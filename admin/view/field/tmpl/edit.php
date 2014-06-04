@@ -40,6 +40,12 @@ $tabs = array(
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
 	}
+
+	// Fix Quickadd bug
+	jQuery(document).ready(function($)
+	{
+		$('#jform_catid_quickadd-container').find('input, select, textarea').removeAttr('required').removeAttr('aria-required');
+	});
 </script>
 
 <div id="userxtd" class="windwalker field edit-form row-fluid">

@@ -168,7 +168,11 @@ $grid->registerTableSort();
 		</td>
 
 		<td class="center">
-			<?php echo $grid->booleanIcon($item->field_required); ?>
+			<?php if ($item->field_required): ?>
+			<i class="icon-publish"></i>
+			<?php else: ?>
+			-
+			<?php endif; ?>
 		</td>
 
 		<!--USER-->

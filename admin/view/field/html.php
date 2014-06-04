@@ -100,5 +100,10 @@ class UserxtdViewFieldHtml extends EditView
 	protected function prepareData()
 	{
 		parent::prepareData();
+
+		$input = $this->container->get('input');
+		$fieldType = $this->data->item->field_type;
+
+		$input->set('field_type', $fieldType);
 	}
 }
