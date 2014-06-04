@@ -9,7 +9,7 @@
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
 	<authorUrl>http://asikart.com</authorUrl>
-	<version>1.0.0-beta10</version>
+	<version>1.0.0-beta11</version>
 	<description>COM_USERXTD_XML_DESCRIPTION</description>
 
 	<scriptfile>install.php</scriptfile>
