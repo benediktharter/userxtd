@@ -3,10 +3,10 @@
 	<!-- Joomla!3.3 -->
 	<update>
 		<name>Asikart UserXTD</name>
-		<version>1.0.0-beta10</version>
+		<version>1.0.0-beta11</version>
 		<infourl title="Asikart UserXTD">http://ext.asikart.com</infourl>
 		<downloads>
-			<downloadurl type="upgrade" format="zip">https://github.com/asikart/userxtd/archive/1.0.0-beta10.zip</downloadurl>
+			<downloadurl type="upgrade" format="zip">https://github.com/asikart/userxtd/archive/1.0.0-beta11.zip</downloadurl>
 		</downloads>
 		<targetplatform name="joomla" version="3.3" />
 		<element>com_userxtd</element>
