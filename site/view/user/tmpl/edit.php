@@ -35,6 +35,17 @@ $data = $this->data;
 	name="adminForm" id="user-form" class="profile-edit form-validate form-horizontal" enctype="multipart/form-data">
 
 	<div id="member-profile">
+
+		<div class="top-toolbar text-right">
+			<a type="submit" class="btn btn-primary" onclick="Joomla.submitbutton('user.edit.save')">
+				<?php echo JText::_('JTOOLBAR_SAVE');?>
+			</a>
+
+			<a class="btn button" href="#" title="<?php echo JText::_('JCANCEL');?>" onclick="Joomla.submitbutton('user.edit.cancel')">
+				<?php echo JText::_('JCANCEL');?>
+			</a>
+		</div>
+
 		<?php foreach ($data->form->getFieldsets() as $group => $fieldset):// Iterate through the form fieldsets and display each one.?>
 			<?php $fields = $data->form->getFieldset($group);?>
 			<?php if (count($fields)):?>

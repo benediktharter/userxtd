@@ -22,8 +22,8 @@ defined('_JEXEC') or die;
  * @var $profile   \Windwalker\CCK\Form
  */
 $container = $this->getContainer();
-$params = $data->item->params;
-$item = $data->item;
+$params  = $data->item->params;
+$item    = $data->item;
 $profile = $data->profiles;
 $canEdit = $data->item->params->get('access-edit');
 $user    = JFactory::getUser();
@@ -37,9 +37,9 @@ $fieldsets	 = $profile->getFieldsets('profile');
 
 
 $exclude_fields = array() ;
-$exclude_fields[] = $avatar_field 	= $params->get('UserInfo_ImageField', 'BASIC_AVATAR');
-$exclude_fields[] = $title_field 	= $params->get('UserInfo_TitleField', 'name');
-$exclude_fields[] = $about_field 	= $params->get('UserInfo_AboutField', 'BASIC_ABOUT');
+$exclude_fields[] = $avatar_field = $params->get('UserInfo_ImageField', 'BASIC_AVATAR');
+$exclude_fields[] = $title_field  = $params->get('UserInfo_TitleField', 'name');
+$exclude_fields[] = $about_field  = $params->get('UserInfo_AboutField', 'BASIC_ABOUT');
 
 $data->exclude_fields = $exclude_fields;
 $show_cats = $data->params->get('show_categories', '*') ;
@@ -52,14 +52,6 @@ $show_cats = $data->params->get('show_categories', '*') ;
 
 			<div class="user-item item">
 				<div class="user-item-inner">
-
-					<!-- Heading -->
-					<!-- ============================================================================= -->
-					<div class="heading">
-						<h2><?php echo $params->get('link_titles', 1) ? JHtml::_('link', $item->link, $item->title) : $item->title ?></h2>
-					</div>
-					<!-- ============================================================================= -->
-					<!-- Heading -->
 
 					<!-- afterDisplayTitle -->
 					<!-- ============================================================================= -->
@@ -82,8 +74,6 @@ $show_cats = $data->params->get('show_categories', '*') ;
 							</div>
 
 						</div>
-
-
 
 						<!-- Info -->
 						<!-- ============================================================================= -->

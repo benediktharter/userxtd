@@ -1,7 +1,7 @@
 {
-	"user_id": {
-		"pattern": ":id",
-		"view" : "user"
+	"register" : {
+		"pattern": "registration",
+		"view" : "registration"
 	},
 
 	"user": {
@@ -14,8 +14,8 @@
 		"view" : "user"
 	},
 
-	"register" : {
-		"pattern": "registration",
-		"view" : "registration"
+	"user_id": {
+		"pattern": ":id",
+		"view" : "user"
 	}
 }

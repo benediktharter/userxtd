@@ -22,3 +22,13 @@
 {
 	border: none;
 }
+
+#Userxtd .profile-info
+{
+	padding-left: 20px;
+}
+
+.profile-content fieldset
+{
+	margin: 20px 0;
+}

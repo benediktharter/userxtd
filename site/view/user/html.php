@@ -142,6 +142,31 @@ class UserxtdViewUserHtml extends ItemHtmlView
 	}
 
 	/**
+	 * Set title of this page.
+	 *
+	 * @param string $title Page title.
+	 * @param string $icons Title icon.
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'stack')
+	{
+		$doc = \JFactory::getDocument();
+		$config = JFactory::getConfig();
+
+		if ($config->get('sitename_pagetitles', 0) == 1)
+		{
+			$title = JText::sprintf('JPAGETITLE', $config->get('sitename'), $title);
+		}
+		elseif ($config->get('sitename_pagetitles', 0) == 2)
+		{
+			$title = JText::sprintf('JPAGETITLE', $title, $config->get('sitename'));
+		}
+
+		$doc->setTitle($title);
+	}
+
+	/**
 	 * Prepare the content events.
 	 *
 	 * @param Data $item The item object.
@@ -193,6 +218,8 @@ class UserxtdViewUserHtml extends ItemHtmlView
 		$temp         = clone ($data->params);
 		$item->params = new Registry($item->params);
 
+		$item->title = JText::_('COM_USERS_PROFILE');
+
 		// Check to see which parameters should take priority
 		if ($active)
 		{
@@ -227,7 +254,7 @@ class UserxtdViewUserHtml extends ItemHtmlView
 				}
 
 				// If not Active, set Title
-				$this->setTitle($item->get('title'));
+				$this->setTitle($item->title);
 			}
 		}
 		else
@@ -244,7 +271,7 @@ class UserxtdViewUserHtml extends ItemHtmlView
 			}
 
 			// If not Active, set Title
-			$this->setTitle($item->get('title'));
+			$this->setTitle($item->title);
 		}
 
 		$item->params = $data->params;

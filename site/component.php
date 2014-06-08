@@ -21,7 +21,7 @@ final class UserxtdComponent extends \Userxtd\Component\UserxtdComponent
 	 *
 	 * @var string
 	 */
-	protected $defaultController = 'users.display';
+	protected $defaultController = 'user.display';
 
 	/**
 	 * Prepare hook of this component.
@@ -34,10 +34,14 @@ final class UserxtdComponent extends \Userxtd\Component\UserxtdComponent
 	{
 		parent::prepare();
 
+		// Prevent JToolbarHelper bug
+		include_once JPATH_ADMINISTRATOR . '/includes/toolbar.php';
+
 		// Load admin language
 		$lang = JFactory::getLanguage();
 		$lang->load('', JPATH_ADMINISTRATOR);
 
+		// Load css
 		$asset = $this->container->get('helper.asset');
 		$asset->addCss('userxtd-component.css')
 			->addCss('main.css');

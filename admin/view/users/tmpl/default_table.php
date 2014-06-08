@@ -33,7 +33,7 @@ $grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
-<table id="userList" class="table table-striped adminlist">
+<table id="userList" class="table table-striped table-bordered adminlist">
 
 <!-- TABLE HEADER -->
 <thead>

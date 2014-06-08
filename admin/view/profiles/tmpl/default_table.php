@@ -33,7 +33,7 @@ $grid->registerTableSort();
 ?>
 
 <!-- LIST TABLE -->
-<table id="profileList" class="table table-striped adminlist">
+<table id="profileList" class="table table-striped table-bordered adminlist">
 
 <!-- TABLE HEADER -->
 <thead>
@@ -44,7 +44,7 @@ $grid->registerTableSort();
 	</th>
 
 	<!-- USER ID -->
-	<th class="center">
+	<th class="center" width="10%">
 		<?php echo $grid->sortTitle('COM_USERXTD_USER_ID', 'profile.user_id'); ?>
 	</th>
 
@@ -54,12 +54,12 @@ $grid->registerTableSort();
 	</th>
 
 	<!-- ATTR NAME -->
-	<th  class="center" width="10%">
+	<th  class="center" width="20%">
 		<?php echo $grid->sortTitle('LIB_WINDWALKER_FIELD_ATTR_NAME', 'field.name'); ?>
 	</th>
 
 	<!-- ATTR LABEL -->
-	<th  class="center" width="10%">
+	<th  class="center" width="20%">
 		<?php echo $grid->sortTitle('LIB_WINDWALKER_FIELD_ATTR_LABEL', 'field.label'); ?>
 	</th>
 

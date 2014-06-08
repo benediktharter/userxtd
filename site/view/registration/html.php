@@ -6,10 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use Userxtd\Router\Route;
 use Joomla\Registry\Registry;
-use Windwalker\Data\Data;
-use Windwalker\Helper\DateHelper;
 use Windwalker\View\Html\ItemHtmlView;
 
 // No direct access
@@ -96,5 +93,70 @@ class UserxtdViewRegistrationHtml extends ItemHtmlView
 		}
 
 		$data->canDo = UserxtdHelper::getActions();
+
+		$this->setTitle();
+	}
+
+	/**
+	 * Set title of this page.
+	 *
+	 * @param string $title Page title.
+	 * @param string $icons Title icon.
+	 *
+	 * @return  void
+	 */
+	protected function setTitle($title = null, $icons = 'stack')
+	{
+		$app    = JFactory::getApplication();
+		$config = JFactory::getConfig();
+		$menus  = $app->getMenu();
+		$title  = null;
+
+		$document = \JFactory::getDocument();
+
+		// Because the application sets a default page title,
+		// we need to get it from the menu item itself
+		$menu = $menus->getActive();
+
+		if ($menu)
+		{
+			$this->data->params->def('page_heading', $this->data->params->get('page_title', $menu->title));
+		}
+		else
+		{
+			$this->data->params->def('page_heading', JText::_('COM_USERS_REGISTRATION'));
+		}
+
+		$title = $this->data->params->get('page_title', JText::_('COM_USERS_REGISTRATION'));
+
+		if (empty($title))
+		{
+			$title = $config->get('sitename');
+		}
+		elseif ($config->get('sitename_pagetitles', 0) == 1)
+		{
+			$title = JText::sprintf('JPAGETITLE', $config->get('sitename'), $title);
+		}
+		elseif ($config->get('sitename_pagetitles', 0) == 2)
+		{
+			$title = JText::sprintf('JPAGETITLE', $title, $config->get('sitename'));
+		}
+
+		$document->setTitle($title);
+
+		if ($this->data->params->get('menu-meta_description'))
+		{
+			$document->setDescription($this->data->params->get('menu-meta_description'));
+		}
+
+		if ($this->data->params->get('menu-meta_keywords'))
+		{
+			$document->setMetadata('keywords', $this->data->params->get('menu-meta_keywords'));
+		}
+
+		if ($this->data->params->get('robots'))
+		{
+			$document->setMetadata('robots', $this->data->params->get('robots'));
+		}
 	}
 }
