@@ -65,6 +65,13 @@ class UserxtdModelUsers extends ListModel
 	protected $viewList = 'users';
 
 	/**
+	 * Property fields.
+	 *
+	 * @var  \Windwalker\Data\DataSet
+	 */
+	protected $fields = null;
+
+	/**
 	 * Configure tables through QueryHelper.
 	 *
 	 * @return  void
@@ -86,6 +93,12 @@ class UserxtdModelUsers extends ListModel
 	 */
 	public function getFields()
 	{
+		// Get a storage key.
+		if ($this->fields)
+		{
+			return $this->fields;
+		}
+
 		// Get Field Filter
 		$app = JFactory::getApplication() ;
 		$filter_fields = $app->getUserStateFromRequest($this->context . '.field.fields', 'fields');
@@ -114,16 +127,17 @@ class UserxtdModelUsers extends ListModel
 			}
 		}
 
-		$this->state->set('filteredFields', $filtered) ;
+		$this->state->set('filteredFields', $filtered);
 
 		// Set Keys into State
-		$this->state->set('profileKeys', $filter_fields) ;
+		$this->state->set('profileKeys', $filter_fields);
 
 		// Set Keys into Filter Fields
-		$keys = JArrayHelper::getColumn($result, 'name');
-		$this->filterFields = array_merge($this->filterFields, $keys);
+		$keys = $fields->name;
+		$this->filterFields = array_merge($this->filterFields, $filter_fields);
 
-		return $fields;
+		// Add the items to the internal cache.
+		return $this->fields = $fields;
 	}
 
 	/**
@@ -139,7 +153,7 @@ class UserxtdModelUsers extends ListModel
 
 		// Build SQL Pivot
 		// ========================================================================
-		foreach( $keys as $key )
+		foreach($keys as $key)
 		{
 			if($key)
 			{
@@ -166,6 +180,8 @@ class UserxtdModelUsers extends ListModel
 	 */
 	protected function populateState($ordering = 'user.id', $direction = 'DESC')
 	{
+		$this->getFields();
+
 		parent::populateState($ordering, $direction);
 	}
 
@@ -224,5 +240,16 @@ class UserxtdModelUsers extends ListModel
 	 */
 	protected function configureSearches($searchHelper)
 	{
+		foreach ($this->state->get('profileKeys') as $key)
+		{
+			$searchHelper->setHandler(
+				$key,
+				function($query, $field, $value)
+				{
+					/** @var $query \JDatabaseQuery */
+					$query->having($query->format('%n LIKE "%%%E%%"', $field, $value));
+				}
+			);
+		}
 	}
 }
