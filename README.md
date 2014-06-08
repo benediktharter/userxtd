@@ -12,7 +12,7 @@ FREE in beta Period
 
 > Extension Info
 >
-> ![compat 25][2] ![compat 30][3]![ext com][4] ![ext plugin][5]
+> ![compat 30][3]![ext com][4] ![ext plugin][5]
 
 [DEMO][7] Account: demo / demo
 
