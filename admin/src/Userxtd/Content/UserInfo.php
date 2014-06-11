@@ -70,7 +70,14 @@ class UserInfo
 		$image 	= $thumb->resize($image, $width, $height, $crop);
 
 		// Link
-		$link = Route::_('com_userxtd.user_id', array('id' => $user->get('id')));
+		$query = array(
+			'option' => 'com_users',
+			'view' => 'profile',
+			'id' => $user->get('id')
+		);
+
+		$link = \JRoute::_('index.php?' . http_build_query($query));
+			//Route::_('com_userxtd.user_id', array('id' => $user->get('id')));
 
 		// Website
 		$website_link = $user->get($website_field);

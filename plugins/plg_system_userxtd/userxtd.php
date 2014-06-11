@@ -132,7 +132,7 @@ class PlgSystemUserxtd extends JPlugin
 
 				if ($view == 'profile' && $layout == 'default')
 				{
-					$this->app->redirect(Route::_('user'));
+					$this->app->redirect(Route::_('user_id', array('id' => $this->input->get('id'))));
 				}
 
 				if ($view == 'profile' && $layout == 'edit')
