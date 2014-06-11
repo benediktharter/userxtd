@@ -12,7 +12,7 @@ FREE in beta Period
 
 > Extension Info
 >
-> ![compat 30][3]![ext com][4] ![ext plugin][5]
+> ![compat 30][3] &nbsp; ![ext com][4] &nbsp; ![ext plugin][5]
 
 [DEMO][7] Account: demo / demo
 
@@ -23,34 +23,32 @@ Help us making our extensions more perfectly.
 ## FEATURES
 
   1. Support both 2.5 & 3.0
-  2. Custom fields by form contructor for registration.
+  2. Custom fields by form constructor for registration.
   3. Integrate with core users profile system.
   4. Show author details after article.
   5. User profile page and edit page.
   6. User list to show all users' profiles.
   7. Replace core users page by UserXTD pages.
- 
 
 ### User profile page and intergate with content article.
 
-![130322-0004][8]
+![p-2014-06-09-1](https://cloud.githubusercontent.com/assets/1639206/3246009/a651a8a2-f177-11e3-970c-1244d56c0b77.jpg)
 
 ### Edit user profile in core users component.
 
-![130322-0005][9]
+![p-2014-06-09-2](https://cloud.githubusercontent.com/assets/1639206/3246012/aae296c4-f177-11e3-9bcd-9e69de2cce7b.jpg)
 
 ### Create profile fields and categories.
 
-![130322-0001][10]
+![p-2014-06-09-3](https://cloud.githubusercontent.com/assets/1639206/3246021/b49b872a-f177-11e3-8c6d-81aee12d27f5.jpg)
 
 ### View all users data.
 
-![130322-0002][11]
+![p-2014-06-09-4](https://cloud.githubusercontent.com/assets/1639206/3246023/b886db0a-f177-11e3-9923-5bbd09751a30.jpg)
  
 ### Field form constructor.
 
-![userxtd-edit][12]
-
+![p-2014-06-09-5](https://cloud.githubusercontent.com/assets/1639206/3246028/bc54b6c6-f177-11e3-9765-d37bdf8cb353.jpg)
 
    [1]: http://ext.asikart.com/images/extensions/userxtd/logo/Asikart-UserXTD-LOGO-sq-alpha.png
    [2]: http://ext.asikart.com/images/global/extension/compat_25.png
@@ -59,9 +57,3 @@ Help us making our extensions more perfectly.
    [5]: http://ext.asikart.com/images/global/extension/ext_plugin.png
    [6]: http://ext.asikart.com/downloads/asikart-userxtd.html
    [7]: http://demo.asikart.com/quickcontent/index.php/component/users/?view=registration
-   [8]: http://ext.asikart.com/images/extensions/userxtd/130322-0004.jpg
-   [9]: http://ext.asikart.com/images/extensions/userxtd/130322-0005.jpg
-   [10]: http://ext.asikart.com/images/extensions/userxtd/130322-0001.jpg
-   [11]: http://ext.asikart.com/images/extensions/userxtd/130322-0002.jpg
-   [12]: http://ext.asikart.com/images/extensions/userxtd/userxtd-edit.png
-  
