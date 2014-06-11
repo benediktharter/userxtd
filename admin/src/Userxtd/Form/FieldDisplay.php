@@ -29,14 +29,24 @@ class FieldDisplay
 	{
 		if($value)
 		{
-			$thumb = new \Windwalker\Image\Thumb(null, 'com_userxtd');
-
-			$value = $thumb->resize($value, 300, 300, \JImage::CROP_RESIZE);
-
-			return \JHtml::image($value, 'UserXTD image');
+			return \JHtml::image(static::getThumbPath($value), 'UserXTD image');
 		}
 
 		return '';
+	}
+
+	/**
+	 * getThumbPath
+	 *
+	 * @param string $value
+	 *
+	 * @return  string
+	 */
+	public static function getThumbPath($value)
+	{
+		$thumb = new \Windwalker\Image\Thumb(null, 'com_userxtd');
+
+		return $thumb->resize($value, 300, 300, \JImage::CROP_RESIZE);
 	}
 }
  

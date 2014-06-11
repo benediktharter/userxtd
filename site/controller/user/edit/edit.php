@@ -32,5 +32,35 @@ class UserxtdControllerUserEditEdit extends \Windwalker\Controller\Edit\EditCont
 			\Windwalker\Router\Route::_('com_userxtd.user_layout', array('id' => $recordId, 'layout' => 'edit'))
 		);
 	}
+
+	/**
+	 * Method to check if you can save a new or existing record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key.
+	 *
+	 * @return  boolean
+	 */
+	protected function allowSave($data, $key = 'id')
+	{
+		return true;
+	}
+
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
+	 */
+	protected function allowEdit($data = array(), $key = 'id')
+	{
+		return true;
+	}
 }
  

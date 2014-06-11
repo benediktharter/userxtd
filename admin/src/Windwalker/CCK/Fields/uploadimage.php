@@ -65,7 +65,7 @@ class JFormFieldUploadimage extends JFormField
 
 			if ($this->value)
 			{
-				$html .= '<div class="image-' . $this->id . '">' . JHtml::image(ThumbHelper::resize($this->value, $width, $height, \JImage::CROP_RESIZE), $this->name, array()) . '</div>';
+				$html .= '<div class="image-' . $this->id . '">' . JHtml::image($this->getThumbPath(), $this->name, array()) . '</div>';
 			}
 
 			$html .= '<input type="file" name="' . $this->getName($this->element['name'] . '_upload') . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
@@ -158,11 +158,32 @@ class JFormFieldUploadimage extends JFormField
 
 					// Set in Value
 					$this->value = $url;
+
+					// Clean cache
+					$thumb = $this->getThumbPath();
+
+					if (is_file(JPATH_ROOT . '/' . $thumb))
+					{
+						\JFile::delete(JPATH_ROOT . '/' . $thumb);
+					}
 				}
 			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * getThumbPath
+	 *
+	 * @return  string
+	 */
+	protected function getThumbPath()
+	{
+		$width  = $this->element['width'] ? $this->element['width'] : 150;
+		$height = $this->element['height'] ? $this->element['height'] : 150;
+
+		return ThumbHelper::resize($this->value, $width, $height, \JImage::CROP_RESIZE);
 	}
 
 	/**

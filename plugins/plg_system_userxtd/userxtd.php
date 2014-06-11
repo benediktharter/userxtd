@@ -348,7 +348,7 @@ class PlgSystemUserxtd extends JPlugin
 		$db = JFactory::getDbo();
 
 		// don't do anything when activate.
-		$allowTask = array('save', 'apply', 'save2new');
+		$allowTask = array('save', 'apply', 'save2new', 'user.edit.save');
 
 		if (! in_array($this->input->get('task'), $allowTask))
 		{
@@ -646,15 +646,16 @@ class PlgSystemUserxtd extends JPlugin
 	/**
 	 * onCCKEngineUploadImage
 	 *
-	 * @param   string            $url
+	 * @param   string            &$url
 	 * @param   \JFormField       $field
 	 * @param   \SimpleXmlElement $element
 	 *
 	 * @return  void
 	 */
-	public function onCCKEngineUploadImage($url, $field, $element = null)
+	public function onCCKEngineUploadImage(&$url, $field, $element = null)
 	{
-		$data = $this->user_data;
+		$input = \JFactory::getApplication()->input;
+		$data = $this->user_data ? : (array) JFactory::getUser($input->get('id'));
 
 		$name = $_FILES['jform']['name']['profile'][$field->fieldname . '_upload'];
 		$name = explode('.', $name);

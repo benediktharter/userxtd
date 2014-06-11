@@ -158,8 +158,9 @@ class UserxtdModelUser extends \Windwalker\Model\CrudModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array  $data The form data.
+	 * @param   array $data The form data.
 	 *
+	 * @throws  RuntimeException
 	 * @return  mixed  The user id on success, false on failure.
 	 */
 	public function save($data)
