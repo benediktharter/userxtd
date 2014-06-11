@@ -134,7 +134,7 @@ class UserxtdModelUsers extends ListModel
 
 		// Set Keys into Filter Fields
 		$keys = $fields->name;
-		$this->filterFields = array_merge($this->filterFields, $filter_fields);
+		$this->filterFields = array_merge($this->filterFields, $fields->name);
 
 		// Add the items to the internal cache.
 		return $this->fields = $fields;
@@ -153,15 +153,15 @@ class UserxtdModelUsers extends ListModel
 
 		// Build SQL Pivot
 		// ========================================================================
-		foreach($keys as $key)
+		foreach ($keys as $key)
 		{
-			if($key)
+			if ($key)
 			{
 				/*
 				 * Use MySQL Pivot query:
 				 * MAX(IF(profile.key = 'foo', profile.value, NULL)) AS foo
 				 */
-				$query->select(sprintf("MAX(IF(profile.key = '%s', profile.value, NULL)) AS %s", $key, $key));
+				$query->select($query->format("MAX(IF(profile.key = %q, profile.value, NULL)) AS %e", $key, $key));
 			}
 		}
 
@@ -183,6 +183,16 @@ class UserxtdModelUsers extends ListModel
 		$this->getFields();
 
 		parent::populateState($ordering, $direction);
+	}
+
+	/**
+	 * Get search fields from form xml.
+	 *
+	 * @return  array Search fields.
+	 */
+	public function getSearchFields()
+	{
+		return array_merge(parent::getSearchFields(), $this->state->get('profileKeys'));
 	}
 
 	/**
@@ -240,14 +250,14 @@ class UserxtdModelUsers extends ListModel
 	 */
 	protected function configureSearches($searchHelper)
 	{
-		foreach ($this->state->get('profileKeys') as $key)
+		foreach ($this->getSearchFields() as $key)
 		{
 			$searchHelper->setHandler(
 				$key,
 				function($query, $field, $value)
 				{
 					/** @var $query \JDatabaseQuery */
-					$query->having($query->format('%n LIKE "%%%E%%"', $field, $value));
+					$query->having($query->format('%n LIKE "%%%E%%"', $field, $value), 'OR');
 				}
 			);
 		}
