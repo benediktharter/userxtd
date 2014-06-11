@@ -90,6 +90,28 @@ class UserxtdModelField extends AdminModel
 	}
 
 	/**
+	 * loadFormData
+	 *
+	 * @return  array
+	 */
+	protected function loadFormData()
+	{
+		$data = (array) parent::loadFormData();
+
+		$app   = $this->container->get('app');
+
+		// Check the session for previously entered form data.
+		$attrs = $app->getUserState("com_userxtd.edit.field.attrs", array());
+
+		if ($attrs)
+		{
+			$data['attrs'] = json_encode($attrs);
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Post save hook.
 	 *
 	 * @param JTable $table The table object.

@@ -93,6 +93,16 @@ class UserxtdViewFieldHtml extends EditView
 	}
 
 	/**
+	 * prepareRender
+	 *
+	 * @return  void
+	 */
+	protected function prepareRender()
+	{
+		parent::prepareRender();
+	}
+
+	/**
 	 * Prepare data hook.
 	 *
 	 * @return  void
@@ -100,10 +110,5 @@ class UserxtdViewFieldHtml extends EditView
 	protected function prepareData()
 	{
 		parent::prepareData();
-
-		$input = $this->container->get('input');
-		$fieldType = $this->data->item->field_type;
-
-		$input->set('field_type', $fieldType);
 	}
 }

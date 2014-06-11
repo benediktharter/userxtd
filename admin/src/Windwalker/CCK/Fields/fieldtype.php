@@ -88,7 +88,7 @@ class JFormFieldFieldtype extends JFormFieldList
 			$this->value = XmlHelper::get($this->element, 'default');
 		}
 
-		$input->get('field_type', $this->value, 'method', true);
+		$input->set('field_type', $this->value, 'method', true);
 
 		$element = $this->element;
 
@@ -135,6 +135,6 @@ class JFormFieldFieldtype extends JFormFieldList
 
 		$type = $input->get('field_type');
 
-		$this->value = $type ? $type : $this->value;
+		$this->value = $type ? : $this->value;
 	}
 }
