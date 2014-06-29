@@ -22,13 +22,12 @@ Help us making our extensions more perfectly.
 
 ## FEATURES
 
-  1. Support both 2.5 & 3.0
-  2. Custom fields by form constructor for registration.
-  3. Integrate with core users profile system.
-  4. Show author details after article.
-  5. User profile page and edit page.
-  6. User list to show all users' profiles.
-  7. Replace core users page by UserXTD pages.
+  1. Custom fields by form constructor for registration.
+  2. Integrate with core users profile system.
+  3. Show author details after article.
+  4. User profile page and edit page.
+  5. User list to show all users' profiles.
+  6. Replace core users page by UserXTD pages.
 
 ### User profile page and intergate with content article.
 
