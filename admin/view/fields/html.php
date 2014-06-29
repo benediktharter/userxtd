@@ -162,6 +162,9 @@ class UserxtdViewFieldsHtml extends GridView
 			'access' => $this->container->get('user')->authorise('core.admin', 'com_users')
 		);
 
+		// Replace wrong task of checkin
+		$buttonSet['checkin']['args'] = array($this->viewList . '.check.checkin');
+
 		return $buttonSet;
 	}
 
