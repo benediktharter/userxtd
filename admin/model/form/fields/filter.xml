@@ -53,6 +53,7 @@
 			name="field.published"
 			type="list"
 			default=""
+			label="COM_USERXTD_FILTER_STATUS_LABEL"
 			onchange="this.form.submit();"
 			>
 			<option></option>
@@ -67,6 +68,7 @@
 			name="field.catid"
 			type="category"
 			default=""
+			label="COM_USERXTD_FILTER_CATEGORY_LABEL"
 			extension="com_userxtd"
 			onchange="this.form.submit();"
 			class=""
