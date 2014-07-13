@@ -79,6 +79,10 @@ class UserxtdViewUserHtml extends ItemHtmlView
 			$this->container->get('app')->redirect(JUri::root());
 		}
 
+		$state = $this->get('State');
+
+		$state->set('user.id', $input->get('id', $user->id));
+
 		parent::prepareRender();
 	}
 
@@ -218,7 +222,7 @@ class UserxtdViewUserHtml extends ItemHtmlView
 		$temp         = clone ($data->params);
 		$item->params = new Registry($item->params);
 
-		$item->title = JText::_('COM_USERS_PROFILE');
+		$item->title = JText::_('COM_USERS_PROFILE') . ' - ' . $item->name;
 
 		// Check to see which parameters should take priority
 		if ($active)
