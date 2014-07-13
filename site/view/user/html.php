@@ -73,14 +73,23 @@ class UserxtdViewUserHtml extends ItemHtmlView
 	{
 		$user = $this->container->get('user');
 		$input = $this->container->get('input');
+		$app = $this->container->get('app');
+		$state = $this->get('State');
+		$params = $this->get('Params');
 
+		// Not login and no id, return.
 		if (! $input->get('id') && $user->get('guest'))
 		{
-			$this->container->get('app')->redirect(JUri::root());
+			$app->redirect(JUri::root());
 		}
 
-		$state = $this->get('State');
+		// Guest can not see other users' profile if config set.
+		if (!$params->get('UserProfile_GuestSeeProfile', 1) && $user->get('guest'))
+		{
+			$app->redirect(JUri::root());
+		}
 
+		// Set user id into model
 		$state->set('user.id', $input->get('id', $user->id));
 
 		parent::prepareRender();
@@ -127,12 +136,12 @@ class UserxtdViewUserHtml extends ItemHtmlView
 		{
 			$userId	= $user->get('id');
 
-			if($item->id == $userId)
+			if($item->id == $userId && $data->params->get('UserProfile_CanEdit', 1))
 			{
 				$data->params->set('access-edit', true);
 			}
 
-			// Now check if edit.own is available.
+			// Now check if core.edit is available.
 			elseif (!empty($userId) && $user->authorise('core.edit', 'com_user'))
 			{
 				// Check for a valid user and that they are the owner.

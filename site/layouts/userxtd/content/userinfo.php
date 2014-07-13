@@ -13,6 +13,7 @@ $params = $displayData['params'];
 
 $title_field = $params->get('UserInfo_TitleField', 'name');
 $about_field = $params->get('UserInfo_AboutField', 'BASIC_ABOUT');
+$allowGuestSee = $params->get('UserProfile_GuestSeeProfile', 1);
 
 $website_link = $displayData['website_link'];
 $image = $displayData['image'];
@@ -42,9 +43,12 @@ $link  = $displayData['link'];
 			</a>
 			|
 			<?php endif; ?>
+
+			<?php if ($allowGuestSee): ?>
 			<a href="<?php echo $link ?>">
 				<?php echo \JText::_('COM_USERXTD_USER_INFO_MORE'); ?>
 			</a>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

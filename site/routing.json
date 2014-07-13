@@ -5,7 +5,7 @@
 	},
 
 	"user": {
-		"pattern": "user/:id",
+		"pattern": "user",
 		"view" : "user"
 	},
 

@@ -120,6 +120,7 @@ class PlgSystemUserxtd extends JPlugin
 			$option = $this->input->get('option');
 			$view   = $this->input->get('view');
 			$layout = $this->input->get('layout', 'default');
+			$id     = $this->input->get('id', JFactory::getUser()->id);
 
 			if ($option == 'com_users')
 			{
@@ -132,12 +133,19 @@ class PlgSystemUserxtd extends JPlugin
 
 				if ($view == 'profile' && $layout == 'default')
 				{
-					$this->app->redirect(Route::_('user_id', array('id' => $this->input->get('id'))));
+					if ($id)
+					{
+						$this->app->redirect(Route::_('user_id', array('id' => $id)));
+					}
+					else
+					{
+						$this->app->redirect(Route::_('user'));
+					}
 				}
 
 				if ($view == 'profile' && $layout == 'edit')
 				{
-					$this->app->redirect(Route::_('user_layout', array('task' => 'user.edit.edit', 'layout' => 'edit', 'id' => $this->input->get('id'))));
+					$this->app->redirect(Route::_('user_layout', array('task' => 'user.edit.edit', 'layout' => 'edit', 'id' => $id)));
 				}
 			}
 		}
