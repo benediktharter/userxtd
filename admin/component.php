@@ -30,7 +30,7 @@ final class UserxtdComponent extends \Userxtd\Component\UserxtdComponent
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		parent::prepare();
 	}
